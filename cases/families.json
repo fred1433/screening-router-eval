@@ -1,0 +1,52 @@
+{
+  "exact_match": {
+    "dev": 2,
+    "test": 10,
+    "permitted": "same_entity_supported"
+  },
+  "listed_alias": {
+    "dev": 2,
+    "test": 8,
+    "permitted": "same_entity_supported"
+  },
+  "transliteration": {
+    "dev": 2,
+    "test": 8,
+    "permitted": "same_entity_supported"
+  },
+  "homonym": {
+    "dev": 2,
+    "test": 12,
+    "permitted": "different_entity_supported"
+  },
+  "name_only": {
+    "dev": 2,
+    "test": 6,
+    "permitted": "insufficient_evidence"
+  },
+  "contradictory_ids": {
+    "dev": 2,
+    "test": 8,
+    "permitted": "insufficient_evidence"
+  },
+  "relative_trap": {
+    "dev": 2,
+    "test": 6,
+    "permitted": "different_entity_supported"
+  },
+  "year_only": {
+    "dev": 2,
+    "test": 6,
+    "permitted": "insufficient_evidence"
+  },
+  "entity_match": {
+    "dev": 2,
+    "test": 8,
+    "permitted": "same_entity_supported"
+  },
+  "entity_homonym": {
+    "dev": 2,
+    "test": 8,
+    "permitted": "different_entity_supported"
+  }
+}

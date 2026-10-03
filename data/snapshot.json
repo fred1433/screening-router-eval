@@ -1,0 +1,20 @@
+{
+  "source": "https://www.treasury.gov/ofac/downloads/{sdn,alt,add}.csv (redirects to sanctionslistservice.ofac.treas.gov)",
+  "published": "2026-10-02",
+  "published_note": "Last-Modified header of the export: Fri, 02 Oct 2026 15:55:48 GMT",
+  "retrieved": "2026-10-03",
+  "files": {
+    "sdn.csv": {
+      "sha256": "49215a8e749832b34dbb577c83f00f4c3c1b8baf0f14a9bd91bdcf19de3a51e1",
+      "bytes": 5730604
+    },
+    "alt.csv": {
+      "sha256": "e8602c7309956acb1167164c85c01d7e139ada119261670d0472a9bcef44baba",
+      "bytes": 1065827
+    },
+    "add.csv": {
+      "sha256": "0d87e2426edb78880f44e9e49fcc811e18142338dc9d3959203c899823c0151d",
+      "bytes": 1698480
+    }
+  }
+}

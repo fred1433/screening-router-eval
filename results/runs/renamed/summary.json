@@ -16,7 +16,9 @@
         "k": 0,
         "n": 43,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 43,
+        "ci95_cases": [
           0,
           0.082
         ]
@@ -25,7 +27,9 @@
         "k": 0,
         "n": 17,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 17,
+        "ci95_cases": [
           0,
           0.184
         ]
@@ -34,13 +38,17 @@
         "k": 0,
         "n": 0,
         "rate": null,
-        "ci95": null
+        "k_cases": 0,
+        "n_cases": 0,
+        "ci95_cases": null
       },
       "supported_on_answerable": {
         "k": 26,
         "n": 26,
         "rate": 1.0,
-        "ci95": [
+        "k_cases": 26,
+        "n_cases": 26,
+        "ci95_cases": [
           0.871,
           1
         ]
@@ -49,7 +57,9 @@
         "k": 17,
         "n": 17,
         "rate": 1.0,
-        "ci95": [
+        "k_cases": 17,
+        "n_cases": 17,
+        "ci95_cases": [
           0.816,
           1
         ]
@@ -58,7 +68,9 @@
         "k": 0,
         "n": 26,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 26,
+        "ci95_cases": [
           0,
           0.129
         ]
@@ -67,6 +79,9 @@
       "validation_unresolved": 0,
       "latency_ms_p50": 13078,
       "latency_ms_p95": 20552,
+      "latency_ms_p50_model_runs": 13078,
+      "latency_ms_p95_model_runs": 20552,
+      "model_runs": 43,
       "calls_per_case": 1,
       "large_calls_per_case": 1,
       "tokens_in_per_case": 1257,
@@ -116,7 +131,9 @@
         "k": 0,
         "n": 43,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 43,
+        "ci95_cases": [
           0,
           0.082
         ]
@@ -125,7 +142,9 @@
         "k": 0,
         "n": 17,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 17,
+        "ci95_cases": [
           0,
           0.184
         ]
@@ -134,13 +153,17 @@
         "k": 0,
         "n": 0,
         "rate": null,
-        "ci95": null
+        "k_cases": 0,
+        "n_cases": 0,
+        "ci95_cases": null
       },
       "supported_on_answerable": {
         "k": 24,
         "n": 26,
         "rate": 0.923,
-        "ci95": [
+        "k_cases": 24,
+        "n_cases": 26,
+        "ci95_cases": [
           0.759,
           0.979
         ]
@@ -149,7 +172,9 @@
         "k": 17,
         "n": 17,
         "rate": 1.0,
-        "ci95": [
+        "k_cases": 17,
+        "n_cases": 17,
+        "ci95_cases": [
           0.816,
           1
         ]
@@ -158,7 +183,9 @@
         "k": 0,
         "n": 26,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 26,
+        "ci95_cases": [
           0,
           0.129
         ]
@@ -167,6 +194,9 @@
       "validation_unresolved": 0,
       "latency_ms_p50": 5028,
       "latency_ms_p95": 26579,
+      "latency_ms_p50_model_runs": 7147,
+      "latency_ms_p95_model_runs": 29225,
+      "model_runs": 24,
       "calls_per_case": 0.84,
       "large_calls_per_case": 0.14,
       "tokens_in_per_case": 1176,
@@ -212,9 +242,9 @@
           "small output failed checks after repair": 2
         },
         "effect": {
-          "no_material_change": 4,
-          "corrected": 2
+          "no_material_change": 6
         },
+        "small_invalid_replaced_by_stop": 2,
         "stopped_without_large_call": 2,
         "decided_by_rules": 19
       },
@@ -237,7 +267,9 @@
         "k": 0,
         "n": 43,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 43,
+        "ci95_cases": [
           0,
           0.082
         ]
@@ -246,7 +278,9 @@
         "k": 0,
         "n": 17,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 17,
+        "ci95_cases": [
           0,
           0.184
         ]
@@ -255,13 +289,17 @@
         "k": 0,
         "n": 0,
         "rate": null,
-        "ci95": null
+        "k_cases": 0,
+        "n_cases": 0,
+        "ci95_cases": null
       },
       "supported_on_answerable": {
         "k": 24,
         "n": 26,
         "rate": 0.923,
-        "ci95": [
+        "k_cases": 24,
+        "n_cases": 26,
+        "ci95_cases": [
           0.759,
           0.979
         ]
@@ -270,7 +308,9 @@
         "k": 17,
         "n": 17,
         "rate": 1.0,
-        "ci95": [
+        "k_cases": 17,
+        "n_cases": 17,
+        "ci95_cases": [
           0.816,
           1
         ]
@@ -279,7 +319,9 @@
         "k": 0,
         "n": 26,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 26,
+        "ci95_cases": [
           0,
           0.129
         ]
@@ -288,6 +330,9 @@
       "validation_unresolved": 2,
       "latency_ms_p50": 6197,
       "latency_ms_p95": 14337,
+      "latency_ms_p50_model_runs": 6197,
+      "latency_ms_p95_model_runs": 14337,
+      "model_runs": 43,
       "calls_per_case": 1.23,
       "large_calls_per_case": 0,
       "tokens_in_per_case": 1713,

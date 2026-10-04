@@ -1,5 +1,4 @@
-// Gabarit : remplacer screening-router. Sert site/ sous https://theaipipe.com/demos/screening-router/ (static files only).
-// The route is more specific than the galerie-presell route theaipipe.com/demos/*, so it wins.
+// Serves the static files in site/ under https://theaipipe.com/demos/screening-router/ with a noindex header.
 const BASE = '/demos/screening-router';
 export default {
   async fetch(request, env) {

@@ -5,28 +5,32 @@ and `results/runs/test/first_answer_only.json`.
 
 ## What the run shows
 
-- With the same evidence, output contract, validators and one repair call, the small model (qwen/qwen3.5-9b) and the large
-  model (qwen/qwen3.5-397b-a17b) each produced 177 of 240 correct and supported runs and 3 needless stops. Neither
-  recommended excluding a true match (0 of 153 runs, 95% Wilson interval 0 to 2.4%: zero observed, not zero risk).
-- The router produced 180 of 240, no needless stop, 0.15 large-model calls per case, a resource index of 1.61 against 6.48
-  for the large model alone (small alone = 1). Of its 31 escalations, 7 corrected the small model, 24 changed nothing
-  material, none introduced an error.
+- With the same evidence, output contract, validators and one repair call, the small model (qwen/qwen3.5-9b) produced
+  176/180 answerable runs correct and supported and the large model (qwen/qwen3.5-397b-a17b) 178/180; both stopped rightly
+  on 60/60 insufficient-evidence runs. Neither recommended excluding a true match: 0 of 51 true-match cases in any of three
+  runs, a 95% interval of 0 to 7% computed over cases (runs at temperature 0 are not independent). Zero observed, not zero risk.
+- The router produced 180/180 and 60/60, with 0.17 large-model calls per case and a resource index of 1.72 against 6.47
+  for the large model alone (small alone = 1). Of its 34 escalations, 6 runs over 2 cases were corrected, 4 small outputs
+  that had failed their checks were replaced by valid stops, none introduced an error, the rest changed nothing material.
 - The validators carried the safety. Before any check the small model's first answer said "different entity" on 15 of 240
   runs where the customer really was the listed person and the identifiers conflicted. The policy check (the disposition must
   follow from the model's own comparisons) rejected all 15. The large model's first answers made no such error.
+- After the run, a stricter citation check (non-trivial quote, containing the value, never a "not captured" line) was
+  replayed on every accepted output without new calls: it would have rejected 9 of 235 small-model outputs, 3 of 238
+  large-model outputs and 3 of 240 router outputs, all for citing a line that records an absent value.
 
 ## Error families that remain, and which a training run could touch
 
 | Family | Seen in | Fix that comes first | Could training help? |
 |---|---|---|---|
-| Disposition that does not follow from the model's own, correct comparisons | large model, 2 cases (3 runs) ended as needless stops | Let code apply the policy to the extracted comparisons; the model only extracts | No need |
-| A field marked "not captured" read as a conflict | small model, case-030 (3 runs), rescued by escalation | One deterministic rule: an attribute absent on one side cannot conflict | No need |
-| An attribute read as another (residence as nationality; nationality as place of birth) | small model: 3 stops on original names, 2 cases with invented names | A stricter extraction step that quotes the field label, and a reference-based check for the label | Possibly |
+| Disposition that does not follow from the model's own, correct comparisons | large model, 2 runs (2 cases) ended as needless stops | Let code apply the policy to the extracted comparisons; the model only extracts | No need |
+| A field marked "not captured" read as a conflict | small and large first answers on case-030 (3 runs each); the large model fixed it on repair, the small did not; rescued by escalation | One deterministic rule: an attribute absent on one side cannot conflict | No need |
+| An attribute read as another (residence as nationality; nationality as place of birth) | small model: 3 stops citing "Nationality: not captured" on original names, 2 cases with invented names | A stricter extraction step that quotes the field label, and a reference-based check for the label | Possibly |
 | Judging an unlisted spelling as a transliteration | escalated by design (12 runs), no error left | Keep escalating; add listed-alias lookup in code | Possibly, with reviewed pairs |
 
 ## When fine-tuning would be worth testing here
 
-Not yet. After the two code fixes above, the only family left that training might reduce is attribute confusion in free
+Not yet. After the two code fixes above and the stricter citation check, the only family left that training might reduce is attribute confusion in free
 text. A training run would need a reviewed set of comparison records (customer field, candidate field, relation,
 verbatim citation), drawn from the institution's own document types and reviewed by an analyst, never list facts baked into
 weights (lists change; the evidence packet must stay the source). The deciding experiment: the same small model with and

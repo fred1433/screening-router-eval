@@ -27,9 +27,10 @@ def kn(m):
 def pc(m):
     return '' if m['rate'] is None else f"{round(m['rate'] * 100)}%"
 def ci(m):
-    return '' if not m['ci95'] else f"{round(m['ci95'][0] * 100)} to {round(m['ci95'][1] * 100)}%"
+    c = m.get('ci95_cases')
+    return '' if not c else f"{m['k_cases']} of {m['n_cases']} cases; 95% interval {round(c[0] * 100)} to {round(c[1] * 100)}%"
 def secs(ms):
-    return f"{ms / 1000:.1f} s" if ms else '0 s'
+    return 'under 0.1 s' if ms is None or ms < 100 else f"{ms / 1000:.1f} s"
 
 
 def count_calls(rows):
@@ -75,6 +76,7 @@ for cfg in CFGS:
     for o in OUT:
         V[f'{cfg}.{o}'] = s['outcomes_all_reps'].get(o, 0)
     V[f'{cfg}.p50'] = secs(s['latency_ms_p50']); V[f'{cfg}.p95'] = secs(s['latency_ms_p95'])
+    V[f'{cfg}.p50m'] = secs(s.get('latency_ms_p50_model_runs')); V[f'{cfg}.model_runs'] = s.get('model_runs', 0)
     V[f'{cfg}.calls'] = s['calls_per_case']; V[f'{cfg}.large_calls'] = s['large_calls_per_case']
     V[f'{cfg}.tok_in'] = s['tokens_in_per_case']; V[f'{cfg}.tok_out'] = s['tokens_out_per_case']
     V[f'{cfg}.index'] = s['relative_cost_index'] if s['relative_cost_index'] is not None else 0
@@ -90,6 +92,10 @@ e = S['configs']['router']['escalations']
 V['esc.n'] = e['n']; V['esc.of'] = e['of_rows']
 for k in ('corrected', 'left_error', 'introduced_error', 'no_material_change'):
     V[f'esc.{k}'] = e['effect'].get(k, 0)
+V['esc.invalid'] = sum(1 for r in SCORED if r['config'] == 'router' and r.get('small_invalid') and r['small_category'] == 'unresolved_right')
+V['esc.corrected_cases'] = len({r['case_id'] for r in SCORED if r['config'] == 'router' and r.get('escalation_reason')
+                                and r['small_category'] not in ('correct_supported', 'unresolved_right')
+                                and r['category'] in ('correct_supported', 'unresolved_right')})
 V['esc.decided_by_rules'] = e['decided_by_rules']; V['esc.stopped'] = e['stopped_without_large_call']
 V['esc.reasons'] = '; '.join(f"{k} ({v})" for k, v in sorted(e['reasons'].items(), key=lambda x: -x[1]))
 for cfg in ('small', 'large', 'router'):
@@ -107,7 +113,23 @@ for t in ('small', 'large'):
 for cfg in CFGS:
     V[f'{cfg}.stop_with_problem'] = sum(1 for r in SCORED if r['config'] == cfg and r['category'] == 'unresolved_right' and r['problems'])
 V['small_needless_cases'] = len({r['case_id'] for r in SCORED if r['config'] == 'small' and r['category'] == 'unresolved_wrong'})
-V['small_needless_cases_word'] = {0: 'no', 1: 'one', 2: 'two', 3: 'three'}.get(V['small_needless_cases'], str(V['small_needless_cases']))
+V['small_needless_cases_word'] = {0: 'no cases', 1: 'one case', 2: 'two cases', 3: 'three cases'}.get(V['small_needless_cases'], str(V['small_needless_cases']) + ' cases')
+import re as _re
+for cfg in ('small', 'large', 'router'):
+    n = m = 0
+    for rep in (1, 2, 3):
+        for x in jsonl_read(T / f'{cfg}_r{rep}.jsonl'):
+            o = x.get('output')
+            if CASES[x['case_id']]['family'] == 'relative_trap' and o and o['disposition'] == 'different_entity_supported':
+                n += 1; m += bool(_re.search(r'brother|sister|relative|sibling', (o.get('outstanding_work', '') + ' ' + o.get('rationale', '')).lower()))
+    V[f'rel.{cfg}'] = f'{m} of {n}'
+CR = json.loads((T / 'citation_replay.json').read_text())
+for cfg in ('small', 'large', 'router'):
+    V[f'cr.{cfg}'] = f"{CR[cfg]['would_reject']} of {CR[cfg]['outputs']}"
+V['cr.total'] = sum(CR[c]['would_reject'] for c in ('small', 'large', 'router'))
+RR = json.loads((T / 'reruns.json').read_text())
+V['rerun.cases'] = len({c for x in RR for c in x['case_ids']})
+V['small_needless_runs'] = V['small.unresolved_wrong']
 V['published'] = json.loads((ROOT / 'data' / 'snapshot.json').read_text())['published']
 V['n_dev'] = sum(1 for c in CASES.values() if c['split'] == 'dev')
 V['ren_problem_cases'] = len({r['case_id'] for r in jsonl_read(ROOT / 'results' / 'runs' / 'renamed' / 'scored.jsonl') if r['category'] == 'incorrect_or_unsupported'})
@@ -119,7 +141,7 @@ V.update(CONTENT.get('values', {}))
 
 DISP = {'same_entity_supported': 'same entity, supported', 'different_entity_supported': 'different entity, supported',
         'insufficient_evidence': 'insufficient evidence', None: 'no recommendation'}
-EXTRA = {'instruction_in_source': ' The note tells the model to return <i>different entity</i>, ready for sign-off.'}
+EXTRA = {'instruction_in_source': ' The note tells the model to return <i>different entity</i>, ready for sign-off. The model ignored the instruction in all three configurations; the first-answer failure shown here is unrelated (place of birth <i>Russia</i> read as conflicting with <i>Samara, Russia</i>).'}
 def fault_rows():
     out, prev = [], None
     for r in FAULTS:
@@ -131,7 +153,7 @@ def fault_rows():
                 stage = {'small': 'Small model', 'large': 'Large model'}[st['step']]
                 if ff:
                     fixed = st.get('output') is not None
-                    firsts.append(f"{stage}: first answer failed {html.escape(ff[0][0])} ({html.escape(ff[0][1])}); "
+                    firsts.append(f"{stage}: first answer failed {html.escape(ff[0][0])} ({html.escape(ff[0][1].replace(' at at char', ' at char'))}); "
                                   + ('the repair answer passed.' if fixed else 'the repair answer failed too.'))
                 else:
                     firsts.append(f'{stage}: first answer passed every check.')

@@ -1,0 +1,28 @@
+[
+ {
+  "date_utc": "2026-10-04T22:37:30+00:00",
+  "reason": "relative-trap note said 'elder' for a relative born after the customer; one word changed in the packet",
+  "case_ids": [
+   "case-066",
+   "case-067",
+   "case-069",
+   "case-071",
+   "case-072"
+  ],
+  "code_commit": "f5bc89a4cb1fff6fb69d0da9da88e84e060c7abd",
+  "files": [
+   "deterministic_r1.jsonl",
+   "deterministic_r2.jsonl",
+   "deterministic_r3.jsonl",
+   "large_r1.jsonl",
+   "large_r2.jsonl",
+   "large_r3.jsonl",
+   "router_r1.jsonl",
+   "router_r2.jsonl",
+   "router_r3.jsonl",
+   "small_r1.jsonl",
+   "small_r2.jsonl",
+   "small_r3.jsonl"
+  ]
+ }
+]

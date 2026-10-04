@@ -1,0 +1,116 @@
+{
+  "deterministic": {
+    "outputs": 93,
+    "would_reject": 0,
+    "by_check": {},
+    "by_category": {},
+    "examples": []
+  },
+  "large": {
+    "outputs": 238,
+    "would_reject": 3,
+    "by_check": {
+      "citation_absent_value": 3
+    },
+    "by_category": {
+      "correct_supported": 3
+    },
+    "examples": [
+      {
+        "case_id": "case-039",
+        "rep": 1,
+        "problems": [
+          "place_of_birth: customer quote records an absent value"
+        ]
+      },
+      {
+        "case_id": "case-039",
+        "rep": 2,
+        "problems": [
+          "place_of_birth: customer quote records an absent value"
+        ]
+      },
+      {
+        "case_id": "case-039",
+        "rep": 3,
+        "problems": [
+          "place_of_birth: customer quote records an absent value"
+        ]
+      }
+    ]
+  },
+  "router": {
+    "outputs": 240,
+    "would_reject": 3,
+    "by_check": {
+      "citation_absent_value": 3
+    },
+    "by_category": {
+      "unresolved_right": 3
+    },
+    "examples": [
+      {
+        "case_id": "case-047",
+        "rep": 1,
+        "problems": [
+          "nationality: customer quote records an absent value"
+        ]
+      },
+      {
+        "case_id": "case-047",
+        "rep": 2,
+        "problems": [
+          "nationality: customer quote records an absent value"
+        ]
+      },
+      {
+        "case_id": "case-047",
+        "rep": 3,
+        "problems": [
+          "nationality: customer quote records an absent value"
+        ]
+      }
+    ]
+  },
+  "small": {
+    "outputs": 235,
+    "would_reject": 9,
+    "by_check": {
+      "citation_absent_value": 9
+    },
+    "by_category": {
+      "unresolved_wrong": 3,
+      "unresolved_right": 6
+    },
+    "examples": [
+      {
+        "case_id": "case-030",
+        "rep": 1,
+        "problems": [
+          "place_of_birth: customer quote records an absent value"
+        ]
+      },
+      {
+        "case_id": "case-047",
+        "rep": 1,
+        "problems": [
+          "nationality: customer quote records an absent value"
+        ]
+      },
+      {
+        "case_id": "case-056",
+        "rep": 1,
+        "problems": [
+          "place_of_birth: customer quote records an absent value"
+        ]
+      },
+      {
+        "case_id": "case-030",
+        "rep": 2,
+        "problems": [
+          "place_of_birth: customer quote records an absent value"
+        ]
+      }
+    ]
+  }
+}

@@ -63,15 +63,25 @@ No money amount is published. `results/price_index.json` holds relative token we
 
 | | Rules only | Small alone | Large alone | Router |
 |---|---|---|---|---|
-| Recommended excluding a true match | 0/153 | 0/153 | 0/153 | 0/153 |
+| Recommended excluding a true match (runs; cases) | 0/153; 0/51 | 0/153; 0/51 | 0/153; 0/51 | 0/153; 0/51 |
 | Decided on insufficient evidence | 0/60 | 0/60 | 0/60 | 0/60 |
 | Matched a different entity | 0/87 | 0/87 | 0/87 | 0/87 |
-| Correct and supported, answerable | 60/180 | 177/180 | 177/180 | 180/180 |
-| Stopped rightly | 60/60 | 60/60 | 60/60 | 60/60 |
-| Stopped needlessly | 120/180 | 3/180 | 3/180 | 0/180 |
-| Large-model calls per case | 0 | 0 | 1.07 | 0.15 |
-| Latency median / p95 | 0 s | 6.4 / 13.1 s | 13.6 / 25.3 s | 4.7 / 24.8 s |
-| Resource index (small = 1) | 0 | 1.0 | 6.48 | 1.61 |
+| Correct and supported, answerable | 60/180 | 176/180 | 178/180 | 180/180 |
+| Stopped rightly | 60/60 (by default) | 60/60 | 60/60 | 60/60 |
+| Stopped needlessly | 120/180 | 4/180 | 2/180 | 0/180 |
+| Large-model calls per case | 0 | 0 | 1.07 | 0.17 |
+| Latency median / p95 | under 0.1 s | 6.4 / 13.4 s | 13.4 / 25.3 s | 4.8 / 24.9 s |
+| Resource index (small = 1) | 0 | 1.0 | 6.47 | 1.72 |
+
+Intervals are computed over cases, not runs (`ci95_cases` in the summary): 0 of 51 true-match cases gives 0 to 7%. The
+router's median is low because rules settle 93 of 240 runs; over runs that call a model it is 6.4 s.
+
+Re-run after the final run: the relative-trap notes always said "elder", even for a relative born after the customer.
+The generator was fixed (one word in 6 packets, references unchanged) and the 5 held-out cases it touched were re-run with
+the frozen pipeline (`results/runs/test/reruns.json`). The two-policy demonstration was moved to an individual
+(`src/two_policies.py`). A stricter citation check was added to `src/pipeline.py` after the run and replayed on the accepted
+outputs without new calls (`src/replay_citations.py`, `results/runs/test/citation_replay.json`); the scored run used the
+earlier checks.
 
 Scoring limit: on a decided case the score checks the disposition, the conflicts covered and the agreements claimed; it does not penalise an incomplete missing-information list.
 

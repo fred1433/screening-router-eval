@@ -104,7 +104,12 @@ for f in sorted(run_dir.glob('*_r*.jsonl')):
         if row.get('escalation_reason') is not None:
             so = row.get('small_output')
             fake = {**row, 'output': so, 'resolution': 'decided' if so else 'unresolved_validation'}
-            row2['small_category'] = classify(fake)[0] if so else 'invalid'
+            if so:
+                row2['small_category'] = classify(fake)[0]
+            else:  # the small output failed its checks: the router would have stopped there anyway
+                ok_stop = cases[row['case_id']]['reference']['permitted_disposition'] == 'insufficient_evidence'
+                row2['small_category'] = 'unresolved_right' if ok_stop else 'unresolved_wrong'
+                row2['small_invalid'] = True
         runs[cfg][int(rep)] = runs[cfg].get(int(rep), []) + [row2]
         scored.append(row2)
 jsonl_write(scored, run_dir / 'scored.jsonl')
@@ -119,7 +124,10 @@ for cfg, reps in runs.items():
         rows = rows if rows is not None else allrows
         den = [r for r in rows if pred_den(r)]
         num = [r for r in den if pred_num(r)]
-        return {'k': len(num), 'n': len(den), 'rate': round(len(num) / len(den), 3) if den else None, 'ci95': wilson(len(num), len(den))}
+        cn, ck = len({r['case_id'] for r in den}), len({r['case_id'] for r in num})
+        # runs at temperature 0 are not independent: the interval is computed over cases (a case counts if any run hits)
+        return {'k': len(num), 'n': len(den), 'rate': round(len(num) / len(den), 3) if den else None,
+                'k_cases': ck, 'n_cases': cn, 'ci95_cases': wilson(ck, cn)}
     true_match = lambda r: ref(r)['construction_identity'] == 'same'
     distinct = lambda r: ref(r)['construction_identity'] == 'different'
     insuff = lambda r: ref(r)['permitted_disposition'] == 'insufficient_evidence'
@@ -139,6 +147,9 @@ for cfg, reps in runs.items():
         'validation_unresolved': sum(1 for r in allrows if r['resolution'] == 'unresolved_validation'),
         'latency_ms_p50': pct([r['latency_ms'] for r in allrows], .5),
         'latency_ms_p95': pct([r['latency_ms'] for r in allrows], .95),
+        'latency_ms_p50_model_runs': pct([r['latency_ms'] for r in allrows if r['n_calls']], .5),
+        'latency_ms_p95_model_runs': pct([r['latency_ms'] for r in allrows if r['n_calls']], .95),
+        'model_runs': sum(1 for r in allrows if r['n_calls']),
         'calls_per_case': round(statistics.mean(r['n_calls'] for r in allrows), 2),
         'large_calls_per_case': round(statistics.mean(r['calls_by_tier'].get('large', 0) for r in allrows), 2),
         'tokens_in_per_case': round(statistics.mean(r['tokens_in'] for r in allrows)),
@@ -167,6 +178,7 @@ for cfg, reps in runs.items():
                 eff['no_material_change'] += 1
         s['escalations'] = {'n': len(esc), 'of_rows': len(allrows), 'reasons': dict(Counter(r['escalation_reason'].split(':')[0] for r in esc)),
                             'effect': dict(eff),
+                            'small_invalid_replaced_by_stop': sum(1 for r in esc if r.get('small_invalid')),
                             'stopped_without_large_call': sum(1 for r in allrows if r['route'] == ['rules', 'small'] and r['disposition'] == 'insufficient_evidence'),
                             'decided_by_rules': sum(1 for r in allrows if r['route'] == ['rules'])}
     # stability across repetitions

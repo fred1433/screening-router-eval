@@ -42,15 +42,4 @@ for name, kind, case, cfgs, fault, desc in SUITE:
 jsonl_write(rows, ROOT / 'results' / 'faults' / 'faults.jsonl')
 jsonl_write([inj], ROOT / 'results' / 'faults' / 'injection_case.jsonl')
 
-# two illustrative policies on the same factual case
-pc = pick('entity_match')
-pol = []
-for policy in ('A', 'B'):
-    for cfg in ('deterministic', 'small'):
-        c = copy.deepcopy(pc)
-        if cfg == 'deterministic':
-            c['packet']['documents'] = [d for d in c['packet']['documents'] if d['kind'] == 'structured']
-        r = pipeline.run_case(cfg, c, policy)
-        pol.append({'policy': policy, **r})
-        print('policy', policy, cfg, (r['output'] or {}).get('disposition'), (r['output'] or {}).get('status'), flush=True)
-jsonl_write(pol, ROOT / 'results' / 'faults' / 'two_policies.jsonl')
+# two illustrative policies: see src/two_policies.py

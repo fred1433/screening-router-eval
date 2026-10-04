@@ -70,6 +70,9 @@ section{padding:56px 0;border-top:1px solid var(--rule)}
 .fhead{display:grid;grid-template-columns:170px 1fr 320px;gap:20px;font-size:13px;color:var(--faint);padding-bottom:6px}
 .fhead .side{color:var(--faint)}
 .fnote{font-size:14px;color:var(--slate);margin:18px 0 0;max-width:62em}
+dl.notes{display:grid;grid-template-columns:200px 1fr;gap:14px 28px;margin:30px 0 0;max-width:980px;font-size:15.5px;line-height:1.55}
+dl.notes dt{font-weight:600}
+dl.notes dd{margin:0}
 
 table{border-collapse:collapse;width:100%;font-size:15px}
 .measures{margin-top:34px}
@@ -94,7 +97,7 @@ table{border-collapse:collapse;width:100%;font-size:15px}
 .doc.list header{background:#EEF1F3}
 .doc pre{margin:0;padding:12px 14px;font:400 13px/1.6 "IBM Plex Mono",ui-monospace,monospace;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
 .doc mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
-.rec{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:18px 20px}
+.rec{min-width:0;background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:18px 20px}
 .route{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:14px;margin:0 0 6px}
 .route span{border:1px solid var(--rule);border-radius:3px;padding:2px 9px;background:var(--paper)}
 .route span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -121,7 +124,7 @@ dl.kv dt{color:var(--faint)} dl.kv dd{margin:0}
 .signoff b{display:block;font-size:15px}
 details.raw{margin-top:14px;font-size:14px}
 details.raw summary{cursor:pointer;color:var(--stamp)}
-details.raw pre{font:12px/1.5 "IBM Plex Mono",monospace;background:#F2F4F5;border-radius:4px;padding:12px;overflow:auto;max-height:420px}
+details.raw pre{max-width:100%;overflow-x:auto;white-space:pre;font:12px/1.5 "IBM Plex Mono",monospace;background:#F2F4F5;border-radius:4px;padding:12px;overflow:auto;max-height:420px}
 
 .faults th,.faults td{padding:10px 12px 10px 0;border-top:1px solid var(--rule);text-align:left;vertical-align:top;font-size:14.5px}
 .faults thead th{border-top:0;color:var(--slate);font-weight:600;font-size:13px}
@@ -142,7 +145,9 @@ footer{color:var(--faint);font-size:13px;padding:0 0 40px}
   .frow,.fhead{grid-template-columns:1fr;gap:8px}
   .fhead{display:none}
   .side{grid-template-columns:repeat(4,1fr)}
-  .file{grid-template-columns:1fr}
+  .file{grid-template-columns:minmax(0,1fr)}
+  dl.notes{grid-template-columns:1fr;gap:4px}
+  dl.notes dd{margin-bottom:14px}
   .two{grid-template-columns:1fr;gap:32px}
 }
 @media (max-width:700px){
@@ -173,6 +178,9 @@ footer{color:var(--faint);font-size:13px;padding:0 0 40px}
   .side{grid-template-columns:repeat(2,1fr)}
   .bar span{font-size:11px}
   .grid{grid-template-columns:repeat(24,1fr);gap:4px}
+  .comps{table-layout:fixed;font-size:13px}
+  .comps td,.comps th{padding:6px 3px;overflow-wrap:anywhere}
+  .rec{padding:14px 12px}
   .grid.lit span.excl,.grid.lit span.wrong{outline-width:1.5px;outline-offset:1px}
   .catch-line{font-size:20px}
   .catch{margin-bottom:48px}
@@ -206,15 +214,16 @@ footer{color:var(--faint);font-size:13px;padding:0 0 40px}
 </figure>
 
 <div class="finding">
-<p>On {{n_test}} held-out cases, each run {{reps}} times, a small open-weight model behind shared checks did as well as a large one: {{small.correct_supported}} and {{large.correct_supported}} of {{rows}} runs correct and supported, and neither recommended excluding a true match. The router reached {{router.correct_supported}} of {{rows}} with no needless stop, calling the large model on {{esc.n}} runs and using a resource index of {{router.index}} against {{large.index}} for the large model alone.</p>
+<p>On {{n_test}} held-out cases, each run {{reps}} times, a small open-weight model behind shared checks did about as well as a large one: {{small.supported_on_answerable.kn}} and {{large.supported_on_answerable.kn}} answerable runs correct and supported, {{small.appropriate_unresolved.kn}} and {{large.appropriate_unresolved.kn}} right stops, and neither recommended excluding a true match. The router reached {{router.supported_on_answerable.kn}} with {{router.appropriate_unresolved.kn}} right stops, calling the large model on {{esc.n}} of {{esc.of}} runs, for a resource index of {{router.index}} against {{large.index}} for the large model alone.</p>
 <p>The checks did the protective work, not the model size. The large model's first answers made {{fa.large.wrong_excl}} such errors; after one repair call, neither model recommended excluding a true match in any run.</p>
-<p>What I would recommend from this run: the small model behind deterministic checks as the default path, and the large model only for named, observable reasons. The router's gain over the small model alone is real but narrow here ({{small_needless_cases_word}} case, three runs); it earns its place by removing needless stops at a fraction of the large model's cost.</p>
+<p>What I would recommend from this run: the small model behind deterministic checks as the default path, and the large model only for named, observable reasons. The router's gain over the small model alone is real but narrow here ({{small_needless_runs}} runs over {{small_needless_cases_word}}); it earns its place by removing needless stops at a fraction of the large model's cost.</p>
 </div>
 <p class="scope">Scope: the identity disposition for a list candidate already selected upstream; adverse media, risk scoring and PEP screening are out. Customer records are synthetic. Candidate records are copied field by field from the OFAC SDN export published {{published}}, with the entry UID kept; nothing is alleged about anyone. Reference answers were written by the builder and checked by a separate model session, not by a compliance expert. Models: {{small_model}} on {{small_endpoint}} and {{large_model}} on {{large_endpoint}}, through OpenRouter with fallbacks disabled.</p>
 
 <section id="cases" aria-labelledby="h-cases">
 <h2 id="h-cases">Three case files, as the analyst would receive them</h2>
 <p class="sub">Each file holds the customer documents, the list candidate, the proposed disposition with its citations, the route taken, every check in order and the outstanding work. Nothing is approved by the system.</p>
+<p class="sub">One thing the files do not do well enough: in the relative-trap family, where a relative of the customer is born on the listed date, the recommendation is <i>different entity</i> under the illustrative policy, but it names the relative in only {{rel.small}} small-model runs and {{rel.large}} large-model runs. The analyst needs that link in front of them; in a pilot it would be a required field.</p>
 <div class="tabs" id="tabs" role="tablist" aria-label="Case files"></div>
 <div id="casefile"></div>
 </section>
@@ -237,7 +246,7 @@ footer{color:var(--faint);font-size:13px;padding:0 0 40px}
 <div class="frow"><div class="nm">Large model alone<small>{{large_model}}</small></div><div class="bar" data-cfg="large" role="img"></div><div class="side"><span><b>{{large.large_calls}}</b>large calls</span><span><b>{{large.p50}}</b>median</span><span><b>{{large.p95}}</b>p95</span><span><b>{{large.index}}</b>index</span></div></div>
 <div class="frow"><div class="nm">Router<small>rules, then small, then large if needed</small></div><div class="bar" data-cfg="router" role="img"></div><div class="side"><span><b>{{router.large_calls}}</b>large calls</span><span><b>{{router.p50}}</b>median</span><span><b>{{router.p95}}</b>p95</span><span><b>{{router.index}}</b>index</span></div></div>
 </div>
-<p class="fnote">Latency is wall-clock per case on the client, network included, six cases in flight. The resource index weights input and output tokens by the list prices of the two pinned endpoints, small model alone = 1; no money amount is published. Endpoint failures in the scored run: {{small.opfail}}, {{large.opfail}}, {{router.opfail}} (small, large, router).</p>
+<p class="fnote">Latency is wall-clock per case on the client, network included, six cases in flight. The router's median is low because rules settle {{esc.decided_by_rules}} of {{esc.of}} runs in under 0.1 s; over the {{router.model_runs}} runs that call a model it is {{router.p50m}}. The resource index weights tokens by the list prices of the two pinned endpoints, small model alone = 1; no money amount is published. Rules-only stops are stops by default: that configuration never reads free text. No endpoint failed during the scored run.</p>
 </div>
 
 <div class="tablewrap">
@@ -256,7 +265,12 @@ footer{color:var(--faint);font-size:13px;padding:0 0 40px}
 </tbody>
 </table>
 </div>
-<p class="fnote">Counts are runs over {{n_true}} true-match cases, {{n_distinct}} distinct-entity cases and {{n_insuff}} insufficient-evidence cases, three runs each; repeated runs are not independent cases. Small print gives the 95% Wilson interval: zero observed in {{small.wrong_exclusion_true_matches.kn}} runs, not zero risk. Large-model escalations in the router: {{esc.n}} of {{esc.of}} runs ({{esc.reasons}}). Effect: corrected {{esc.corrected}}, left an error {{esc.left_error}}, introduced an error {{esc.introduced_error}}, no material change {{esc.no_material_change}}. Rules alone decided {{esc.decided_by_rules}} runs; {{esc.stopped}} stopped for missing evidence without a large-model call. First answers before any check: the small model failed at least one check on {{small.small.first_failed}} model stages and the repair fixed {{small.small.repaired}}; the large model failed {{large.large.first_failed}}. {{small.stop_with_problem}} of the small model's right stops (the same {{router.stop_with_problem}} in the router) still claim a nationality agreement that the file does not support (residence read as nationality); the score counts them as right stops and they are listed here.</p>
+<dl class="notes">
+<dt>How to read it</dt><dd>Counts are runs: {{n_true}} true-match, {{n_distinct}} distinct-entity and {{n_insuff}} insufficient-evidence cases, three runs each. Runs at temperature 0 are not independent, so the interval in small print is computed over cases: none of {{n_true}} true-match cases was excluded in any run, which leaves a 95% interval of 0 to 7%. Zero observed, not zero risk.</dd>
+<dt>Large-model escalations</dt><dd>{{esc.n}} of {{esc.of}} router runs: {{esc.reasons}}. They corrected {{esc.corrected}} runs ({{esc.corrected_cases}} cases), replaced {{esc.invalid}} small outputs that had failed their checks with valid stops, introduced no error and changed nothing material in the rest. Rules alone decided {{esc.decided_by_rules}} runs; {{esc.stopped}} stopped for missing evidence without a large-model call.</dd>
+<dt>Before the checks</dt><dd>The small model's first answer failed at least one check on {{small.small.first_failed}} model stages and the repair call fixed {{small.small.repaired}}; the large model's failed on {{large.large.first_failed}}.</dd>
+<dt>Not in the score</dt><dd>{{small.stop_with_problem}} of the small model's right stops (the same {{router.stop_with_problem}} in the router) rest on a nationality agreement the file does not support: they cite the line <i>Nationality: not captured</i>. A stricter citation check, added after the run and replayed on every accepted output without new calls, rejects such quotes: it would have sent back {{cr.small}} small-model outputs, {{cr.large}} large-model outputs and {{cr.router}} router outputs.</dd>
+</dl>
 </section>
 
 <section id="faults" aria-labelledby="h-faults">
@@ -270,14 +284,17 @@ footer{color:var(--faint);font-size:13px;padding:0 0 40px}
 </tbody>
 </table>
 </div>
-<p class="fnote">Same factual case under two illustrative policies: policy A (two agreeing identifiers, at least one strong) gives <i>{{pol.A.small}}</i> from the small model and <i>{{pol.A.deterministic}}</i> from the rules; policy B (two agreeing strong identifiers) gives <i>{{pol.B.small}}</i> and <i>{{pol.B.deterministic}}</i>. The policy is an input, not something the model decides. Name sensitivity: with every name token replaced by an invented one on {{n_renamed}} true-match cases (counts below are over the answerable ones), the small model went from {{ren.small.orig}} to {{ren.small.kn}} correct and supported, the large model from {{ren.large.orig}} to {{ren.large.kn}}, the router from {{ren.router.orig}} to {{ren.router.kn}}. The {{ren_problem_cases}} changed cases each claim a place-of-birth agreement the file does not support. This shows sensitivity to the names; it does not show whether prior knowledge of listed names helped.</p>
+<dl class="notes">
+<dt>Two policies</dt><dd>One individual whose customer record has its passport number removed, so that the date of birth and weaker identifiers agree. Policy A (two agreeing identifiers, at least one strong) gives <i>{{pol.A.small}}</i> from the small model and <i>{{pol.A.deterministic}}</i> from the rules; policy B (two agreeing strong identifiers) gives <i>{{pol.B.small}}</i> and <i>{{pol.B.deterministic}}</i>. The policy is an input, not something the model decides.</dd>
+<dt>Invented names</dt><dd>Every name token replaced by an invented one on {{n_renamed}} true-match cases. Over the answerable ones, the small model went from {{ren.small.orig}} to {{ren.small.kn}} correct and supported, the large model from {{ren.large.orig}} to {{ren.large.kn}}, the router from {{ren.router.orig}} to {{ren.router.kn}}. The {{ren_problem_cases}} changed cases each claim a place-of-birth agreement the file does not support. This shows sensitivity to the names; it does not show whether prior knowledge of listed names helped.</dd>
+</dl>
 </section>
 
 <section id="evidence" aria-labelledby="h-ev">
 <div class="two">
 <div>
 <h2 id="h-ev">The evidence behind every number</h2>
-<p>Every figure on this page is read from the result files when the page is built, at code commit {{commit}}. Prompts, routing and scoring were frozen before the final run; {{n_dev}} development cases were kept apart from the {{n_test}} scored ones.</p>
+<p>Every figure on this page is read from the result files when the page is built; the run used code commit {{commit}}. Prompts, routing and scoring were frozen before the final run; {{n_dev}} development cases were kept apart from the {{n_test}} scored ones.</p>
 <ul class="ev">
 <li><a href="{{repo}}/blob/main/cases/cases.jsonl">Cases and reference answers</a>, and the <a href="{{repo}}/tree/main/review">two rounds of reference review</a></li>
 <li><a href="{{repo}}/blob/main/results/runs/test/manifest.json">Run manifest</a>: endpoints, settings, concurrency, retries, dates</li>
@@ -293,6 +310,7 @@ footer{color:var(--faint);font-size:13px;padding:0 0 40px}
 <li>Expert agreement. The references were checked by a fresh model session that did not build them; a compliance analyst has not reviewed them.</li>
 <li>A self-hosted deployment. Latency and resource use are measured on hosted endpoints on {{run_date}}; the harness takes any OpenAI-compatible endpoint, but only the hosted one was tested. OpenRouter model names are aliases the host can update.</li>
 <li>The search that selects the candidate. It is assumed done upstream.</li>
+<li>A frozen case set in every detail. After the run, a fresh review found that the relative-trap notes always said <i>elder</i>, even for a relative born after the customer; the generator was fixed and the {{rerun.cases}} held-out cases it touched were re-run with the frozen pipeline (<a href="{{repo}}/blob/main/results/runs/test/reruns.json">reruns.json</a>).</li>
 <li>Completeness of the missing-information list on a decided case. The score checks the disposition, the conflicts and the claimed agreements; an incomplete list of missing items is not penalised.</li>
 </ul>
 </div>
@@ -320,7 +338,7 @@ footer{color:var(--faint);font-size:13px;padding:0 0 40px}
 <p>If this is close to the first milestone you have in mind, I would be glad to walk through the run and the case files with you in fifteen minutes.</p>
 <a class="mail" href="mailto:frederic@theaipipe.com?subject=Screening%20router%20evaluation">Write to Frédéric</a>
 </div>
-<footer>Frédéric de Choulot, The AI Pipe. Page generated from the result files at commit {{commit}}. Not indexed.</footer>
+<footer>Frédéric de Choulot, The AI Pipe. Page built from the result files; run at code commit {{commit}}. Not indexed.</footer>
 </div>
 <script>
 const DATA = /*DATA*/null;

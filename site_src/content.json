@@ -1,11 +1,28 @@
 {
- "values": {"repo": "https://github.com/fred1433/screening-router-eval"},
+ "values": {
+  "repo": "https://github.com/fred1433/screening-router-eval"
+ },
  "cases": [
-  {"tab": "A supported recommendation", "case_id": "case-066", "config": "router", "rep": 1,
-   "note": "The customer's name is an exact match for a listed person, and an officer's note mentions a brother born on the listed date of birth. Under the policy only the customer's own facts count. The small model compared the customer's own date of birth, recorded the conflict, and did not let the brother's date stand in for it. The large model was not called."},
-  {"tab": "A justified stop", "case_id": "case-050", "config": "router", "rep": 1,
-   "note": "Only the name is captured. The small model names what is missing and the router stops there, because a larger model cannot supply a date of birth or a passport number that is not in the file. The output is a request for documents, routed to further investigation."},
-  {"tab": "A correction, and what it reveals", "case_id": "case-030", "config": "router", "rep": 1,
-   "note": "The small model read a place of birth marked <i>not captured</i> as a conflict. Asked to repair the policy error the checks found, it made its disposition agree with that wrong comparison: insufficient evidence. The router escalated on an observable reason, an agreement and a conflict side by side, and the large model got it right. With the small model alone this case ended as a needless stop in all three runs. A one-line rule in code (an attribute marked not captured cannot conflict) would fix it without any large-model call."}
+  {
+   "tab": "A supported recommendation",
+   "case_id": "case-020",
+   "config": "router",
+   "rep": 1,
+   "note": "The customer's name is one of the candidate's listed aliases. The structured record holds only the nationality; the date of birth and the passport number appear only in the transcribed passport page. Rules do not read free text, so the small model compared them, citing each value from the line it came from. Its first answer passed every check and the large model was not called."
+  },
+  {
+   "tab": "A justified stop",
+   "case_id": "case-050",
+   "config": "router",
+   "rep": 1,
+   "note": "Only the name is captured. The small model names what is missing and the router stops there, because a larger model cannot supply a date of birth or a passport number that is not in the file. The output is a request for documents, routed to further investigation."
+  },
+  {
+   "tab": "A correction, and what it reveals",
+   "case_id": "case-030",
+   "config": "router",
+   "rep": 1,
+   "note": "In their first answers, in all three runs, both the small and the large model read a place of birth marked <i>not captured</i> as a conflict, and both failed the policy check. The repair call then split them: the large model corrected the comparison, while the small model kept it and bent its disposition to match, insufficient evidence. The router escalated on an observable reason, an agreement and a conflict side by side, so the large model's repaired answer is the one kept. With the small model alone this case ended as a needless stop in all three runs. The stricter citation check added after the run refuses a <i>not captured</i> line as evidence, which sends the first answer back for the right reason."
+  }
  ]
 }

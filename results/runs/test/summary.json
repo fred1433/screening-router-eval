@@ -18,60 +18,75 @@
         "k": 0,
         "n": 153,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 51,
+        "ci95_cases": [
           0,
-          0.024
+          0.07
         ]
       },
       "decisive_on_insufficient": {
         "k": 0,
         "n": 60,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 20,
+        "ci95_cases": [
           0,
-          0.06
+          0.161
         ]
       },
       "wrong_match_distinct": {
         "k": 0,
         "n": 87,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 29,
+        "ci95_cases": [
           0,
-          0.042
+          0.117
         ]
       },
       "supported_on_answerable": {
         "k": 60,
         "n": 180,
         "rate": 0.333,
-        "ci95": [
-          0.269,
-          0.405
+        "k_cases": 20,
+        "n_cases": 60,
+        "ci95_cases": [
+          0.227,
+          0.459
         ]
       },
       "appropriate_unresolved": {
         "k": 60,
         "n": 60,
         "rate": 1.0,
-        "ci95": [
-          0.94,
-          1.0
+        "k_cases": 20,
+        "n_cases": 20,
+        "ci95_cases": [
+          0.839,
+          1
         ]
       },
       "unnecessary_unresolved": {
         "k": 120,
         "n": 180,
         "rate": 0.667,
-        "ci95": [
-          0.595,
-          0.731
+        "k_cases": 40,
+        "n_cases": 60,
+        "ci95_cases": [
+          0.541,
+          0.773
         ]
       },
       "operational_failures": 0,
       "validation_unresolved": 0,
       "latency_ms_p50": 0,
-      "latency_ms_p95": 3,
+      "latency_ms_p95": 2,
+      "latency_ms_p50_model_runs": null,
+      "latency_ms_p95_model_runs": null,
+      "model_runs": 0,
       "calls_per_case": 0,
       "large_calls_per_case": 0,
       "tokens_in_per_case": 0,
@@ -127,78 +142,92 @@
       "reps": 3,
       "scored_rows": 240,
       "outcomes_rep1": {
-        "correct_supported": 59,
-        "unresolved_right": 20,
-        "unresolved_wrong": 1
+        "correct_supported": 60,
+        "unresolved_right": 20
       },
       "outcomes_all_reps": {
-        "correct_supported": 177,
+        "correct_supported": 178,
         "unresolved_right": 60,
-        "unresolved_wrong": 3
+        "unresolved_wrong": 2
       },
       "wrong_exclusion_true_matches": {
         "k": 0,
         "n": 153,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 51,
+        "ci95_cases": [
           0,
-          0.024
+          0.07
         ]
       },
       "decisive_on_insufficient": {
         "k": 0,
         "n": 60,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 20,
+        "ci95_cases": [
           0,
-          0.06
+          0.161
         ]
       },
       "wrong_match_distinct": {
         "k": 0,
         "n": 87,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 29,
+        "ci95_cases": [
           0,
-          0.042
+          0.117
         ]
       },
       "supported_on_answerable": {
-        "k": 177,
+        "k": 178,
         "n": 180,
-        "rate": 0.983,
-        "ci95": [
-          0.952,
-          0.994
+        "rate": 0.989,
+        "k_cases": 60,
+        "n_cases": 60,
+        "ci95_cases": [
+          0.94,
+          1.0
         ]
       },
       "appropriate_unresolved": {
         "k": 60,
         "n": 60,
         "rate": 1.0,
-        "ci95": [
-          0.94,
-          1.0
+        "k_cases": 20,
+        "n_cases": 20,
+        "ci95_cases": [
+          0.839,
+          1
         ]
       },
       "unnecessary_unresolved": {
-        "k": 3,
+        "k": 2,
         "n": 180,
-        "rate": 0.017,
-        "ci95": [
-          0.006,
-          0.048
+        "rate": 0.011,
+        "k_cases": 2,
+        "n_cases": 60,
+        "ci95_cases": [
+          0.009,
+          0.114
         ]
       },
       "operational_failures": 0,
-      "validation_unresolved": 3,
-      "latency_ms_p50": 13598,
+      "validation_unresolved": 2,
+      "latency_ms_p50": 13444,
       "latency_ms_p95": 25283,
+      "latency_ms_p50_model_runs": 13444,
+      "latency_ms_p95_model_runs": 25283,
+      "model_runs": 240,
       "calls_per_case": 1.07,
       "large_calls_per_case": 1.07,
       "tokens_in_per_case": 1383,
-      "tokens_out_per_case": 604,
-      "resource_index_per_case": 24353.85,
+      "tokens_out_per_case": 603,
+      "resource_index_per_case": 24312.02,
       "by_family": {
         "exact_match": {
           "correct_supported": 30
@@ -219,8 +248,8 @@
           "unresolved_right": 24
         },
         "relative_trap": {
-          "correct_supported": 16,
-          "unresolved_wrong": 2
+          "correct_supported": 17,
+          "unresolved_wrong": 1
         },
         "year_only": {
           "unresolved_right": 18
@@ -237,11 +266,11 @@
         "large": {
           "stages": 240,
           "failed_first_answer": 16,
-          "policy": 13,
+          "policy": 14,
           "structured_mismatch": 6,
-          "repaired": 13,
+          "repaired": 14,
           "citation_missing": 1,
-          "structured_omitted": 2
+          "structured_omitted": 1
         }
       },
       "stability": {
@@ -249,9 +278,9 @@
         "same_disposition": 78,
         "same_route": 80,
         "same_facts": 78,
-        "same_missing": 59
+        "same_missing": 57
       },
-      "relative_cost_index": 6.48
+      "relative_cost_index": 6.47
     },
     "router": {
       "reps": 3,
@@ -268,65 +297,80 @@
         "k": 0,
         "n": 153,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 51,
+        "ci95_cases": [
           0,
-          0.024
+          0.07
         ]
       },
       "decisive_on_insufficient": {
         "k": 0,
         "n": 60,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 20,
+        "ci95_cases": [
           0,
-          0.06
+          0.161
         ]
       },
       "wrong_match_distinct": {
         "k": 0,
         "n": 87,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 29,
+        "ci95_cases": [
           0,
-          0.042
+          0.117
         ]
       },
       "supported_on_answerable": {
         "k": 180,
         "n": 180,
         "rate": 1.0,
-        "ci95": [
-          0.979,
-          1
+        "k_cases": 60,
+        "n_cases": 60,
+        "ci95_cases": [
+          0.94,
+          1.0
         ]
       },
       "appropriate_unresolved": {
         "k": 60,
         "n": 60,
         "rate": 1.0,
-        "ci95": [
-          0.94,
-          1.0
+        "k_cases": 20,
+        "n_cases": 20,
+        "ci95_cases": [
+          0.839,
+          1
         ]
       },
       "unnecessary_unresolved": {
         "k": 0,
         "n": 180,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 60,
+        "ci95_cases": [
           0,
-          0.021
+          0.06
         ]
       },
       "operational_failures": 0,
       "validation_unresolved": 0,
-      "latency_ms_p50": 4724,
-      "latency_ms_p95": 24827,
-      "calls_per_case": 0.92,
-      "large_calls_per_case": 0.15,
-      "tokens_in_per_case": 1302,
-      "tokens_out_per_case": 582,
-      "resource_index_per_case": 6039.74,
+      "latency_ms_p50": 4796,
+      "latency_ms_p95": 24891,
+      "latency_ms_p50_model_runs": 6403,
+      "latency_ms_p95_model_runs": 27403,
+      "model_runs": 147,
+      "calls_per_case": 0.94,
+      "large_calls_per_case": 0.17,
+      "tokens_in_per_case": 1326,
+      "tokens_out_per_case": 593,
+      "resource_index_per_case": 6469.03,
       "by_family": {
         "exact_match": {
           "correct_supported": 30
@@ -365,28 +409,29 @@
           "failed_first_answer": 37,
           "policy": 25,
           "structured_mismatch": 3,
-          "repaired": 33,
+          "repaired": 30,
           "structured_omitted": 12
         },
         "large": {
-          "stages": 31,
-          "failed_first_answer": 6,
-          "policy": 6,
-          "repaired": 6
+          "stages": 34,
+          "failed_first_answer": 7,
+          "policy": 7,
+          "repaired": 7
         }
       },
       "escalations": {
-        "n": 31,
+        "n": 34,
         "of_rows": 240,
         "reasons": {
           "match rests on a name spelling that is not listed": 12,
           "contradictory identifiers": 15,
-          "small output failed checks after repair": 4
+          "small output failed checks after repair": 7
         },
         "effect": {
-          "no_material_change": 24,
-          "corrected": 7
+          "no_material_change": 28,
+          "corrected": 6
         },
+        "small_invalid_replaced_by_stop": 7,
         "stopped_without_large_call": 11,
         "decided_by_rules": 93
       },
@@ -397,7 +442,7 @@
         "same_facts": 80,
         "same_missing": 75
       },
-      "relative_cost_index": 1.61
+      "relative_cost_index": 1.72
     },
     "small": {
       "reps": 3,
@@ -408,73 +453,88 @@
         "unresolved_right": 20
       },
       "outcomes_all_reps": {
-        "correct_supported": 177,
-        "unresolved_wrong": 3,
+        "correct_supported": 176,
+        "unresolved_wrong": 4,
         "unresolved_right": 60
       },
       "wrong_exclusion_true_matches": {
         "k": 0,
         "n": 153,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 51,
+        "ci95_cases": [
           0,
-          0.024
+          0.07
         ]
       },
       "decisive_on_insufficient": {
         "k": 0,
         "n": 60,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 20,
+        "ci95_cases": [
           0,
-          0.06
+          0.161
         ]
       },
       "wrong_match_distinct": {
         "k": 0,
         "n": 87,
         "rate": 0.0,
-        "ci95": [
+        "k_cases": 0,
+        "n_cases": 29,
+        "ci95_cases": [
           0,
-          0.042
+          0.117
         ]
       },
       "supported_on_answerable": {
-        "k": 177,
+        "k": 176,
         "n": 180,
-        "rate": 0.983,
-        "ci95": [
-          0.952,
-          0.994
+        "rate": 0.978,
+        "k_cases": 59,
+        "n_cases": 60,
+        "ci95_cases": [
+          0.911,
+          0.997
         ]
       },
       "appropriate_unresolved": {
         "k": 60,
         "n": 60,
         "rate": 1.0,
-        "ci95": [
-          0.94,
-          1.0
+        "k_cases": 20,
+        "n_cases": 20,
+        "ci95_cases": [
+          0.839,
+          1
         ]
       },
       "unnecessary_unresolved": {
-        "k": 3,
+        "k": 4,
         "n": 180,
-        "rate": 0.017,
-        "ci95": [
-          0.006,
-          0.048
+        "rate": 0.022,
+        "k_cases": 2,
+        "n_cases": 60,
+        "ci95_cases": [
+          0.009,
+          0.114
         ]
       },
       "operational_failures": 0,
-      "validation_unresolved": 4,
+      "validation_unresolved": 5,
       "latency_ms_p50": 6424,
-      "latency_ms_p95": 13115,
+      "latency_ms_p95": 13439,
+      "latency_ms_p50_model_runs": 6424,
+      "latency_ms_p95_model_runs": 13439,
+      "model_runs": 240,
       "calls_per_case": 1.26,
       "large_calls_per_case": 0,
       "tokens_in_per_case": 1741,
       "tokens_out_per_case": 807,
-      "resource_index_per_case": 3758.24,
+      "resource_index_per_case": 3758.19,
       "by_family": {
         "exact_match": {
           "correct_supported": 30
@@ -496,7 +556,8 @@
           "unresolved_right": 24
         },
         "relative_trap": {
-          "correct_supported": 18
+          "correct_supported": 17,
+          "unresolved_wrong": 1
         },
         "year_only": {
           "unresolved_right": 18
@@ -514,16 +575,16 @@
           "failed_first_answer": 62,
           "policy": 30,
           "structured_mismatch": 3,
-          "repaired": 58,
+          "repaired": 57,
           "structured_omitted": 32
         }
       },
       "stability": {
         "cases": 80,
-        "same_disposition": 79,
+        "same_disposition": 78,
         "same_route": 80,
-        "same_facts": 79,
-        "same_missing": 74
+        "same_facts": 78,
+        "same_missing": 73
       },
       "relative_cost_index": 1.0
     }

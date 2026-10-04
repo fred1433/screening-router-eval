@@ -31,6 +31,57 @@ def _norm(s):
     return re.sub(r'\s+', ' ', (s or '')).strip().lower()
 
 
+ABSENT = re.compile(r'not captured|not listed|not provided|none listed|not available', re.I)
+DATE_PATTERNS = [r'\d{4}-\d{2}-\d{2}', r'\d{1,2} [A-Za-z]{3,9} \d{4}', r'\d{1,2}/\d{1,2}/\d{4}']
+STRICT_CITATIONS = True   # added after the final run (fresh review, 2026-10-04); the scored run used the earlier checks
+
+
+def _dates(text):
+    from common import parse_date
+    out = set()
+    for pat in DATE_PATTERNS:
+        for m in re.findall(pat, text or ''):
+            if '/' in m:
+                d, mo, y = m.split('/')
+                out.add(f'{y}-{int(mo):02d}-{int(d):02d}')
+            else:
+                v = parse_date(m)
+                if v:
+                    out.add(v)
+    return out
+
+
+def _tokens(s):
+    from common import strip_accents
+    return set(re.findall(r'[a-z0-9]+', strip_accents(str(s or '')).lower()))
+
+
+def citation_problems(c):
+    """Stricter citation checks for one agree/conflict comparison: a non-trivial quote, not a line that records an
+    absent value, and one that contains the value it is cited for (dates compared across formats)."""
+    errs = []
+    for side, cite_key, val_key in (('customer', 'customer_cite', 'customer_value'), ('list', 'list_cite', 'list_value')):
+        cite = c.get(cite_key) or {}
+        q, v = str(cite.get('quote') or ''), c.get(val_key)
+        if len(re.sub(r'[^A-Za-z0-9]', '', q)) < 4:
+            errs.append(('citation_trivial', f"{c['attribute']}: {side} quote is empty or too short")); continue
+        if ABSENT.search(q):
+            errs.append(('citation_absent_value', f"{c['attribute']}: {side} quote records an absent value")); continue
+        if v in (None, ''):
+            errs.append(('citation_value', f"{c['attribute']}: {side} value missing")); continue
+        vd = _dates(str(v))
+        if vd:
+            if not (vd & _dates(q)):
+                errs.append(('citation_value', f"{c['attribute']}: {side} quote does not contain the date {v}"))
+            continue
+        vt, qt = _tokens(v), _tokens(q)
+        digits = {t for t in vt if any(ch.isdigit() for ch in t)}
+        words = {t for t in vt - digits if len(t) >= 3}
+        if (digits and not digits <= qt) or (not digits and words and not (words & qt)):
+            errs.append(('citation_value', f"{c['attribute']}: {side} quote does not contain the value {v}"))
+    return errs
+
+
 def validate(out, packet, policy='A'):
     """Returns list of (check, message). Empty list = passes every deterministic control."""
     errs = []
@@ -67,6 +118,8 @@ def validate(out, packet, policy='A'):
                 errs.append(('citation_source', f"{c['attribute']}: {side} fact cited from {cite['doc']} ({d['side']} side)"))
             if _norm(cite['quote']) not in _norm(d['text']):
                 errs.append(('citation_exact', f"{c['attribute']}: quote not found verbatim in {cite['doc']}"))
+        if STRICT_CITATIONS and not any(e[1].startswith(c['attribute'] + ':') for e in errs):
+            errs.extend(citation_problems(c))
     if errs:
         return errs
     # policy applied to the model's own comparisons
@@ -98,7 +151,7 @@ def parse_json(text):
     try:
         return json.loads(t), None
     except json.JSONDecodeError as e:
-        return None, f'not valid JSON ({e.msg} at char {e.pos})'
+        return None, f'not valid JSON ({e.msg}, char {e.pos})'
 
 
 # ------------------------------------------------------------------ one model with shared controls

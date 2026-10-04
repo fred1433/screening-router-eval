@@ -204,5 +204,13 @@
  "pol.A.small": "same entity, supported",
  "pol.B.deterministic": "insufficient evidence",
  "pol.B.small": "insufficient evidence",
- "repo": "https://github.com/fred1433/screening-router-eval"
+ "repo": "https://github.com/fred1433/screening-router-eval",
+ "grid.excl": 15,
+ "grid.excl_caught": 15,
+ "grid.wrong": 5,
+ "grid.wrong_caught": 5,
+ "grid.n": 240,
+ "grid.excl_cases": 5,
+ "grid.excl_family": "contradictory identifiers",
+ "grid.ok": 220
 }

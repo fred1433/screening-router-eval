@@ -32,8 +32,20 @@ h1{font-weight:700;font-size:clamp(34px,4.6vw,56px);line-height:1.05;letter-spac
 .question{font-size:19px;line-height:1.5;color:var(--slate);max-width:46em;margin:0 0 28px}
 .question q{color:var(--ink)}
 .finding{border-left:4px solid var(--ink);padding:4px 0 4px 22px;max-width:46em;margin:0 0 18px}
+.catch{margin:8px 0 72px;padding:0}
+.grid{display:grid;grid-template-columns:repeat(48,1fr);gap:4px;max-width:1056px}
+.grid span{aspect-ratio:1;border-radius:2px;background:#CBD6D1}
+.grid span.excl{background:var(--bad)}
+.grid span.wrong{background:var(--idle)}
+.grid.lit span.excl,.grid.lit span.wrong{outline:2px solid var(--stamp);outline-offset:2px}
+.catch-line{font-size:26px;line-height:1.35;letter-spacing:-.01em;font-weight:500;max-width:34em;margin:26px 0 14px}
+.key{display:flex;flex-wrap:wrap;gap:6px 24px;list-style:none;padding:0;margin:0 0 8px;font-size:14px;color:var(--slate)}
+.key i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:8px;vertical-align:-1px}
+.k-ok{background:#CBD6D1}.k-excl{background:var(--bad);outline:2px solid var(--stamp);outline-offset:1px}.k-wrong{background:var(--idle);outline:2px solid var(--stamp);outline-offset:1px}
+.key-note{font-size:14px;color:var(--faint);max-width:52em;margin:0}
+@media (prefers-reduced-motion:no-preference){.grid span{transition:outline-color .5s ease}.grid:not(.lit) span{outline:2px solid transparent;outline-offset:2px}}
 .finding p{margin:0 0 12px;font-size:18px}
-.finding p:first-child{font-size:21px;line-height:1.5;font-weight:500}
+
 .finding p:last-child{margin-bottom:0}
 .scope{font-size:14px;color:var(--faint);max-width:56em;margin:0 0 40px}
 h2{font-size:28px;font-weight:700;letter-spacing:-.015em;margin:0 0 10px}
@@ -160,6 +172,10 @@ footer{color:var(--faint);font-size:13px;padding:0 0 40px}
   .masthead .who{display:none}
   .side{grid-template-columns:repeat(2,1fr)}
   .bar span{font-size:11px}
+  .grid{grid-template-columns:repeat(24,1fr);gap:4px}
+  .grid.lit span.excl,.grid.lit span.wrong{outline-width:1.5px;outline-offset:1px}
+  .catch-line{font-size:20px}
+  .catch{margin-bottom:48px}
   dl.kv{grid-template-columns:1fr}
   dl.kv dt{margin-top:6px}
   .tabs button{padding:10px 10px 8px;font-size:14px}
@@ -176,9 +192,22 @@ footer{color:var(--faint);font-size:13px;padding:0 0 40px}
 <h1>Open-model routing for screening recommendations</h1>
 <p class="question">The question: <q>Can a smaller open-weight model prepare a defensible screening recommendation, and when does calling a larger model actually improve it, while preserving analyst sign-off?</q></p>
 
+<figure class="catch" aria-labelledby="catch-cap">
+<div class="grid" id="grid" role="img" aria-label="{{grid.n}} first answers of the small model: {{grid.ok}} with the permitted disposition, {{grid.excl}} wrong exclusions of a true match, {{grid.wrong}} other wrong dispositions; all wrong ones rejected by the policy check."></div>
+<figcaption id="catch-cap">
+<p class="catch-line">{{grid.excl}} of {{grid.n}} first answers from the small model said <i>different entity</i> for a customer who was the listed person. The policy check rejected all {{grid.excl_caught}} before any recommendation went out.</p>
+<ul class="key">
+<li><i class="k-ok"></i>Permitted disposition ({{grid.ok}})</li>
+<li><i class="k-excl"></i>Wrong exclusion of a true match, rejected ({{grid.excl_caught}} of {{grid.excl}})</li>
+<li><i class="k-wrong"></i>Other wrong disposition, rejected ({{grid.wrong_caught}} of {{grid.wrong}})</li>
+</ul>
+<p class="key-note">Each square is one run of one held-out case, before any check, three squares per case in case order. The {{grid.excl}} exclusions come from {{grid.excl_cases}} cases, all in the {{grid.excl_family}} family. The rejected answers went back for one repair; the figures below are after it.</p>
+</figcaption>
+</figure>
+
 <div class="finding">
 <p>On {{n_test}} held-out cases, each run {{reps}} times, a small open-weight model behind shared checks did as well as a large one: {{small.correct_supported}} and {{large.correct_supported}} of {{rows}} runs correct and supported, and neither recommended excluding a true match. The router reached {{router.correct_supported}} of {{rows}} with no needless stop, calling the large model on {{esc.n}} runs and using a resource index of {{router.index}} against {{large.index}} for the large model alone.</p>
-<p>The checks did the protective work, not the model size. Before any check, the small model's first answer said <i>different entity</i> on {{fa.small.wrong_excl}} of {{fa.small.answers}} runs where the customer really was the listed person and the evidence conflicted. The policy check rejected every one of them.</p>
+<p>The checks did the protective work, not the model size. The large model's first answers made {{fa.large.wrong_excl}} such errors; after one repair call, neither model recommended excluding a true match in any run.</p>
 <p>What I would recommend from this run: the small model behind deterministic checks as the default path, and the large model only for named, observable reasons. The router's gain over the small model alone is real but narrow here ({{small_needless_cases_word}} case, three runs); it earns its place by removing needless stops at a fraction of the large model's cost.</p>
 </div>
 <p class="scope">Scope: the identity disposition for a list candidate already selected upstream; adverse media, risk scoring and PEP screening are out. Customer records are synthetic. Candidate records are copied field by field from the OFAC SDN export published {{published}}, with the entry UID kept; nothing is alleged about anyone. Reference answers were written by the builder and checked by a separate model session, not by a compliance expert. Models: {{small_model}} on {{small_endpoint}} and {{large_model}} on {{large_endpoint}}, through OpenRouter with fallbacks disabled.</p>
@@ -301,6 +330,15 @@ const STATUS = {ready_for_analyst_signoff:'Ready for analyst sign-off', further_
 const ATTR = {date_of_birth:'Date of birth', year_of_birth:'Year of birth', passport_number:'Passport number', national_id:'National ID', nationality:'Nationality', place_of_birth:'Place of birth', registration_number:'Registration number', country_of_registration:'Country of registration', city:'City'};
 const STAGE = {deterministic:'rules', rules:'rules', small:'small model', large:'large model'};
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// first-answer grid
+(function(){
+  const g = document.getElementById('grid'); if (!g) return;
+  const word = {ok:'permitted disposition', excl:'wrong exclusion of a true match', wrong:'other wrong disposition'};
+  g.innerHTML = DATA.grid.map(([id, rep, kind, caught, fam]) => `<span class="${kind}" title="${id}, run ${rep} (${fam}): ${word[kind]}${caught ? ', rejected by the policy check' : ''}"></span>`).join('');
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) g.classList.add('lit'); else setTimeout(() => g.classList.add('lit'), 700);
+})();
 
 // figure
 (function(){

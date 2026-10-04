@@ -182,7 +182,26 @@ def case_view(spec):
             'construction_note': c.get('construction_note')}
 
 
-DATA = {'figure': fig, 'cases': [case_view(s) for s in CONTENT['cases']]}
+GRID = []
+for rep in (1, 2, 3):
+    for r in jsonl_read(T / f'small_r{rep}.jsonl'):
+        ref = CASES[r['case_id']]['reference']
+        a = next(st for st in r['trace'] if st['step'] == 'small')['attempts'][0]
+        d = (a['parsed'] or {}).get('disposition') if isinstance(a['parsed'], dict) else None
+        kind = 'ok' if d == ref['permitted_disposition'] else (
+            'excl' if ref['construction_identity'] == 'same' and d == 'different_entity_supported' else 'wrong')
+        caught = any(c[0] == 'policy' for c in a['checks_failed'])
+        GRID.append([r['case_id'], rep, kind, caught, CASES[r['case_id']]['family'].replace('_', ' ')])
+GRID.sort(key=lambda g: (g[0], g[1]))
+V['grid.excl'] = sum(g[2] == 'excl' for g in GRID)
+V['grid.excl_caught'] = sum(g[2] == 'excl' and g[3] for g in GRID)
+V['grid.wrong'] = sum(g[2] == 'wrong' for g in GRID)
+V['grid.wrong_caught'] = sum(g[2] == 'wrong' and g[3] for g in GRID)
+V['grid.n'] = len(GRID)
+V['grid.excl_cases'] = len({g[0] for g in GRID if g[2] == 'excl'})
+V['grid.excl_family'] = ', '.join(sorted({g[4] for g in GRID if g[2] == 'excl'})).replace('contradictory ids', 'contradictory identifiers')
+V['grid.ok'] = sum(g[2] == 'ok' for g in GRID)
+DATA = {'grid': GRID, 'figure': fig, 'cases': [case_view(s) for s in CONTENT['cases']]}
 
 tpl = (ROOT / 'site_src' / 'index.template.html').read_text()
 missing = set()

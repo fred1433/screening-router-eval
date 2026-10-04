@@ -73,6 +73,8 @@ No money amount is published. `results/price_index.json` holds relative token we
 | Latency median / p95 | 0 s | 6.4 / 13.1 s | 13.6 / 25.3 s | 4.7 / 24.8 s |
 | Resource index (small = 1) | 0 | 1.0 | 6.48 | 1.61 |
 
+Scoring limit: on a decided case the score checks the disposition, the conflicts covered and the agreements claimed; it does not penalise an incomplete missing-information list.
+
 Full figures, intervals and stability: `results/runs/test/summary.json`.
 
 ## Layout

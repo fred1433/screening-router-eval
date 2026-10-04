@@ -8,6 +8,8 @@ from common import ROOT, STRONG, jsonl_read, jsonl_write, jdump
 
 run_dir = Path(sys.argv[1])
 cases = {c['case_id']: c for c in jsonl_read(ROOT / 'cases' / 'cases.jsonl')}
+if (ROOT / 'cases' / 'cases_renamed.jsonl').exists():
+    cases.update({c['case_id']: c for c in jsonl_read(ROOT / 'cases' / 'cases_renamed.jsonl')})
 PRICES = {}  # relative index only: per-token list prices of the pinned endpoints, normalised to the small model
 try:
     PRICES = json.loads((ROOT / 'results' / 'price_index.json').read_text())

@@ -320,6 +320,10 @@ def reference(c):
         ag, nm = ['registration_number', 'country_of_registration', 'city'], 'exact'
     elif fam == 'entity_homonym':
         cf, nm = ['registration_number', 'country_of_registration', 'city'], 'exact'
+    entity = fam.startswith('entity')
+    pool = (['registration_number', 'country_of_registration', 'city'] if entity else
+            ['date_of_birth', 'passport_number', 'national_id', 'nationality', 'place_of_birth'])
+    miss = [a for a in pool if a not in ag and a not in cf]  # every identifier that cannot be compared (review round 1)
     comps = [{'attribute': a, 'relation': 'agree'} for a in ag] + [{'attribute': a, 'relation': 'conflict'} for a in cf]
     disp = apply_policy(nm, comps)
     just = {

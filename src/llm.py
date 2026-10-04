@@ -5,7 +5,7 @@ from pathlib import Path
 
 MODELS = {
     'small': {'model': os.environ.get('SMALL_MODEL', 'qwen/qwen3.5-9b'),
-              'provider': os.environ.get('SMALL_PROVIDER', 'deepinfra/bf16')},
+              'provider': os.environ.get('SMALL_PROVIDER', 'parasail/bf16')},
     'large': {'model': os.environ.get('LARGE_MODEL', 'qwen/qwen3.5-397b-a17b'),
               'provider': os.environ.get('LARGE_PROVIDER', 'deepinfra/fp8')},
 }

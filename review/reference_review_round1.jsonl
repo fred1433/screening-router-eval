@@ -1,0 +1,100 @@
+{"case_id": "case-001", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-002", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-003", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-004", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-005", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-006", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-007", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-008", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-009", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-010", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-011", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-012", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-013", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-014", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-015", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-016", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-017", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-018", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-019", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-020", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-021", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-022", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-023", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-024", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-025", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-026", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-027", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-028", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-029", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-030", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-031", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-032", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-033", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-034", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-035", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-036", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-037", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-038", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-039", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-040", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-041", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-042", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-043", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-044", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-045", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-046", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-047", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-048", "agrees": false, "issue": "La disposition et le statut sont justes, mais missing_information est incomplet. La liste donne un lieu de naissance (Luton, UK), donc un pays de naissance, qui est un identifiant faible. Côté client, il est 'not captured'. place_of_birth (country) devrait donc figurer dans les informations manquantes au même titre que nationality, autre identifiant faible que la référence liste bien.", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-049", "agrees": false, "issue": "La disposition et le statut sont justes, mais missing_information est incomplet. La liste donne un lieu de naissance (Anshan Liaoning, China), donc un pays de naissance. Côté client, il est 'not captured'. place_of_birth (country) devrait donc figurer dans les informations manquantes, par cohérence avec nationality qui y figure.", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-050", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-051", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-052", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-053", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-054", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-055", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-056", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-057", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-058", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-059", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-060", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-061", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-062", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-063", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-064", "agrees": true, "issue": "", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-065", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-066", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-067", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-068", "agrees": false, "issue": "The disposition and status are right, but missing_information is incomplete. The list gives a national ID number (4009952155), which is a strong identifier, while the customer's is not captured. national_id_number should therefore be listed next to passport_number. The match between the sister's date of birth and the list does not count (rule 8).", "your_disposition": "different_entity_supported"}
+{"case_id": "case-069", "agrees": false, "issue": "The disposition and status are right, but missing_information is incomplete. The list gives a national ID number (2912519114, Russia), which is a strong identifier, while the customer's is not captured. national_id_number should therefore be listed next to passport_number. The match between the brother's date of birth and the list does not count (rule 8).", "your_disposition": "different_entity_supported"}
+{"case_id": "case-070", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-071", "agrees": false, "issue": "La disposition est juste : date_of_birth en conflit (1982-04-09 contre 10 Apr 1986), aucun identifiant fort concordant, nationality concordante. La date du frère dans C2 correspond à la liste, mais elle est à écarter (règle 8), et la référence l'écarte bien. En revanche, missing_information est incomplet : national_id_number manque aussi. La liste donne 2907229130 et le client n'en a pas. Le cas est symétrique au passeport et doit figurer.", "your_disposition": "different_entity_supported"}
+{"case_id": "case-072", "agrees": false, "issue": "La disposition est juste : date_of_birth en conflit (1941-12-14 contre 09 Sep 1948), aucun identifiant fort concordant. La date du frère dans C2 est à écarter. En revanche, missing_information omet national_id_number, absent des deux côtés.", "your_disposition": "different_entity_supported"}
+{"case_id": "case-073", "agrees": false, "issue": "La disposition est juste. En revanche, missing_information est incomplet. Il manque date_of_birth : la liste ne donne que l'année, donc la date de naissance complète n'est pas comparable. Il manque aussi national_id_number, absent des deux côtés. Ces absences d'identifiants forts sont précisément ce qui rend le dossier insuffisant.", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-074", "agrees": false, "issue": "La disposition est juste. En revanche, missing_information omet date_of_birth (la liste ne donne que l'année 1946) et national_id_number (absent des deux côtés).", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-075", "agrees": false, "issue": "La disposition est juste. En revanche, missing_information omet date_of_birth (la liste ne donne que l'année 1970) et national_id_number (absent des deux côtés).", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-076", "agrees": false, "issue": "La disposition est juste. En revanche, missing_information omet date_of_birth (la liste ne donne que l'année 1980) et national_id_number (absent des deux côtés).", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-077", "agrees": false, "issue": "La disposition est juste. En revanche, missing_information omet date_of_birth (la liste ne donne que l'année 1950) et national_id_number (absent des deux côtés).", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-078", "agrees": false, "issue": "La disposition est juste. Le nom correspond exactement au nom principal une fois l'ordre ignoré. En revanche, missing_information omet date_of_birth (la liste ne donne que l'année 1984) et national_id_number (absent des deux côtés).", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-079", "agrees": false, "issue": "La disposition est juste. En revanche, missing_information omet date_of_birth (la liste ne donne que l'année 1981) et national_id_number (absent des deux côtés).", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-080", "agrees": false, "issue": "La disposition est juste. En revanche, missing_information omet date_of_birth (la liste ne donne que l'année 1955) et national_id_number (absent des deux côtés).", "your_disposition": "insufficient_evidence"}
+{"case_id": "case-081", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-082", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-083", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-084", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-085", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-086", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-087", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-088", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-089", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-090", "agrees": true, "issue": "", "your_disposition": "same_entity_supported"}
+{"case_id": "case-091", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-092", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-093", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-094", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-095", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-096", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-097", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-098", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-099", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}
+{"case_id": "case-100", "agrees": true, "issue": "", "your_disposition": "different_entity_supported"}

@@ -21,7 +21,7 @@ cases = [c for c in jsonl_read(a.cases) if a.split == 'all' or c['split'] == a.s
 out_dir = Path(a.out or ROOT / 'results' / 'runs' / a.split)
 out_dir.mkdir(parents=True, exist_ok=True)
 commit = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, capture_output=True, text=True).stdout.strip()
-manifest = {'started_utc': datetime.datetime.utcnow().isoformat(timespec='seconds') + 'Z', 'code_commit': commit,
+manifest = {'started_utc': datetime.datetime.now(datetime.UTC).replace(tzinfo=None).isoformat(timespec='seconds') + 'Z', 'code_commit': commit,
             'split': a.split, 'n_cases': len(cases), 'reps': a.reps, 'configs': a.configs.split(','),
             'policy': a.policy, 'models': llm.MODELS, 'settings': llm.SETTINGS,
             'routing': {'allow_fallbacks': False, 'require_parameters': True, 'base_url': llm.BASE_URL},
@@ -37,5 +37,5 @@ for cfg in a.configs.split(','):
             rows = list(ex.map(lambda c: {**pipeline.run_case(cfg, c, a.policy), 'rep': rep}, cases))
         jsonl_write(rows, out_dir / f'{cfg}_r{rep}.jsonl')
         print(f'{cfg} rep {rep}: {len(rows)} cases in {time.time() - t0:.0f}s', flush=True)
-manifest['finished_utc'] = datetime.datetime.utcnow().isoformat(timespec='seconds') + 'Z'
+manifest['finished_utc'] = datetime.datetime.now(datetime.UTC).replace(tzinfo=None).isoformat(timespec='seconds') + 'Z'
 jdump(manifest, out_dir / 'manifest.json')

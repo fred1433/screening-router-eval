@@ -1,0 +1,3 @@
+{"note": "Relative weights only, derived from the list prices of the two pinned endpoints on 2026-10-03 and normalised so that one small-model input token = 1. Used to compute a relative cost index; no monetary amount is published.",
+ "small": {"in": 1.0, "out": 2.5},
+ "large": {"in": 4.5, "out": 30.0}}

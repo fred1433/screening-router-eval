@@ -1,0 +1,6 @@
+{
+  "note": "Development-phase probe, one request per endpoint, same prompt (case-015), qwen/qwen3.5-9b, 2026-10-03. Used only to choose the small model endpoint before the final run.",
+  "first_dev_run_endpoint": "deepinfra/bf16: 20 dev cases, per-call latency 21 to 75 s for 450 to 810 output tokens",
+  "probe_latency_ms": {"parasail/bf16": 9798, "siliconflow/fp8": 30935, "together (quantization not exposed)": 6610, "venice/fp8": 6128, "darkbloom/fp4": 10457},
+  "choice": "parasail/bf16: full-precision weights disclosed, about 10 s per call. Faster endpoints either use fp8/fp4 or do not expose quantization."
+}

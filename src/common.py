@@ -108,13 +108,13 @@ POLICY_TEXT = (ROOT / 'policy' / 'policy_a.md').read_text() if (ROOT / 'policy' 
 def apply_policy(name_match, comparisons, policy='A'):
     """Recompute disposition from a list of comparisons [{attribute, relation}].
     Policy A: same = name criterion + >=2 agreeing identifiers incl. >=1 strong + no conflict.
-    Policy B (stricter, demo only): same additionally needs an agreeing document or registration number."""
+    Policy B (stricter, demo only): same additionally needs two agreeing strong identifiers."""
     agree = {c['attribute'] for c in comparisons if c.get('relation') == 'agree'}
     conflict = {c['attribute'] for c in comparisons if c.get('relation') == 'conflict'}
     name_ok = name_match in ('exact', 'listed_alias', 'transliteration_variant')
     strong_agree, strong_conflict = agree & STRONG, conflict & STRONG
     if name_ok and len(agree) >= 2 and strong_agree and not conflict:
-        if policy == 'B' and not (agree & {'passport_number', 'national_id', 'registration_number'}):
+        if policy == 'B' and len(strong_agree) < 2:
             return 'insufficient_evidence'
         return 'same_entity_supported'
     if strong_conflict and not strong_agree:

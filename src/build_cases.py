@@ -246,7 +246,9 @@ for i, e in enumerate(take(ind, full_ind, 10)):                          # F6 co
 for e in take(ind, lambda e: full_ind(e), 8):                             # F7 relative trap
     r = e['parsed']; d2 = shift_date(r['dob'][0])
     f = ind_fields(natural(e['name']), d2, nat=r['nationality'][0])
-    pron, rel = ('her', 'elder sister') if r.get('gender') == 'Female' else ('his', 'elder brother')
+    older = r['dob'][0] < d2                     # the relative's (listed) date is earlier: the relative is older
+    pron = 'her' if r.get('gender') == 'Female' else 'his'
+    rel = ('elder ' if older else 'younger ') + ('sister' if r.get('gender') == 'Female' else 'brother')
     t = (f"The customer explained that the account will also receive transfers from {pron} {rel}, born "
          f"{long_date(r['dob'][0])}, who lives abroad. The {rel.split()[-1]} is not a party to this account.")
     add('relative_trap', e, [cust_doc(f), free_doc(2, 'Onboarding officer note', t)], 'different',

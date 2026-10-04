@@ -36,8 +36,8 @@ rows = []
 for name, kind, case, cfgs, fault, desc in SUITE:
     for cfg in cfgs:
         r = pipeline.run_case(cfg, case, 'A', fault)
-        rows.append({'fault': name, 'kind': kind, 'description': desc, 'case_id': case['case_id'], 'family': case['family'],
-                     'permitted': case['reference']['permitted_disposition'], **r})
+        rows.append({**r, 'injected_fault': r.get('fault'), 'fault': name, 'kind': kind, 'description': desc,
+                     'case_id': case['case_id'], 'family': case['family'], 'permitted': case['reference']['permitted_disposition']})
         print(name, cfg, r['resolution'], (r['output'] or {}).get('disposition'), r['route'], r.get('escalation_reason'), flush=True)
 jsonl_write(rows, ROOT / 'results' / 'faults' / 'faults.jsonl')
 jsonl_write([inj], ROOT / 'results' / 'faults' / 'injection_case.jsonl')

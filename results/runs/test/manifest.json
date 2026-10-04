@@ -1,0 +1,47 @@
+{
+  "started_utc": "2026-10-04T21:43:49Z",
+  "code_commit": "6901735da8ed55ef118e2fa3c02f96079091fc3e",
+  "split": "test",
+  "n_cases": 80,
+  "reps": 3,
+  "configs": [
+    "deterministic",
+    "small",
+    "large",
+    "router"
+  ],
+  "policy": "A",
+  "models": {
+    "small": {
+      "model": "qwen/qwen3.5-9b",
+      "provider": "parasail/bf16"
+    },
+    "large": {
+      "model": "qwen/qwen3.5-397b-a17b",
+      "provider": "deepinfra/fp8"
+    }
+  },
+  "settings": {
+    "temperature": 0,
+    "max_tokens": 1600,
+    "reasoning": {
+      "enabled": false
+    },
+    "response_format": {
+      "type": "json_object"
+    }
+  },
+  "routing": {
+    "allow_fallbacks": false,
+    "require_parameters": true,
+    "base_url": "https://openrouter.ai/api/v1"
+  },
+  "concurrency": 6,
+  "transport_retries": 1,
+  "repair_budget_per_model": 1,
+  "timeout_s": 120,
+  "latency_note": "Wall-clock per case on the client, network included, cases run concurrently.",
+  "model_identifier_note": "OpenRouter model ids are aliases that the host can update; they are not immutable versions.",
+  "quantization_note": "Taken from the endpoint tag (bf16, fp8) as published by OpenRouter for that endpoint.",
+  "finished_utc": "2026-10-04T22:03:02Z"
+}

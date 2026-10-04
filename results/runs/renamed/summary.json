@@ -1,0 +1,329 @@
+{
+  "n_cases": 43,
+  "configs": {
+    "large": {
+      "reps": 1,
+      "scored_rows": 43,
+      "outcomes_rep1": {
+        "correct_supported": 26,
+        "unresolved_right": 17
+      },
+      "outcomes_all_reps": {
+        "correct_supported": 26,
+        "unresolved_right": 17
+      },
+      "wrong_exclusion_true_matches": {
+        "k": 0,
+        "n": 43,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.082
+        ]
+      },
+      "decisive_on_insufficient": {
+        "k": 0,
+        "n": 17,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.184
+        ]
+      },
+      "wrong_match_distinct": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": null
+      },
+      "supported_on_answerable": {
+        "k": 26,
+        "n": 26,
+        "rate": 1.0,
+        "ci95": [
+          0.871,
+          1
+        ]
+      },
+      "appropriate_unresolved": {
+        "k": 17,
+        "n": 17,
+        "rate": 1.0,
+        "ci95": [
+          0.816,
+          1
+        ]
+      },
+      "unnecessary_unresolved": {
+        "k": 0,
+        "n": 26,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.129
+        ]
+      },
+      "operational_failures": 0,
+      "validation_unresolved": 0,
+      "latency_ms_p50": 13078,
+      "latency_ms_p95": 20552,
+      "calls_per_case": 1,
+      "large_calls_per_case": 1,
+      "tokens_in_per_case": 1257,
+      "tokens_out_per_case": 574,
+      "resource_index_per_case": 22887.56,
+      "by_family": {
+        "exact_match": {
+          "correct_supported": 10
+        },
+        "listed_alias": {
+          "correct_supported": 8
+        },
+        "name_only": {
+          "unresolved_right": 3
+        },
+        "contradictory_ids": {
+          "unresolved_right": 8
+        },
+        "year_only": {
+          "unresolved_right": 6
+        },
+        "entity_match": {
+          "correct_supported": 8
+        }
+      },
+      "first_answer_failed_checks": {
+        "large": {
+          "stages": 43
+        }
+      },
+      "relative_cost_index": 5.96
+    },
+    "router": {
+      "reps": 1,
+      "scored_rows": 43,
+      "outcomes_rep1": {
+        "correct_supported": 24,
+        "incorrect_or_unsupported": 2,
+        "unresolved_right": 17
+      },
+      "outcomes_all_reps": {
+        "correct_supported": 24,
+        "incorrect_or_unsupported": 2,
+        "unresolved_right": 17
+      },
+      "wrong_exclusion_true_matches": {
+        "k": 0,
+        "n": 43,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.082
+        ]
+      },
+      "decisive_on_insufficient": {
+        "k": 0,
+        "n": 17,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.184
+        ]
+      },
+      "wrong_match_distinct": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": null
+      },
+      "supported_on_answerable": {
+        "k": 24,
+        "n": 26,
+        "rate": 0.923,
+        "ci95": [
+          0.759,
+          0.979
+        ]
+      },
+      "appropriate_unresolved": {
+        "k": 17,
+        "n": 17,
+        "rate": 1.0,
+        "ci95": [
+          0.816,
+          1
+        ]
+      },
+      "unnecessary_unresolved": {
+        "k": 0,
+        "n": 26,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.129
+        ]
+      },
+      "operational_failures": 0,
+      "validation_unresolved": 0,
+      "latency_ms_p50": 5028,
+      "latency_ms_p95": 26579,
+      "calls_per_case": 0.84,
+      "large_calls_per_case": 0.14,
+      "tokens_in_per_case": 1176,
+      "tokens_out_per_case": 567,
+      "resource_index_per_case": 5449.69,
+      "by_family": {
+        "exact_match": {
+          "correct_supported": 10
+        },
+        "listed_alias": {
+          "correct_supported": 6,
+          "incorrect_or_unsupported": 2
+        },
+        "name_only": {
+          "unresolved_right": 3
+        },
+        "contradictory_ids": {
+          "unresolved_right": 8
+        },
+        "year_only": {
+          "unresolved_right": 6
+        },
+        "entity_match": {
+          "correct_supported": 8
+        }
+      },
+      "first_answer_failed_checks": {
+        "small": {
+          "stages": 24,
+          "failed_first_answer": 6,
+          "policy": 6,
+          "repaired": 4
+        },
+        "large": {
+          "stages": 6
+        }
+      },
+      "escalations": {
+        "n": 6,
+        "of_rows": 43,
+        "reasons": {
+          "contradictory identifiers": 4,
+          "small output failed checks after repair": 2
+        },
+        "effect": {
+          "no_material_change": 4,
+          "corrected": 2
+        },
+        "stopped_without_large_call": 2,
+        "decided_by_rules": 19
+      },
+      "relative_cost_index": 1.42
+    },
+    "small": {
+      "reps": 1,
+      "scored_rows": 43,
+      "outcomes_rep1": {
+        "correct_supported": 24,
+        "incorrect_or_unsupported": 2,
+        "unresolved_right": 17
+      },
+      "outcomes_all_reps": {
+        "correct_supported": 24,
+        "incorrect_or_unsupported": 2,
+        "unresolved_right": 17
+      },
+      "wrong_exclusion_true_matches": {
+        "k": 0,
+        "n": 43,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.082
+        ]
+      },
+      "decisive_on_insufficient": {
+        "k": 0,
+        "n": 17,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.184
+        ]
+      },
+      "wrong_match_distinct": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": null
+      },
+      "supported_on_answerable": {
+        "k": 24,
+        "n": 26,
+        "rate": 0.923,
+        "ci95": [
+          0.759,
+          0.979
+        ]
+      },
+      "appropriate_unresolved": {
+        "k": 17,
+        "n": 17,
+        "rate": 1.0,
+        "ci95": [
+          0.816,
+          1
+        ]
+      },
+      "unnecessary_unresolved": {
+        "k": 0,
+        "n": 26,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.129
+        ]
+      },
+      "operational_failures": 0,
+      "validation_unresolved": 2,
+      "latency_ms_p50": 6197,
+      "latency_ms_p95": 14337,
+      "calls_per_case": 1.23,
+      "large_calls_per_case": 0,
+      "tokens_in_per_case": 1713,
+      "tokens_out_per_case": 849,
+      "resource_index_per_case": 3836.98,
+      "by_family": {
+        "exact_match": {
+          "correct_supported": 10
+        },
+        "listed_alias": {
+          "correct_supported": 6,
+          "incorrect_or_unsupported": 2
+        },
+        "name_only": {
+          "unresolved_right": 3
+        },
+        "contradictory_ids": {
+          "unresolved_right": 8
+        },
+        "year_only": {
+          "unresolved_right": 6
+        },
+        "entity_match": {
+          "correct_supported": 8
+        }
+      },
+      "first_answer_failed_checks": {
+        "small": {
+          "stages": 43,
+          "failed_first_answer": 10,
+          "structured_omitted": 2,
+          "repaired": 8,
+          "policy": 8
+        }
+      },
+      "relative_cost_index": 1.0
+    }
+  }
+}

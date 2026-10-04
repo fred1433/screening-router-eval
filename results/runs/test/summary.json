@@ -1,0 +1,531 @@
+{
+  "n_cases": 80,
+  "configs": {
+    "deterministic": {
+      "reps": 3,
+      "scored_rows": 240,
+      "outcomes_rep1": {
+        "unresolved_wrong": 40,
+        "correct_supported": 20,
+        "unresolved_right": 20
+      },
+      "outcomes_all_reps": {
+        "unresolved_wrong": 120,
+        "correct_supported": 60,
+        "unresolved_right": 60
+      },
+      "wrong_exclusion_true_matches": {
+        "k": 0,
+        "n": 153,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.024
+        ]
+      },
+      "decisive_on_insufficient": {
+        "k": 0,
+        "n": 60,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.06
+        ]
+      },
+      "wrong_match_distinct": {
+        "k": 0,
+        "n": 87,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.042
+        ]
+      },
+      "supported_on_answerable": {
+        "k": 60,
+        "n": 180,
+        "rate": 0.333,
+        "ci95": [
+          0.269,
+          0.405
+        ]
+      },
+      "appropriate_unresolved": {
+        "k": 60,
+        "n": 60,
+        "rate": 1.0,
+        "ci95": [
+          0.94,
+          1.0
+        ]
+      },
+      "unnecessary_unresolved": {
+        "k": 120,
+        "n": 180,
+        "rate": 0.667,
+        "ci95": [
+          0.595,
+          0.731
+        ]
+      },
+      "operational_failures": 0,
+      "validation_unresolved": 0,
+      "latency_ms_p50": 0,
+      "latency_ms_p95": 3,
+      "calls_per_case": 0,
+      "large_calls_per_case": 0,
+      "tokens_in_per_case": 0,
+      "tokens_out_per_case": 0,
+      "resource_index_per_case": 0,
+      "by_family": {
+        "exact_match": {
+          "unresolved_wrong": 12,
+          "correct_supported": 18
+        },
+        "listed_alias": {
+          "unresolved_wrong": 24
+        },
+        "transliteration": {
+          "unresolved_wrong": 24
+        },
+        "homonym": {
+          "unresolved_wrong": 18,
+          "correct_supported": 18
+        },
+        "name_only": {
+          "unresolved_right": 18
+        },
+        "contradictory_ids": {
+          "unresolved_right": 24
+        },
+        "relative_trap": {
+          "unresolved_wrong": 18
+        },
+        "year_only": {
+          "unresolved_right": 18
+        },
+        "entity_match": {
+          "unresolved_wrong": 12,
+          "correct_supported": 12
+        },
+        "entity_homonym": {
+          "unresolved_wrong": 12,
+          "correct_supported": 12
+        }
+      },
+      "first_answer_failed_checks": {},
+      "stability": {
+        "cases": 80,
+        "same_disposition": 80,
+        "same_route": 80,
+        "same_facts": 80,
+        "same_missing": 80
+      },
+      "relative_cost_index": 0.0
+    },
+    "large": {
+      "reps": 3,
+      "scored_rows": 240,
+      "outcomes_rep1": {
+        "correct_supported": 59,
+        "unresolved_right": 20,
+        "unresolved_wrong": 1
+      },
+      "outcomes_all_reps": {
+        "correct_supported": 177,
+        "unresolved_right": 60,
+        "unresolved_wrong": 3
+      },
+      "wrong_exclusion_true_matches": {
+        "k": 0,
+        "n": 153,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.024
+        ]
+      },
+      "decisive_on_insufficient": {
+        "k": 0,
+        "n": 60,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.06
+        ]
+      },
+      "wrong_match_distinct": {
+        "k": 0,
+        "n": 87,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.042
+        ]
+      },
+      "supported_on_answerable": {
+        "k": 177,
+        "n": 180,
+        "rate": 0.983,
+        "ci95": [
+          0.952,
+          0.994
+        ]
+      },
+      "appropriate_unresolved": {
+        "k": 60,
+        "n": 60,
+        "rate": 1.0,
+        "ci95": [
+          0.94,
+          1.0
+        ]
+      },
+      "unnecessary_unresolved": {
+        "k": 3,
+        "n": 180,
+        "rate": 0.017,
+        "ci95": [
+          0.006,
+          0.048
+        ]
+      },
+      "operational_failures": 0,
+      "validation_unresolved": 3,
+      "latency_ms_p50": 13598,
+      "latency_ms_p95": 25283,
+      "calls_per_case": 1.07,
+      "large_calls_per_case": 1.07,
+      "tokens_in_per_case": 1383,
+      "tokens_out_per_case": 604,
+      "resource_index_per_case": 24353.85,
+      "by_family": {
+        "exact_match": {
+          "correct_supported": 30
+        },
+        "listed_alias": {
+          "correct_supported": 24
+        },
+        "transliteration": {
+          "correct_supported": 24
+        },
+        "homonym": {
+          "correct_supported": 36
+        },
+        "name_only": {
+          "unresolved_right": 18
+        },
+        "contradictory_ids": {
+          "unresolved_right": 24
+        },
+        "relative_trap": {
+          "correct_supported": 16,
+          "unresolved_wrong": 2
+        },
+        "year_only": {
+          "unresolved_right": 18
+        },
+        "entity_match": {
+          "correct_supported": 23,
+          "unresolved_wrong": 1
+        },
+        "entity_homonym": {
+          "correct_supported": 24
+        }
+      },
+      "first_answer_failed_checks": {
+        "large": {
+          "stages": 240,
+          "failed_first_answer": 16,
+          "policy": 13,
+          "structured_mismatch": 6,
+          "repaired": 13,
+          "citation_missing": 1,
+          "structured_omitted": 2
+        }
+      },
+      "stability": {
+        "cases": 80,
+        "same_disposition": 78,
+        "same_route": 80,
+        "same_facts": 78,
+        "same_missing": 59
+      },
+      "relative_cost_index": 6.48
+    },
+    "router": {
+      "reps": 3,
+      "scored_rows": 240,
+      "outcomes_rep1": {
+        "correct_supported": 60,
+        "unresolved_right": 20
+      },
+      "outcomes_all_reps": {
+        "correct_supported": 180,
+        "unresolved_right": 60
+      },
+      "wrong_exclusion_true_matches": {
+        "k": 0,
+        "n": 153,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.024
+        ]
+      },
+      "decisive_on_insufficient": {
+        "k": 0,
+        "n": 60,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.06
+        ]
+      },
+      "wrong_match_distinct": {
+        "k": 0,
+        "n": 87,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.042
+        ]
+      },
+      "supported_on_answerable": {
+        "k": 180,
+        "n": 180,
+        "rate": 1.0,
+        "ci95": [
+          0.979,
+          1
+        ]
+      },
+      "appropriate_unresolved": {
+        "k": 60,
+        "n": 60,
+        "rate": 1.0,
+        "ci95": [
+          0.94,
+          1.0
+        ]
+      },
+      "unnecessary_unresolved": {
+        "k": 0,
+        "n": 180,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.021
+        ]
+      },
+      "operational_failures": 0,
+      "validation_unresolved": 0,
+      "latency_ms_p50": 4724,
+      "latency_ms_p95": 24827,
+      "calls_per_case": 0.92,
+      "large_calls_per_case": 0.15,
+      "tokens_in_per_case": 1302,
+      "tokens_out_per_case": 582,
+      "resource_index_per_case": 6039.74,
+      "by_family": {
+        "exact_match": {
+          "correct_supported": 30
+        },
+        "listed_alias": {
+          "correct_supported": 24
+        },
+        "transliteration": {
+          "correct_supported": 24
+        },
+        "homonym": {
+          "correct_supported": 36
+        },
+        "name_only": {
+          "unresolved_right": 18
+        },
+        "contradictory_ids": {
+          "unresolved_right": 24
+        },
+        "relative_trap": {
+          "correct_supported": 18
+        },
+        "year_only": {
+          "unresolved_right": 18
+        },
+        "entity_match": {
+          "correct_supported": 24
+        },
+        "entity_homonym": {
+          "correct_supported": 24
+        }
+      },
+      "first_answer_failed_checks": {
+        "small": {
+          "stages": 147,
+          "failed_first_answer": 37,
+          "policy": 25,
+          "structured_mismatch": 3,
+          "repaired": 33,
+          "structured_omitted": 12
+        },
+        "large": {
+          "stages": 31,
+          "failed_first_answer": 6,
+          "policy": 6,
+          "repaired": 6
+        }
+      },
+      "escalations": {
+        "n": 31,
+        "of_rows": 240,
+        "reasons": {
+          "match rests on a name spelling that is not listed": 12,
+          "contradictory identifiers": 15,
+          "small output failed checks after repair": 4
+        },
+        "effect": {
+          "no_material_change": 24,
+          "corrected": 7
+        },
+        "stopped_without_large_call": 11,
+        "decided_by_rules": 93
+      },
+      "stability": {
+        "cases": 80,
+        "same_disposition": 80,
+        "same_route": 79,
+        "same_facts": 80,
+        "same_missing": 75
+      },
+      "relative_cost_index": 1.61
+    },
+    "small": {
+      "reps": 3,
+      "scored_rows": 240,
+      "outcomes_rep1": {
+        "correct_supported": 59,
+        "unresolved_wrong": 1,
+        "unresolved_right": 20
+      },
+      "outcomes_all_reps": {
+        "correct_supported": 177,
+        "unresolved_wrong": 3,
+        "unresolved_right": 60
+      },
+      "wrong_exclusion_true_matches": {
+        "k": 0,
+        "n": 153,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.024
+        ]
+      },
+      "decisive_on_insufficient": {
+        "k": 0,
+        "n": 60,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.06
+        ]
+      },
+      "wrong_match_distinct": {
+        "k": 0,
+        "n": 87,
+        "rate": 0.0,
+        "ci95": [
+          0,
+          0.042
+        ]
+      },
+      "supported_on_answerable": {
+        "k": 177,
+        "n": 180,
+        "rate": 0.983,
+        "ci95": [
+          0.952,
+          0.994
+        ]
+      },
+      "appropriate_unresolved": {
+        "k": 60,
+        "n": 60,
+        "rate": 1.0,
+        "ci95": [
+          0.94,
+          1.0
+        ]
+      },
+      "unnecessary_unresolved": {
+        "k": 3,
+        "n": 180,
+        "rate": 0.017,
+        "ci95": [
+          0.006,
+          0.048
+        ]
+      },
+      "operational_failures": 0,
+      "validation_unresolved": 4,
+      "latency_ms_p50": 6424,
+      "latency_ms_p95": 13115,
+      "calls_per_case": 1.26,
+      "large_calls_per_case": 0,
+      "tokens_in_per_case": 1741,
+      "tokens_out_per_case": 807,
+      "resource_index_per_case": 3758.24,
+      "by_family": {
+        "exact_match": {
+          "correct_supported": 30
+        },
+        "listed_alias": {
+          "correct_supported": 24
+        },
+        "transliteration": {
+          "correct_supported": 21,
+          "unresolved_wrong": 3
+        },
+        "homonym": {
+          "correct_supported": 36
+        },
+        "name_only": {
+          "unresolved_right": 18
+        },
+        "contradictory_ids": {
+          "unresolved_right": 24
+        },
+        "relative_trap": {
+          "correct_supported": 18
+        },
+        "year_only": {
+          "unresolved_right": 18
+        },
+        "entity_match": {
+          "correct_supported": 24
+        },
+        "entity_homonym": {
+          "correct_supported": 24
+        }
+      },
+      "first_answer_failed_checks": {
+        "small": {
+          "stages": 240,
+          "failed_first_answer": 62,
+          "policy": 30,
+          "structured_mismatch": 3,
+          "repaired": 58,
+          "structured_omitted": 32
+        }
+      },
+      "stability": {
+        "cases": 80,
+        "same_disposition": 79,
+        "same_route": 80,
+        "same_facts": 79,
+        "same_missing": 74
+      },
+      "relative_cost_index": 1.0
+    }
+  }
+}

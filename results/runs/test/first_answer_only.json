@@ -1,0 +1,23 @@
+{
+  "small": {
+    "answers": 240,
+    "disposition_right": 220,
+    "passed_all_checks": 178,
+    "disposition_wrong": 20,
+    "wrong_exclusion": 15,
+    "wrong_disposition_kinds": {
+      "different_entity_supported -> insufficient_evidence": 5,
+      "insufficient_evidence -> different_entity_supported": 15
+    }
+  },
+  "large": {
+    "answers": 240,
+    "disposition_right": 237,
+    "passed_all_checks": 224,
+    "disposition_wrong": 3,
+    "wrong_disposition_kinds": {
+      "different_entity_supported -> insufficient_evidence": 2,
+      "same_entity_supported -> insufficient_evidence": 1
+    }
+  }
+}

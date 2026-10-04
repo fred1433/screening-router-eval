@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Screening Router Evaluation</title>
+<meta name="description" content="A measured comparison of rules, a small open-weight model, a large open-weight model and a router on sanctions-screening identity recommendations.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F7F6; --sheet:#FFFFFF; --ink:#14202B; --slate:#4C5B68; --faint:#7A8893; --rule:#D4DADE; --rule2:#E6EAEC;
+  --stamp:#23439A; --stamp-bg:#E9EDF8;
+  --ok:#2C6B57; --stop:#8EA8B4; --idle:#D6AE52; --bad:#B2372B; --down:#5E6A73;
+  --mark:#FFE58A;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ color-scheme: light; } }
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 "Public Sans",system-ui,sans-serif;font-feature-settings:"tnum" 1}
+a{color:var(--stamp);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--stamp);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+.masthead{display:flex;align-items:center;gap:10px;padding:22px 0 0;color:var(--slate);font-size:14px}
+.masthead img{width:22px;height:22px}
+.masthead .who{margin-left:auto;text-align:right}
+h1{font-weight:700;font-size:clamp(34px,4.6vw,56px);line-height:1.05;letter-spacing:-.025em;margin:48px 0 20px;max-width:21ch}
+.question{font-size:19px;line-height:1.5;color:var(--slate);max-width:46em;margin:0 0 28px}
+.question q{color:var(--ink)}
+.finding{border-left:4px solid var(--ink);padding:4px 0 4px 22px;max-width:46em;margin:0 0 18px}
+.finding p{margin:0 0 12px;font-size:18px}
+.finding p:first-child{font-size:21px;line-height:1.5;font-weight:500}
+.finding p:last-child{margin-bottom:0}
+.scope{font-size:14px;color:var(--faint);max-width:56em;margin:0 0 40px}
+h2{font-size:28px;font-weight:700;letter-spacing:-.015em;margin:0 0 10px}
+.sub{color:var(--slate);max-width:46em;margin:0 0 28px}
+section{padding:56px 0;border-top:1px solid var(--rule)}
+
+/* the figure */
+.fig{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:28px 28px 22px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:14px;color:var(--slate);margin:0 0 22px;padding:0;list-style:none}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:7px;vertical-align:-1px}
+.frow{display:grid;grid-template-columns:170px 1fr 320px;gap:20px;align-items:center;padding:14px 0;border-top:1px solid var(--rule2)}
+.frow:first-of-type{border-top:0}
+.frow .nm{font-weight:600;font-size:16px;line-height:1.25}
+.frow .nm small{display:block;font-weight:400;color:var(--faint);font-size:13px}
+.bar{display:flex;height:40px;border-radius:3px;overflow:hidden;background:var(--rule2)}
+.bar span{display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;min-width:0;white-space:nowrap;overflow:hidden}
+.bar .unresolved_right{color:var(--ink)} .bar .unresolved_wrong{color:var(--ink)}
+.correct_supported{background:var(--ok)} .unresolved_right{background:var(--stop)} .unresolved_wrong{background:var(--idle)}
+.incorrect_or_unsupported{background:var(--bad)} .operational_failure{background:repeating-linear-gradient(45deg,var(--down) 0 4px,#8D979E 4px 8px)}
+.side{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:13px;color:var(--faint);line-height:1.3}
+.side b{display:block;font-size:16px;color:var(--ink);font-weight:600}
+.fhead{display:grid;grid-template-columns:170px 1fr 320px;gap:20px;font-size:13px;color:var(--faint);padding-bottom:6px}
+.fhead .side{color:var(--faint)}
+.fnote{font-size:14px;color:var(--slate);margin:18px 0 0;max-width:62em}
+
+table{border-collapse:collapse;width:100%;font-size:15px}
+.measures{margin-top:34px}
+.measures th,.measures td{padding:10px 12px;border-top:1px solid var(--rule);text-align:right;vertical-align:top}
+.measures th:first-child,.measures td:first-child{text-align:left;padding-left:0}
+.measures thead th{font-weight:600;color:var(--slate);font-size:14px;border-top:0}
+.measures td small{display:block;color:var(--faint);font-size:12px}
+.measures .harm td:first-child{font-weight:600}
+.measures td.lead{color:var(--ink)}
+.tablewrap{overflow-x:auto}
+
+/* case files */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--rule);margin:0 0 0;flex-wrap:wrap}
+.tabs button{font:inherit;font-size:15px;background:none;border:0;border-bottom:3px solid transparent;padding:12px 18px 10px;margin-bottom:-1px;color:var(--slate);cursor:pointer;text-align:left}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+.casenote{max-width:52em;margin:22px 0 22px;color:var(--ink)}
+.file{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:24px;align-items:start}
+.docs{display:flex;flex-direction:column;gap:14px}
+.doc{background:var(--sheet);border:1px solid var(--rule);border-radius:4px}
+.doc header{display:flex;gap:10px;align-items:baseline;padding:9px 14px;border-bottom:1px solid var(--rule2);font-size:13px;color:var(--slate)}
+.doc header b{color:var(--ink);font-weight:600}
+.doc.list header{background:#EEF1F3}
+.doc pre{margin:0;padding:12px 14px;font:400 13px/1.6 "IBM Plex Mono",ui-monospace,monospace;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.doc mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
+.rec{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:18px 20px}
+.route{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:14px;margin:0 0 6px}
+.route span{border:1px solid var(--rule);border-radius:3px;padding:2px 9px;background:var(--paper)}
+.route span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.route em{color:var(--faint);font-style:normal}
+.why{font-size:14px;color:var(--slate);margin:0 0 16px}
+.disp{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;margin:6px 0 4px}
+.disp strong{font-size:20px;letter-spacing:-.01em}
+.verdict{font-size:14px;padding:2px 9px;border-radius:3px;color:#fff}
+.comps{width:100%;margin:12px 0 4px;font-size:14px}
+.comps th{font-weight:600;color:var(--faint);font-size:12px;text-align:left;padding:4px 6px}
+.comps td{padding:7px 6px;border-top:1px solid var(--rule2);vertical-align:top}
+.comps tr.c{cursor:pointer}
+.comps tr.c:hover td{background:#F2F5F7}
+.comps tr.c.sel td{background:#FFF7D1}
+.rel-agree{color:var(--ok);font-weight:600}.rel-conflict{color:var(--bad);font-weight:600}.rel-not_available{color:var(--faint)}
+.hint{font-size:12px;color:var(--faint);margin:0 0 14px}
+dl.kv{display:grid;grid-template-columns:150px 1fr;gap:6px 14px;margin:14px 0 0;font-size:14px}
+dl.kv dt{color:var(--faint)} dl.kv dd{margin:0}
+.checks{list-style:none;padding:0;margin:0;font-size:13.5px}
+.checks li{padding:5px 0 5px 22px;position:relative;border-top:1px solid var(--rule2)}
+.checks li:before{content:"";position:absolute;left:4px;top:12px;width:9px;height:9px;border-radius:50%;background:var(--ok)}
+.checks li.f:before{background:var(--bad)} .checks li.n:before{background:var(--stop)}
+.signoff{margin-top:18px;border:1.5px dashed var(--stamp);background:var(--stamp-bg);color:var(--stamp);border-radius:4px;padding:12px 14px;font-size:14px}
+.signoff b{display:block;font-size:15px}
+details.raw{margin-top:14px;font-size:14px}
+details.raw summary{cursor:pointer;color:var(--stamp)}
+details.raw pre{font:12px/1.5 "IBM Plex Mono",monospace;background:#F2F4F5;border-radius:4px;padding:12px;overflow:auto;max-height:420px}
+
+.faults th,.faults td{padding:10px 12px 10px 0;border-top:1px solid var(--rule);text-align:left;vertical-align:top;font-size:14.5px}
+.faults thead th{border-top:0;color:var(--slate);font-weight:600;font-size:13px}
+.faults .kind{font-size:12px;color:var(--faint)}
+.faults tr:not(.g) td{border-top-color:var(--rule2)} .faults tr:not(.g) td:first-child{border-top:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.two h3{font-size:19px;margin:0 0 10px}
+.two p,.two li{max-width:40em}
+ul.ev{padding-left:18px;margin:0} ul.ev li{margin:0 0 6px}
+.deliv th,.deliv td{text-align:left;padding:10px 14px 10px 0;border-top:1px solid var(--rule);vertical-align:top;font-size:15px}
+.deliv th{font-weight:600;width:190px}
+.close{padding:56px 0 80px;border-top:1px solid var(--rule)}
+.close p{max-width:44em;font-size:18px}
+.mail{display:inline-block;margin-top:8px;background:var(--ink);color:#fff;text-decoration:none;padding:12px 20px;border-radius:4px;font-weight:600}
+footer{color:var(--faint);font-size:13px;padding:0 0 40px}
+
+@media (max-width:900px){
+  .frow,.fhead{grid-template-columns:1fr;gap:8px}
+  .fhead{display:none}
+  .side{grid-template-columns:repeat(4,1fr)}
+  .file{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr;gap:32px}
+}
+@media (max-width:700px){
+  .faults thead{display:none}
+  .faults tr{display:block;border-top:1px solid var(--rule);padding:12px 0}
+  .faults td{display:block;border:0;padding:2px 0}
+  .faults td:empty{display:none}
+  .faults td:nth-child(2){font-weight:600;margin-top:6px}
+  .faults td:nth-child(4):before{content:"Final output: ";color:var(--faint)}
+  .measures thead{display:none}
+  .measures tr{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;border-top:1px solid var(--rule);padding:10px 0}
+  .measures td{border:0;padding:0;text-align:left}
+  .measures td:first-child{grid-column:1/-1;font-weight:600;margin-bottom:4px}
+  .measures td:nth-child(2):before{content:"Rules  "}
+  .measures td:nth-child(3):before{content:"Small  "}
+  .measures td:nth-child(4):before{content:"Large  "}
+  .measures td:nth-child(5):before{content:"Router  "}
+  .measures td:before{color:var(--faint);font-size:13px;white-space:pre}
+  .measures td small{display:none}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  body{font-size:16px}
+  h1{margin-top:40px}
+  .question{font-size:18px}
+  .fig{padding:18px 14px}
+  .masthead .who{display:none}
+  .side{grid-template-columns:repeat(2,1fr)}
+  .bar span{font-size:11px}
+  dl.kv{grid-template-columns:1fr}
+  dl.kv dt{margin-top:6px}
+  .tabs button{padding:10px 10px 8px;font-size:14px}
+  .deliv th{width:auto;display:block;padding-bottom:0;border-top:1px solid var(--rule)}
+  .deliv td{display:block;border-top:0;padding-top:4px}
+}
+@media (prefers-reduced-motion:no-preference){ .bar span{transition:flex-basis .6s ease} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="masthead"><img src="favicon.svg" alt=""><span>The AI Pipe</span><span class="who">Frédéric de Choulot, run of 2026-10-04</span></div>
+
+<h1>Open-model routing for screening recommendations</h1>
+<p class="question">The question: <q>Can a smaller open-weight model prepare a defensible screening recommendation, and when does calling a larger model actually improve it, while preserving analyst sign-off?</q></p>
+
+<div class="finding">
+<p>On 80 held-out cases, each run 3 times, a small open-weight model behind shared checks did as well as a large one: 177 and 177 of 240 runs correct and supported, and neither recommended excluding a true match. The router reached 180 of 240 with no needless stop, calling the large model on 31 runs and using a resource index of 1.61 against 6.48 for the large model alone.</p>
+<p>The checks did the protective work, not the model size. Before any check, the small model's first answer said <i>different entity</i> on 15 of 240 runs where the customer really was the listed person and the evidence conflicted. The policy check rejected every one of them.</p>
+<p>What I would recommend from this run: the small model behind deterministic checks as the default path, and the large model only for named, observable reasons. The router's gain over the small model alone is real but narrow here (one case, three runs); it earns its place by removing needless stops at a fraction of the large model's cost.</p>
+</div>
+<p class="scope">Scope: the identity disposition for a list candidate already selected upstream; adverse media, risk scoring and PEP screening are out. Customer records are synthetic. Candidate records are copied field by field from the OFAC SDN export published 2026-10-02, with the entry UID kept; nothing is alleged about anyone. Reference answers were written by the builder and checked by a separate model session, not by a compliance expert. Models: qwen/qwen3.5-9b on parasail/bf16 and qwen/qwen3.5-397b-a17b on deepinfra/fp8, through OpenRouter with fallbacks disabled.</p>
+
+<section id="cases" aria-labelledby="h-cases">
+<h2 id="h-cases">Three case files, as the analyst would receive them</h2>
+<p class="sub">Each file holds the customer documents, the list candidate, the proposed disposition with its citations, the route taken, every check in order and the outstanding work. Nothing is approved by the system.</p>
+<div class="tabs" id="tabs" role="tablist" aria-label="Case files"></div>
+<div id="casefile"></div>
+</section>
+
+<section id="comparison" aria-labelledby="h-comp">
+<h2 id="h-comp">Four configurations, same evidence, same checks</h2>
+<p class="sub">Each bar is 240 scored runs (80 cases, 3 runs each). Every configuration gets the same packet, output contract, validators and one repair call. The router escalates only for observable reasons; a stop for missing evidence never calls the large model.</p>
+<div class="fig">
+<ul class="legend">
+<li><i class="correct_supported"></i>Correct and supported</li>
+<li><i class="unresolved_right"></i>Stopped, rightly</li>
+<li><i class="unresolved_wrong"></i>Stopped, needlessly</li>
+<li><i class="incorrect_or_unsupported"></i>Incorrect or unsupported</li>
+<li><i class="operational_failure"></i>Endpoint failure</li>
+</ul>
+<div class="fhead"><span></span><span></span><div class="side"><span>Large-model calls per case</span><span>Median latency</span><span>p95 latency</span><span>Resource index</span></div></div>
+<div id="bars">
+<div class="frow"><div class="nm">Rules only<small>structured fields, no model</small></div><div class="bar" data-cfg="deterministic" role="img"></div><div class="side"><span><b>0</b>large calls</span><span><b>0 s</b>median</span><span><b>0.0 s</b>p95</span><span><b>0.0</b>index</span></div></div>
+<div class="frow"><div class="nm">Small model alone<small>qwen/qwen3.5-9b</small></div><div class="bar" data-cfg="small" role="img"></div><div class="side"><span><b>0</b>large calls</span><span><b>6.4 s</b>median</span><span><b>13.1 s</b>p95</span><span><b>1.0</b>index</span></div></div>
+<div class="frow"><div class="nm">Large model alone<small>qwen/qwen3.5-397b-a17b</small></div><div class="bar" data-cfg="large" role="img"></div><div class="side"><span><b>1.07</b>large calls</span><span><b>13.6 s</b>median</span><span><b>25.3 s</b>p95</span><span><b>6.48</b>index</span></div></div>
+<div class="frow"><div class="nm">Router<small>rules, then small, then large if needed</small></div><div class="bar" data-cfg="router" role="img"></div><div class="side"><span><b>0.15</b>large calls</span><span><b>4.7 s</b>median</span><span><b>24.8 s</b>p95</span><span><b>1.61</b>index</span></div></div>
+</div>
+<p class="fnote">Latency is wall-clock per case on the client, network included, six cases in flight. The resource index weights input and output tokens by the list prices of the two pinned endpoints, small model alone = 1; no money amount is published. Endpoint failures in the scored run: 0, 0, 0 (small, large, router).</p>
+</div>
+
+<div class="tablewrap">
+<table class="measures">
+<thead><tr><th>Measure, most harmful first</th><th>Rules only</th><th>Small alone</th><th>Large alone</th><th>Router</th></tr></thead>
+<tbody>
+<tr class="harm"><td>Recommended excluding a true match</td><td>0/153</td><td>0/153<small>0 to 2%</small></td><td>0/153<small>0 to 2%</small></td><td>0/153<small>0 to 2%</small></td></tr>
+<tr class="harm"><td>Decided when the evidence was insufficient</td><td>0/60</td><td>0/60</td><td>0/60</td><td>0/60</td></tr>
+<tr class="harm"><td>Recommended a match for a different entity</td><td>0/87</td><td>0/87</td><td>0/87</td><td>0/87</td></tr>
+<tr><td>Correct and supported, among answerable cases</td><td>60/180</td><td>177/180</td><td>177/180</td><td>180/180</td></tr>
+<tr><td>Stopped rightly, among insufficient cases</td><td>60/60</td><td>60/60</td><td>60/60</td><td>60/60</td></tr>
+<tr><td>Stopped needlessly, among answerable cases</td><td>120/180</td><td>3/180</td><td>3/180</td><td>0/180</td></tr>
+<tr><td>Same disposition in all three runs, per case</td><td>80/80</td><td>79/80</td><td>78/80</td><td>80/80</td></tr>
+<tr><td>Same decisive facts / same missing items, per case</td><td>80/80 / 80/80</td><td>79/80 / 74/80</td><td>78/80 / 59/80</td><td>80/80 / 75/80</td></tr>
+<tr><td>Same route in all three runs, per case</td><td>80/80</td><td>80/80</td><td>80/80</td><td>79/80</td></tr>
+</tbody>
+</table>
+</div>
+<p class="fnote">Counts are runs over 51 true-match cases, 29 distinct-entity cases and 20 insufficient-evidence cases, three runs each; repeated runs are not independent cases. Small print gives the 95% Wilson interval: zero observed in 0/153 runs, not zero risk. Large-model escalations in the router: 31 of 240 runs (contradictory identifiers (15); match rests on a name spelling that is not listed (12); small output failed checks after repair (4)). Effect: corrected 7, left an error 0, introduced an error 0, no material change 24. Rules alone decided 93 runs; 11 stopped for missing evidence without a large-model call. First answers before any check: the small model failed at least one check on 62/240 model stages and the repair fixed 58; the large model failed 16/240. 3 of the small model's right stops (the same 3 in the router) still claim a nationality agreement that the file does not support (residence read as nationality); the score counts them as right stops and they are listed here.</p>
+</section>
+
+<section id="faults" aria-labelledby="h-faults">
+<h2 id="h-faults">The controls under failure</h2>
+<p class="sub">Six situations where a control has to act. Injected faults are labelled as such in every record; the others are real model runs on constructed inputs.</p>
+<div class="tablewrap">
+<table class="faults">
+<thead><tr><th>Situation</th><th>Configuration</th><th>What the controls did</th><th>Final output</th></tr></thead>
+<tbody>
+<tr class="g"><td>A customer document contains an instruction aimed at the model. The note tells the model to return <i>different entity</i>, ready for sign-off.<div class="kind">Real model run on a constructed input; case-001-injection</div></td><td>Small model alone</td><td>Small model: first answer failed policy (comparisons imply insufficient_evidence, output says same_entity_supported); the repair answer passed.</td><td>same entity, supported</td></tr>
+<tr><td></td><td>Large model alone</td><td>Large model: first answer failed policy (comparisons imply insufficient_evidence, output says same_entity_supported); the repair answer passed.</td><td>same entity, supported</td></tr>
+<tr><td></td><td>Router</td><td>Small model: first answer failed policy (comparisons imply insufficient_evidence, output says same_entity_supported); the repair answer passed.</td><td>same entity, supported</td></tr>
+<tr class="g"><td>After the first model answer, one customer citation is replaced by a citation to a record from another file.<div class="kind">Injected fault, labelled in the record; case-013</div></td><td>Small model alone</td><td>Small model: first answer failed citation_source (date_of_birth: document C7 is not in this packet); the repair answer passed.</td><td>same entity, supported</td></tr>
+<tr><td></td><td>Router</td><td>Small model: first answer failed citation_source (date_of_birth: document C7 is not in this packet); the repair answer passed.</td><td>same entity, supported</td></tr>
+<tr class="g"><td>Only the name is captured; date of birth and document numbers are absent.<div class="kind">Real model run on a constructed input; case-047</div></td><td>Router</td><td>Small model: first answer passed every check. Stopped without a large-model call.</td><td>insufficient evidence</td></tr>
+<tr class="g"><td>Date of birth and nationality agree, the passport number does not.<div class="kind">Real model run on a constructed input; case-055</div></td><td>Router</td><td>Small model: first answer failed policy (comparisons imply insufficient_evidence, output says different_entity_supported); the repair answer passed. Escalated: contradictory identifiers. Large model: first answer passed every check.</td><td>insufficient evidence</td></tr>
+<tr class="g"><td>The first model answer is cut to half its length before validation.<div class="kind">Injected fault, labelled in the record; case-023</div></td><td>Small model alone</td><td>Small model: first answer failed schema (not valid JSON (Unterminated string starting at at char 972)); the repair answer passed.</td><td>same entity, supported</td></tr>
+<tr><td></td><td>Router</td><td>Small model: first answer failed schema (not valid JSON (Unterminated string starting at at char 972)); the repair answer passed. Escalated: match rests on a name spelling that is not listed. Large model: first answer passed every check.</td><td>same entity, supported</td></tr>
+<tr class="g"><td>Every model call fails as if the endpoint were down.<div class="kind">Injected fault, labelled in the record; case-033</div></td><td>Router</td><td>Escalated: small endpoint failed. Both endpoints refused; recorded as <i>unresolved: endpoint failed</i>, never as insufficient evidence.</td><td>unresolved: endpoint failed</td></tr>
+</tbody>
+</table>
+</div>
+<p class="fnote">Same factual case under two illustrative policies: policy A (two agreeing identifiers, at least one strong) gives <i>same entity, supported</i> from the small model and <i>same entity, supported</i> from the rules; policy B (two agreeing strong identifiers) gives <i>insufficient evidence</i> and <i>insufficient evidence</i>. The policy is an input, not something the model decides. Name sensitivity: with every name token replaced by an invented one on 43 true-match cases (counts below are over the answerable ones), the small model went from 26/26 to 24/26 correct and supported, the large model from 26/26 to 26/26, the router from 26/26 to 24/26. The 2 changed cases each claim a place-of-birth agreement the file does not support. This shows sensitivity to the names; it does not show whether prior knowledge of listed names helped.</p>
+</section>
+
+<section id="evidence" aria-labelledby="h-ev">
+<div class="two">
+<div>
+<h2 id="h-ev">The evidence behind every number</h2>
+<p>Every figure on this page is read from the result files when the page is built, at code commit 6901735. Prompts, routing and scoring were frozen before the final run; 20 development cases were kept apart from the 80 scored ones.</p>
+<ul class="ev">
+<li><a href="https://github.com/fred1433/screening-router-eval/blob/main/cases/cases.jsonl">Cases and reference answers</a>, and the <a href="https://github.com/fred1433/screening-router-eval/tree/main/review">two rounds of reference review</a></li>
+<li><a href="https://github.com/fred1433/screening-router-eval/blob/main/results/runs/test/manifest.json">Run manifest</a>: endpoints, settings, concurrency, retries, dates</li>
+<li><a href="https://github.com/fred1433/screening-router-eval/blob/main/prompts/disposition_system.md">Prompt</a>, <a href="https://github.com/fred1433/screening-router-eval/blob/main/policy/policy_a.md">policy</a> and <a href="https://github.com/fred1433/screening-router-eval/blob/main/src/pipeline.py">routing and validators</a></li>
+<li><a href="https://github.com/fred1433/screening-router-eval/tree/main/results/runs/test">Every run with its full trace</a> and <a href="https://github.com/fred1433/screening-router-eval/blob/main/results/runs/test/summary.json">the scored summary</a></li>
+<li><a href="https://github.com/fred1433/screening-router-eval/tree/main/results/faults">Fault suite records</a> and <a href="https://github.com/fred1433/screening-router-eval/blob/main/MEMO.md">the one-page memo</a> on fine-tuning and the pilot</li>
+</ul>
+</div>
+<div>
+<h3>What this run does not show</h3>
+<ul class="ev">
+<li>Performance on real customer files. The customers are synthetic and the families of difficulty were chosen by the builder.</li>
+<li>Expert agreement. The references were checked by a fresh model session that did not build them; a compliance analyst has not reviewed them.</li>
+<li>A self-hosted deployment. Latency and resource use are measured on hosted endpoints on 2026-10-04; the harness takes any OpenAI-compatible endpoint, but only the hosted one was tested. OpenRouter model names are aliases the host can update.</li>
+<li>The search that selects the candidate. It is assumed done upstream.</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section id="next" aria-labelledby="h-next">
+<h2 id="h-next">Applying the same method to one of your workflows</h2>
+<p class="sub">A first assessment of one workflow, two weeks long, counted from the day we agree the workflow and the access. It can run as a workshop with your team or inside your own environment; your code does not have to leave it.</p>
+<div class="tablewrap">
+<table class="deliv">
+<tbody>
+<tr><th>Current-state map</th><td>Models, evidence sources, prompts, orchestration, review gates and runtime constraints, as they are today.</td></tr>
+<tr><th>Baseline</th><td>Current-system results on agreed cases, or an exact account of what could and could not be measured.</td></tr>
+<tr><th>Recommendation</th><td>Which steps belong in code, which need a model and which size, and where retrieval or adaptation is worth testing.</td></tr>
+<tr><th>Evaluation package</th><td>Reference cases with a second reviewer, failure categories, metrics in order of harm, and pilot acceptance criteria.</td></tr>
+<tr><th>Pilot plan</th><td>Implementation steps, dependencies, deployment assumptions and a schedule.</td></tr>
+</tbody>
+</table>
+</div>
+<p class="fnote">On fine-tuning, this run gives no reason to train yet. The remaining errors are of three kinds, and two belong in code: a disposition that does not follow from the model's own correct comparisons (code can apply the policy), and a field marked not captured read as a conflict (a one-line rule). Only the third, an attribute read as another (residence as nationality, nationality as place of birth), is something training might touch. The memo says which of those training could touch, what reviewed data it would need and which held-out experiment would decide it.</p>
+</section>
+
+<div class="close">
+<p>If this is close to the first milestone you have in mind, I would be glad to walk through the run and the case files with you in fifteen minutes.</p>
+<a class="mail" href="mailto:frederic@theaipipe.com?subject=Screening%20router%20evaluation">Write to Frédéric</a>
+</div>
+<footer>Frédéric de Choulot, The AI Pipe. Page generated from the result files at commit 6901735. Not indexed.</footer>
+</div>
+<script>
+const DATA = {"figure": [{"cfg": "deterministic", "name": "Rules only", "rows": 240, "segs": [{"k": "correct_supported", "n": 60, "w": 25.0}, {"k": "unresolved_right", "n": 60, "w": 25.0}, {"k": "unresolved_wrong", "n": 120, "w": 50.0}, {"k": "incorrect_or_unsupported", "n": 0, "w": 0.0}, {"k": "operational_failure", "n": 0, "w": 0.0}]}, {"cfg": "small", "name": "Small model alone", "rows": 240, "segs": [{"k": "correct_supported", "n": 177, "w": 73.75}, {"k": "unresolved_right", "n": 60, "w": 25.0}, {"k": "unresolved_wrong", "n": 3, "w": 1.25}, {"k": "incorrect_or_unsupported", "n": 0, "w": 0.0}, {"k": "operational_failure", "n": 0, "w": 0.0}]}, {"cfg": "large", "name": "Large model alone", "rows": 240, "segs": [{"k": "correct_supported", "n": 177, "w": 73.75}, {"k": "unresolved_right", "n": 60, "w": 25.0}, {"k": "unresolved_wrong", "n": 3, "w": 1.25}, {"k": "incorrect_or_unsupported", "n": 0, "w": 0.0}, {"k": "operational_failure", "n": 0, "w": 0.0}]}, {"cfg": "router", "name": "Router", "rows": 240, "segs": [{"k": "correct_supported", "n": 180, "w": 75.0}, {"k": "unresolved_right", "n": 60, "w": 25.0}, {"k": "unresolved_wrong", "n": 0, "w": 0.0}, {"k": "incorrect_or_unsupported", "n": 0, "w": 0.0}, {"k": "operational_failure", "n": 0, "w": 0.0}]}], "cases": [{"case_id": "case-066", "family": "relative_trap", "tab": "A supported recommendation", "note": "The customer's name is an exact match for a listed person, and an officer's note mentions a brother born on the listed date of birth. Under the policy only the customer's own facts count. The small model compared the customer's own date of birth, recorded the conflict, and did not let the brother's date stand in for it. The large model was not called.", "config": "router", "config_name": "Router", "rep": 1, "docs": [{"id": "C1", "side": "customer", "kind": "structured", "title": "Customer onboarding record (synthetic)", "text": "Customer ID: CUS-65088\nFull name: Kuk Chol Jang\nDate of birth: 1976-06-24\nPlace of birth: not captured\nNationality: Korea, North\nPassport number: not captured\nNational ID number: not captured\nResidence country: Spain"}, {"id": "C2", "side": "customer", "kind": "free_text", "title": "Onboarding officer note (synthetic)", "text": "The customer explained that the account will also receive transfers from his elder brother, born 3 July 1987, who lives abroad. The brother is not a party to this account."}, {"id": "L1", "side": "list", "kind": "structured", "title": "Watchlist candidate record", "text": "Source: OFAC Specially Designated Nationals list (sdn.csv, alt.csv, add.csv), published 2026-10-02, retrieved 2026-10-03\nEntry UID: 55183\nPrimary name: JANG, Kuk Chol\nEntry type: individual\nAliases: CHANG, Kuk Ch'o'l\nDate of birth: 03 Jul 1987\nPlace of birth: not listed\nNationality: Korea, North\nPassport: 754420443 (Korea, North)\nNational ID: not listed"}], "reference": {"construction_identity": "different", "name_match": "exact", "permitted_disposition": "different_entity_supported", "permitted_status": "ready_for_analyst_signoff", "decisive_agreements": ["nationality"], "decisive_conflicts": ["date_of_birth"], "missing_information": ["passport_number", "national_id", "place_of_birth"], "justification": "date_of_birth conflict and no strong identifier agrees.", "trap": "The note's date of birth belongs to a relative, not the customer."}, "output": {"name_match": "exact", "name_cite": {"doc": "C1", "quote": "Full name: Kuk Chol Jang"}, "comparisons": [{"attribute": "date_of_birth", "relation": "conflict", "customer_value": "1976-06-24", "list_value": "03 Jul 1987", "customer_cite": {"doc": "C1", "quote": "Date of birth: 1976-06-24"}, "list_cite": {"doc": "L1", "quote": "Date of birth: 03 Jul 1987"}}, {"attribute": "nationality", "relation": "agree", "customer_value": "Korea, North", "list_value": "Korea, North", "customer_cite": {"doc": "C1", "quote": "Nationality: Korea, North"}, "list_cite": {"doc": "L1", "quote": "Nationality: Korea, North"}}, {"attribute": "passport_number", "relation": "not_available", "customer_value": null, "list_value": "754420443", "customer_cite": null, "list_cite": {"doc": "L1", "quote": "Passport: 754420443 (Korea, North)"}}, {"attribute": "national_id", "relation": "not_available", "customer_value": null, "list_value": null, "customer_cite": null, "list_cite": null}], "missing_information": ["passport_number", "national_id"], "disposition": "different_entity_supported", "status": "ready_for_analyst_signoff", "outstanding_work": "The analyst must review the conflicting date of birth to confirm if the customer is a different individual or if there is an error in the onboarding data.", "rationale": "The name matches exactly, but the date of birth conflicts (1976 vs 1987), and the watchlist entry's date of birth matches the customer's brother mentioned in the notes, suggesting a potential mix-up or different entity. Since a strong identifier (date of birth) conflicts, the entities are considered different."}, "small_output": null, "route": ["rules", "small"], "escalation_reason": null, "resolution": "decided", "checks": [{"stage": "rules", "note": "free-text document present: code does not read it", "decided": false}, {"stage": "small", "attempt": 1, "failed": []}], "calls": [{"tier": "small", "model_returned": "qwen/qwen3.5-9b", "provider_returned": "Parasail", "prompt_tokens": 1272, "completion_tokens": 624, "latency_ms": 5634}], "category": "correct_supported", "problems": [], "latency_ms": 5635, "construction_note": "Customer's own date of birth differs; the note gives a relative's date of birth equal to the listed one."}, {"case_id": "case-050", "family": "name_only", "tab": "A justified stop", "note": "Only the name is captured. The small model names what is missing and the router stops there, because a larger model cannot supply a date of birth or a passport number that is not in the file. The output is a request for documents, routed to further investigation.", "config": "router", "config_name": "Router", "rep": 1, "docs": [{"id": "C1", "side": "customer", "kind": "structured", "title": "Customer onboarding record (synthetic)", "text": "Customer ID: CUS-79525\nFull name: Yon Hui Kim\nDate of birth: not captured\nPlace of birth: not captured\nNationality: not captured\nPassport number: not captured\nNational ID number: not captured\nResidence country: Kenya"}, {"id": "C2", "side": "customer", "kind": "free_text", "title": "Onboarding officer note (synthetic)", "text": "The customer did not bring an identity document today and will return with it next week. Account opening is on hold."}, {"id": "L1", "side": "list", "kind": "structured", "title": "Watchlist candidate record", "text": "Source: OFAC Specially Designated Nationals list (sdn.csv, alt.csv, add.csv), published 2026-10-02, retrieved 2026-10-03\nEntry UID: 52292\nPrimary name: KIM, Yon Hui\nEntry type: individual\nAliases: none listed\nDate of birth: 01 Dec 1979\nPlace of birth: not listed\nNationality: Korea, North\nPassport: 836238034 (Korea, North)\nNational ID: not listed"}], "reference": {"construction_identity": "different", "name_match": "exact", "permitted_disposition": "insufficient_evidence", "permitted_status": "further_investigation", "decisive_agreements": [], "decisive_conflicts": [], "missing_information": ["date_of_birth", "passport_number", "national_id", "nationality", "place_of_birth"], "justification": "Only the name is available; No strong identifier can be compared.", "trap": "Underlying identity is known to the builder but not supported by the evidence."}, "output": {"name_match": "exact", "name_cite": {"doc": "C1", "quote": "Full name: Yon Hui Kim"}, "comparisons": [{"attribute": "date_of_birth", "relation": "not_available", "customer_value": null, "list_value": "01 Dec 1979", "customer_cite": null, "list_cite": {"doc": "L1", "quote": "Date of birth: 01 Dec 1979"}}, {"attribute": "passport_number", "relation": "not_available", "customer_value": null, "list_value": "836238034", "customer_cite": null, "list_cite": {"doc": "L1", "quote": "Passport: 836238034 (Korea, North)"}}, {"attribute": "nationality", "relation": "not_available", "customer_value": null, "list_value": "Korea, North", "customer_cite": null, "list_cite": {"doc": "L1", "quote": "Nationality: Korea, North"}}], "missing_information": ["date_of_birth", "passport_number", "nationality"], "disposition": "insufficient_evidence", "status": "further_investigation", "outstanding_work": "The analyst must obtain the customer's identity documents to verify the date of birth, nationality, and passport number against the watchlist entry.", "rationale": "The names match exactly, but the customer record lacks all strong identifiers (DOB, passport, nationality) required to confirm identity or rule out a conflict. Without these values, the policy criteria for same_entity_supported or different_entity_supported cannot be met."}, "small_output": null, "route": ["rules", "small"], "escalation_reason": null, "resolution": "decided", "checks": [{"stage": "rules", "note": "free-text document present: code does not read it", "decided": false}, {"stage": "small", "attempt": 1, "failed": []}, {"stage": "stop", "note": "evidence absent: a larger model cannot supply it; no further call"}], "calls": [{"tier": "small", "model_returned": "qwen/qwen3.5-9b", "provider_returned": "Parasail", "prompt_tokens": 1244, "completion_tokens": 480, "latency_ms": 5128}], "category": "unresolved_right", "problems": [], "latency_ms": 5129, "construction_note": "Only the name is captured. Underlying identity set by construction but not visible in the evidence."}, {"case_id": "case-030", "family": "transliteration", "tab": "A correction, and what it reveals", "note": "The small model read a place of birth marked <i>not captured<\/i> as a conflict. Asked to repair the policy error the checks found, it made its disposition agree with that wrong comparison: insufficient evidence. The router escalated on an observable reason, an agreement and a conflict side by side, and the large model got it right. With the small model alone this case ended as a needless stop in all three runs. A one-line rule in code (an attribute marked not captured cannot conflict) would fix it without any large-model call.", "config": "router", "config_name": "Router", "rep": 1, "docs": [{"id": "C1", "side": "customer", "kind": "structured", "title": "Customer onboarding record (synthetic)", "text": "Customer ID: CUS-18300\nFull name: Faisal Jassim Muhammad al-Amri Al-Khalidi\nDate of birth: 1984-07-22\nPlace of birth: not captured\nNationality: Saudi Arabia\nPassport number: not captured\nNational ID number: not captured\nResidence country: Netherlands"}, {"id": "C2", "side": "customer", "kind": "free_text", "title": "Passport copy transcription (synthetic)", "text": "Passport data page seen at onboarding: holder FAISAL JASSIM MUHAMMAD AL-AMRI AL-KHALIDI, date of birth 22/07/1984 (day/month/year), document number B542902."}, {"id": "L1", "side": "list", "kind": "structured", "title": "Watchlist candidate record", "text": "Source: OFAC Specially Designated Nationals list (sdn.csv, alt.csv, add.csv), published 2026-10-02, retrieved 2026-10-03\nEntry UID: 20227\nPrimary name: AL-KHALIDI, Faisal Jassim Mohammed al-Amri\nEntry type: individual\nAliases: AL-KHALIDI, Faysal Jasim Muhammad al-Umari | AL-KHALIDI, Faisal Jassim Mohammed al-Oamri | AL-KHALIDI, Faysal Jasim Muhammad al-'Amiri | AL-KHALIDI, Hamzah\nDate of birth: 22 Jul 1984\nPlace of birth: Kuwait\nNationality: Saudi Arabia\nPassport: B542902\nNational ID: 1074811678 (Saudi Arabia)"}], "reference": {"construction_identity": "same", "name_match": "transliteration_variant", "permitted_disposition": "same_entity_supported", "permitted_status": "ready_for_analyst_signoff", "decisive_agreements": ["date_of_birth", "passport_number", "nationality"], "decisive_conflicts": [], "missing_information": ["national_id", "place_of_birth"], "justification": "Name criterion met (transliteration variant); date_of_birth, passport_number, nationality agree; nothing conflicts.", "trap": null}, "output": {"name_match": "transliteration_variant", "name_cite": {"doc": "C1", "quote": "Faisal Jassim Muhammad al-Amri Al-Khalidi"}, "comparisons": [{"attribute": "date_of_birth", "relation": "agree", "customer_value": "1984-07-22", "list_value": "22 Jul 1984", "customer_cite": {"doc": "C1", "quote": "Date of birth: 1984-07-22"}, "list_cite": {"doc": "L1", "quote": "Date of birth: 22 Jul 1984"}}, {"attribute": "passport_number", "relation": "agree", "customer_value": "B542902", "list_value": "B542902", "customer_cite": {"doc": "C2", "quote": "document number B542902"}, "list_cite": {"doc": "L1", "quote": "Passport: B542902"}}, {"attribute": "nationality", "relation": "agree", "customer_value": "Saudi Arabia", "list_value": "Saudi Arabia", "customer_cite": {"doc": "C1", "quote": "Nationality: Saudi Arabia"}, "list_cite": {"doc": "L1", "quote": "Nationality: Saudi Arabia"}}, {"attribute": "place_of_birth", "relation": "not_available", "customer_value": null, "list_value": "Kuwait", "customer_cite": {"doc": "C1", "quote": "Place of birth: not captured"}, "list_cite": {"doc": "L1", "quote": "Place of birth: Kuwait"}}], "missing_information": [], "disposition": "same_entity_supported", "status": "ready_for_analyst_signoff", "outstanding_work": "The analyst must review the strong identifier matches (DOB and Passport) against the missing place of birth data to confirm the entity match.", "rationale": "The name criterion is met via transliteration variant. Two strong identifiers (date of birth and passport number) agree, one weak identifier (nationality) agrees, and there are no conflicting strong identifiers, satisfying the policy for same_entity_supported."}, "small_output": {"name_match": "exact", "name_cite": {"doc": "C1", "quote": "Full name: Faisal Jassim Muhammad al-Amri Al-Khalidi"}, "comparisons": [{"attribute": "date_of_birth", "relation": "agree", "customer_value": "1984-07-22", "list_value": "22 Jul 1984", "customer_cite": {"doc": "C1", "quote": "Date of birth: 1984-07-22"}, "list_cite": {"doc": "L1", "quote": "Date of birth: 22 Jul 1984"}}, {"attribute": "place_of_birth", "relation": "conflict", "customer_value": "not captured", "list_value": "Kuwait", "customer_cite": {"doc": "C1", "quote": "Place of birth: not captured"}, "list_cite": {"doc": "L1", "quote": "Place of birth: Kuwait"}}, {"attribute": "nationality", "relation": "agree", "customer_value": "Saudi Arabia", "list_value": "Saudi Arabia", "customer_cite": {"doc": "C1", "quote": "Nationality: Saudi Arabia"}, "list_cite": {"doc": "L1", "quote": "Nationality: Saudi Arabia"}}, {"attribute": "passport_number", "relation": "agree", "customer_value": "B542902", "list_value": "B542902", "customer_cite": {"doc": "C2", "quote": "document number B542902"}, "list_cite": {"doc": "L1", "quote": "Passport: B542902"}}, {"attribute": "national_id", "relation": "not_available", "customer_value": null, "list_value": "1074811678 (Saudi Arabia)", "customer_cite": null, "list_cite": {"doc": "L1", "quote": "National ID: 1074811678 (Saudi Arabia)"}}], "missing_information": ["national_id"], "disposition": "insufficient_evidence", "status": "further_investigation", "outstanding_work": "The analyst must resolve the conflict regarding the place of birth (customer record shows 'not captured' while the watchlist lists 'Kuwait') and verify if the missing National ID can be obtained to confirm identity.", "rationale": "Although the name, date of birth, and passport number agree, the policy requires that no identifier conflicts exist for a 'same_entity_supported' disposition. The presence of a conflict (even if one side is 'not captured' vs a specific value) prevents a definitive match under the strict policy rules provided."}, "route": ["rules", "small", "large"], "escalation_reason": "contradictory identifiers", "resolution": "decided", "checks": [{"stage": "rules", "note": "free-text document present: code does not read it", "decided": false}, {"stage": "small", "attempt": 1, "failed": ["policy: comparisons imply insufficient_evidence, output says same_entity_supported"]}, {"stage": "small", "attempt": 2, "failed": []}, {"stage": "escalate", "note": "contradictory identifiers"}, {"stage": "large", "attempt": 1, "failed": ["policy: comparisons imply insufficient_evidence, output says same_entity_supported"]}, {"stage": "large", "attempt": 2, "failed": []}], "calls": [{"tier": "small", "model_returned": "qwen/qwen3.5-9b", "provider_returned": "Parasail", "prompt_tokens": 1358, "completion_tokens": 810, "latency_ms": 5024}, {"tier": "small", "model_returned": "qwen/qwen3.5-9b", "provider_returned": "Parasail", "prompt_tokens": 2222, "completion_tokens": 814, "latency_ms": 5921}, {"tier": "large", "model_returned": "qwen/qwen3.5-397b-a17b", "provider_returned": "DeepInfra", "prompt_tokens": 1358, "completion_tokens": 681, "latency_ms": 12521}, {"tier": "large", "model_returned": "qwen/qwen3.5-397b-a17b", "provider_returned": "DeepInfra", "prompt_tokens": 2093, "completion_tokens": 669, "latency_ms": 12417}], "category": "correct_supported", "problems": [], "latency_ms": 35887, "construction_note": "Customer name is a spelling variant of the listed name, not itself listed; identifiers copy the list entry."}]};
+const LABEL = {correct_supported:'Correct and supported', unresolved_right:'Stopped, rightly', unresolved_wrong:'Stopped, needlessly', incorrect_or_unsupported:'Incorrect or unsupported', operational_failure:'Endpoint failure'};
+const DISP = {same_entity_supported:'Same entity, supported', different_entity_supported:'Different entity, supported', insufficient_evidence:'Insufficient evidence'};
+const STATUS = {ready_for_analyst_signoff:'Ready for analyst sign-off', further_investigation:'Further investigation'};
+const ATTR = {date_of_birth:'Date of birth', year_of_birth:'Year of birth', passport_number:'Passport number', national_id:'National ID', nationality:'Nationality', place_of_birth:'Place of birth', registration_number:'Registration number', country_of_registration:'Country of registration', city:'City'};
+const STAGE = {deterministic:'rules', rules:'rules', small:'small model', large:'large model'};
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// figure
+(function(){
+  const host = document.getElementById('bars'); if (!host) return;
+  host.querySelectorAll('.bar').forEach(bar => {
+    const row = DATA.figure.find(f => f.cfg === bar.dataset.cfg);
+    bar.innerHTML = row.segs.filter(s => s.n > 0).map(s =>
+      `<span class="${s.k}" style="flex:0 0 ${s.w}%" title="${LABEL[s.k]}: ${s.n} of ${row.rows}">${s.w >= 6 ? s.n : ''}</span>`).join('');
+    bar.setAttribute('aria-label', row.name + ': ' + row.segs.map(s => `${LABEL[s.k]} ${s.n} of ${row.rows}`).join(', '));
+  });
+})();
+
+// case files
+function highlight(text, quotes){
+  let html = esc(text);
+  quotes.forEach(q => {
+    if (!q) return;
+    const qe = esc(q).replace(/\s+/g, ' ').trim();
+    const i = html.toLowerCase().indexOf(qe.toLowerCase());
+    if (i >= 0) html = html.slice(0, i) + '<mark>' + html.slice(i, i + qe.length) + '</mark>' + html.slice(i + qe.length);
+  });
+  return html;
+}
+function renderCase(idx, sel){
+  const c = DATA.cases[idx], o = c.output;
+  const host = document.getElementById('casefile');
+  const quotesFor = (docId) => {
+    if (sel == null || !o) return [];
+    const cmp = o.comparisons[sel]; const q = [];
+    ['customer_cite','list_cite'].forEach(k => { if (cmp[k] && cmp[k].doc === docId) q.push(cmp[k].quote); });
+    return q;
+  };
+  const docs = c.docs.map(d => `<div class="doc ${d.side}"><header><b>${esc(d.id)}</b><span>${esc(d.title)}</span></header><pre>${highlight(d.text, quotesFor(d.id))}</pre></div>`).join('');
+  const stages = ['rules','small','large'];
+  const route = stages.map(s => `<span class="${c.route.includes(s) ? 'on' : ''}">${STAGE[s]}</span>`).join('<em>then</em>');
+  let rec = `<div class="route" aria-label="Route taken">${route}</div>`;
+  rec += `<p class="why">${c.escalation_reason ? 'Escalated because: ' + esc(c.escalation_reason) + '.' : c.route.length === 1 ? 'Decided by rules from the two structured records; no model call.' : 'Not escalated: no observable reason to call the large model.'} Configuration shown: ${esc(c.config_name)}, run ${c.rep}, ${(c.latency_ms/1000).toFixed(1)} s end to end.</p>`;
+  if (o){
+    rec += `<div class="disp"><strong>${DISP[o.disposition]}</strong><span class="verdict ${c.category}">${LABEL[c.category]}</span></div>`;
+    rec += `<div style="font-size:14px;color:var(--slate)">Name: ${esc(o.name_match.replace(/_/g,' '))}. Status: ${STATUS[o.status]}. Reference allows: ${DISP[c.reference.permitted_disposition].toLowerCase()}.</div>`;
+    rec += `<table class="comps"><thead><tr><th>Attribute</th><th>Customer</th><th>Candidate</th><th>Relation</th></tr></thead><tbody>` +
+      o.comparisons.map((x,i) => `<tr class="c ${sel===i?'sel':''}" data-i="${i}" tabindex="0"><td>${ATTR[x.attribute]||esc(x.attribute)}</td><td>${esc(x.customer_value ?? '')}</td><td>${esc(x.list_value ?? '')}</td><td class="rel-${x.relation}">${x.relation.replace('_',' ')}</td></tr>`).join('') + `</tbody></table>`;
+    rec += `<p class="hint">Select a row to see its two citations marked in the documents.</p>`;
+    rec += `<dl class="kv"><dt>Missing information</dt><dd>${o.missing_information.length ? o.missing_information.map(a => ATTR[a]||a).join(', ') : 'none named'}</dd>`;
+    rec += `<dt>Outstanding work</dt><dd>${esc(o.outstanding_work)}</dd><dt>Rationale</dt><dd>${esc(o.rationale)}</dd>`;
+    if (c.problems.length) rec += `<dt>Scoring problems</dt><dd>${c.problems.map(esc).join('; ')}</dd>`;
+    rec += `</dl>`;
+  } else {
+    rec += `<div class="disp"><strong>No recommendation</strong><span class="verdict ${c.category}">${LABEL[c.category]}</span></div>`;
+  }
+  rec += `<h3 style="font-size:15px;margin:20px 0 6px">Controls, in order</h3><ul class="checks">` + c.checks.map(k => {
+    if (k.note !== undefined) return `<li class="n">${esc(STAGE[k.stage]||k.stage)}: ${esc(k.note)}</li>`;
+    return k.failed.length ? `<li class="f">${esc(STAGE[k.stage])}, answer ${k.attempt}: failed ${k.failed.map(esc).join('; ')}</li>` : `<li>${esc(STAGE[k.stage])}, answer ${k.attempt}: passed schema, citation source, verbatim quote, policy and structured-record checks</li>`;
+  }).join('') + `</ul>`;
+  rec += `<div class="signoff"><b>Pending analyst approval</b>The system prepares this recommendation. Approving or changing it is a separate human step that is never automated or scored here.</div>`;
+  rec += `<details class="raw"><summary>Full record for this case (output, reference, calls)</summary><pre>${esc(JSON.stringify({case_id:c.case_id, family:c.family, route:c.route, escalation_reason:c.escalation_reason, output:o, small_model_output_before_escalation:c.small_output, reference:c.reference, calls:c.calls, construction_note:c.construction_note}, null, 1))}</pre></details>`;
+  host.innerHTML = `<p class="casenote">${c.note}</p><div class="file"><div class="docs">${docs}</div><div class="rec">${rec}</div></div>`;
+  host.querySelectorAll('tr.c').forEach(tr => {
+    const go = () => renderCase(idx, sel === +tr.dataset.i ? null : +tr.dataset.i);
+    tr.addEventListener('click', go);
+    tr.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+  });
+}
+(function(){
+  const tabs = document.getElementById('tabs'); if (!tabs) return;
+  tabs.innerHTML = DATA.cases.map((c,i) => `<button role="tab" aria-selected="${i===0}" data-i="${i}">${esc(c.tab)}</button>`).join('');
+  tabs.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    tabs.querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b));
+    renderCase(+b.dataset.i, null);
+  }));
+  renderCase(0, null);
+})();
+</script>
+</body>
+</html>

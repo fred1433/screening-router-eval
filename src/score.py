@@ -127,7 +127,7 @@ for cfg, reps in runs.items():
         cn, ck = len({r['case_id'] for r in den}), len({r['case_id'] for r in num})
         # runs at temperature 0 are not independent: the interval is computed over cases (a case counts if any run hits)
         return {'k': len(num), 'n': len(den), 'rate': round(len(num) / len(den), 3) if den else None,
-                'k_cases': ck, 'n_cases': cn, 'ci95_cases': wilson(ck, cn)}
+                'cases_any_run': ck, 'of_cases': cn, 'ci95_cases': wilson(ck, cn)}
     true_match = lambda r: ref(r)['construction_identity'] == 'same'
     distinct = lambda r: ref(r)['construction_identity'] == 'different'
     insuff = lambda r: ref(r)['permitted_disposition'] == 'insufficient_evidence'
@@ -136,7 +136,7 @@ for cfg, reps in runs.items():
     cats_all = Counter(r['category'] for r in allrows)
     s = {
         'reps': len(reps), 'scored_rows': len(allrows),
-        'outcomes_rep1': dict(cats), 'outcomes_all_reps': dict(cats_all),
+        'outcomes_rep1': dict(cats), 'outcomes_all_runs': dict(cats_all),
         'wrong_exclusion_true_matches': rate(true_match, lambda r: r['disposition'] == 'different_entity_supported'),
         'decisive_on_insufficient': rate(insuff, lambda r: r['disposition'] in ('same_entity_supported', 'different_entity_supported')),
         'wrong_match_distinct': rate(distinct, lambda r: r['disposition'] == 'same_entity_supported'),
@@ -178,7 +178,8 @@ for cfg, reps in runs.items():
                 eff['no_material_change'] += 1
         s['escalations'] = {'n': len(esc), 'of_rows': len(allrows), 'reasons': dict(Counter(r['escalation_reason'].split(':')[0] for r in esc)),
                             'effect': dict(eff),
-                            'small_invalid_replaced_by_stop': sum(1 for r in esc if r.get('small_invalid')),
+                            'small_invalid_replaced_by_stop': sum(1 for r in esc if r.get('small_invalid') and r['category'] == 'unresolved_right'),
+                            'small_invalid_corrected_by_large': sum(1 for r in esc if r.get('small_invalid') and r['category'] == 'correct_supported'),
                             'stopped_without_large_call': sum(1 for r in allrows if r['route'] == ['rules', 'small'] and r['disposition'] == 'insufficient_evidence'),
                             'decided_by_rules': sum(1 for r in allrows if r['route'] == ['rules'])}
     # stability across repetitions
@@ -188,11 +189,11 @@ for cfg, reps in runs.items():
             by_case[r['case_id']].append(r)
         st = Counter()
         for cid, rs in by_case.items():
-            st['cases'] += 1
-            st['same_disposition'] += len({r['disposition'] for r in rs}) == 1
-            st['same_route'] += len({tuple(r['route']) for r in rs}) == 1
-            st['same_facts'] += len({tuple(r['facts'] or []) for r in rs}) == 1
-            st['same_missing'] += len({tuple(r['missing'] or []) for r in rs}) == 1
+            st['of_cases'] += 1
+            st['cases_same_disposition_all_reps'] += len({r['disposition'] for r in rs}) == 1
+            st['cases_same_route_all_reps'] += len({tuple(r['route']) for r in rs}) == 1
+            st['cases_same_facts_all_reps'] += len({tuple(r['facts'] or []) for r in rs}) == 1
+            st['cases_same_missing_all_reps'] += len({tuple(r['missing'] or []) for r in rs}) == 1
         s['stability'] = dict(st)
     summary['configs'][cfg] = s
 base = summary['configs'].get('small', {}).get('resource_index_per_case')
@@ -201,5 +202,5 @@ for cfg, s_ in summary['configs'].items():
     s_['first_answer_failed_checks'] = {k: dict(v) for k, v in s_['first_answer_failed_checks'].items()}
 jdump(summary, run_dir / 'summary.json')
 for cfg, s in summary['configs'].items():
-    print(cfg, s['outcomes_all_reps'], 'wrongExcl', s['wrong_exclusion_true_matches']['k'], '/', s['wrong_exclusion_true_matches']['n'],
+    print(cfg, s['outcomes_all_runs'], 'wrongExcl', s['wrong_exclusion_true_matches']['k'], '/', s['wrong_exclusion_true_matches']['n'],
           'p50', s['latency_ms_p50'], 'p95', s['latency_ms_p95'], 'calls', s['calls_per_case'], s.get('escalations', ''), s.get('stability', ''))

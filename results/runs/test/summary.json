@@ -9,7 +9,7 @@
         "correct_supported": 20,
         "unresolved_right": 20
       },
-      "outcomes_all_reps": {
+      "outcomes_all_runs": {
         "unresolved_wrong": 120,
         "correct_supported": 60,
         "unresolved_right": 60
@@ -18,8 +18,8 @@
         "k": 0,
         "n": 153,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 51,
+        "cases_any_run": 0,
+        "of_cases": 51,
         "ci95_cases": [
           0,
           0.07
@@ -29,8 +29,8 @@
         "k": 0,
         "n": 60,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 20,
+        "cases_any_run": 0,
+        "of_cases": 20,
         "ci95_cases": [
           0,
           0.161
@@ -40,8 +40,8 @@
         "k": 0,
         "n": 87,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 29,
+        "cases_any_run": 0,
+        "of_cases": 29,
         "ci95_cases": [
           0,
           0.117
@@ -51,8 +51,8 @@
         "k": 60,
         "n": 180,
         "rate": 0.333,
-        "k_cases": 20,
-        "n_cases": 60,
+        "cases_any_run": 20,
+        "of_cases": 60,
         "ci95_cases": [
           0.227,
           0.459
@@ -62,8 +62,8 @@
         "k": 60,
         "n": 60,
         "rate": 1.0,
-        "k_cases": 20,
-        "n_cases": 20,
+        "cases_any_run": 20,
+        "of_cases": 20,
         "ci95_cases": [
           0.839,
           1
@@ -73,8 +73,8 @@
         "k": 120,
         "n": 180,
         "rate": 0.667,
-        "k_cases": 40,
-        "n_cases": 60,
+        "cases_any_run": 40,
+        "of_cases": 60,
         "ci95_cases": [
           0.541,
           0.773
@@ -130,11 +130,11 @@
       },
       "first_answer_failed_checks": {},
       "stability": {
-        "cases": 80,
-        "same_disposition": 80,
-        "same_route": 80,
-        "same_facts": 80,
-        "same_missing": 80
+        "of_cases": 80,
+        "cases_same_disposition_all_reps": 80,
+        "cases_same_route_all_reps": 80,
+        "cases_same_facts_all_reps": 80,
+        "cases_same_missing_all_reps": 80
       },
       "relative_cost_index": 0.0
     },
@@ -145,7 +145,7 @@
         "correct_supported": 60,
         "unresolved_right": 20
       },
-      "outcomes_all_reps": {
+      "outcomes_all_runs": {
         "correct_supported": 178,
         "unresolved_right": 60,
         "unresolved_wrong": 2
@@ -154,8 +154,8 @@
         "k": 0,
         "n": 153,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 51,
+        "cases_any_run": 0,
+        "of_cases": 51,
         "ci95_cases": [
           0,
           0.07
@@ -165,8 +165,8 @@
         "k": 0,
         "n": 60,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 20,
+        "cases_any_run": 0,
+        "of_cases": 20,
         "ci95_cases": [
           0,
           0.161
@@ -176,8 +176,8 @@
         "k": 0,
         "n": 87,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 29,
+        "cases_any_run": 0,
+        "of_cases": 29,
         "ci95_cases": [
           0,
           0.117
@@ -187,8 +187,8 @@
         "k": 178,
         "n": 180,
         "rate": 0.989,
-        "k_cases": 60,
-        "n_cases": 60,
+        "cases_any_run": 60,
+        "of_cases": 60,
         "ci95_cases": [
           0.94,
           1.0
@@ -198,8 +198,8 @@
         "k": 60,
         "n": 60,
         "rate": 1.0,
-        "k_cases": 20,
-        "n_cases": 20,
+        "cases_any_run": 20,
+        "of_cases": 20,
         "ci95_cases": [
           0.839,
           1
@@ -209,8 +209,8 @@
         "k": 2,
         "n": 180,
         "rate": 0.011,
-        "k_cases": 2,
-        "n_cases": 60,
+        "cases_any_run": 2,
+        "of_cases": 60,
         "ci95_cases": [
           0.009,
           0.114
@@ -274,11 +274,11 @@
         }
       },
       "stability": {
-        "cases": 80,
-        "same_disposition": 78,
-        "same_route": 80,
-        "same_facts": 78,
-        "same_missing": 57
+        "of_cases": 80,
+        "cases_same_disposition_all_reps": 78,
+        "cases_same_route_all_reps": 80,
+        "cases_same_facts_all_reps": 78,
+        "cases_same_missing_all_reps": 57
       },
       "relative_cost_index": 6.47
     },
@@ -289,7 +289,7 @@
         "correct_supported": 60,
         "unresolved_right": 20
       },
-      "outcomes_all_reps": {
+      "outcomes_all_runs": {
         "correct_supported": 180,
         "unresolved_right": 60
       },
@@ -297,8 +297,8 @@
         "k": 0,
         "n": 153,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 51,
+        "cases_any_run": 0,
+        "of_cases": 51,
         "ci95_cases": [
           0,
           0.07
@@ -308,8 +308,8 @@
         "k": 0,
         "n": 60,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 20,
+        "cases_any_run": 0,
+        "of_cases": 20,
         "ci95_cases": [
           0,
           0.161
@@ -319,8 +319,8 @@
         "k": 0,
         "n": 87,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 29,
+        "cases_any_run": 0,
+        "of_cases": 29,
         "ci95_cases": [
           0,
           0.117
@@ -330,8 +330,8 @@
         "k": 180,
         "n": 180,
         "rate": 1.0,
-        "k_cases": 60,
-        "n_cases": 60,
+        "cases_any_run": 60,
+        "of_cases": 60,
         "ci95_cases": [
           0.94,
           1.0
@@ -341,8 +341,8 @@
         "k": 60,
         "n": 60,
         "rate": 1.0,
-        "k_cases": 20,
-        "n_cases": 20,
+        "cases_any_run": 20,
+        "of_cases": 20,
         "ci95_cases": [
           0.839,
           1
@@ -352,8 +352,8 @@
         "k": 0,
         "n": 180,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 60,
+        "cases_any_run": 0,
+        "of_cases": 60,
         "ci95_cases": [
           0,
           0.06
@@ -431,16 +431,17 @@
           "no_material_change": 28,
           "corrected": 6
         },
-        "small_invalid_replaced_by_stop": 7,
+        "small_invalid_replaced_by_stop": 4,
+        "small_invalid_corrected_by_large": 3,
         "stopped_without_large_call": 11,
         "decided_by_rules": 93
       },
       "stability": {
-        "cases": 80,
-        "same_disposition": 80,
-        "same_route": 79,
-        "same_facts": 80,
-        "same_missing": 75
+        "of_cases": 80,
+        "cases_same_disposition_all_reps": 80,
+        "cases_same_route_all_reps": 79,
+        "cases_same_facts_all_reps": 80,
+        "cases_same_missing_all_reps": 75
       },
       "relative_cost_index": 1.72
     },
@@ -452,7 +453,7 @@
         "unresolved_wrong": 1,
         "unresolved_right": 20
       },
-      "outcomes_all_reps": {
+      "outcomes_all_runs": {
         "correct_supported": 176,
         "unresolved_wrong": 4,
         "unresolved_right": 60
@@ -461,8 +462,8 @@
         "k": 0,
         "n": 153,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 51,
+        "cases_any_run": 0,
+        "of_cases": 51,
         "ci95_cases": [
           0,
           0.07
@@ -472,8 +473,8 @@
         "k": 0,
         "n": 60,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 20,
+        "cases_any_run": 0,
+        "of_cases": 20,
         "ci95_cases": [
           0,
           0.161
@@ -483,8 +484,8 @@
         "k": 0,
         "n": 87,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 29,
+        "cases_any_run": 0,
+        "of_cases": 29,
         "ci95_cases": [
           0,
           0.117
@@ -494,8 +495,8 @@
         "k": 176,
         "n": 180,
         "rate": 0.978,
-        "k_cases": 59,
-        "n_cases": 60,
+        "cases_any_run": 59,
+        "of_cases": 60,
         "ci95_cases": [
           0.911,
           0.997
@@ -505,8 +506,8 @@
         "k": 60,
         "n": 60,
         "rate": 1.0,
-        "k_cases": 20,
-        "n_cases": 20,
+        "cases_any_run": 20,
+        "of_cases": 20,
         "ci95_cases": [
           0.839,
           1
@@ -516,8 +517,8 @@
         "k": 4,
         "n": 180,
         "rate": 0.022,
-        "k_cases": 2,
-        "n_cases": 60,
+        "cases_any_run": 2,
+        "of_cases": 60,
         "ci95_cases": [
           0.009,
           0.114
@@ -580,11 +581,11 @@
         }
       },
       "stability": {
-        "cases": 80,
-        "same_disposition": 78,
-        "same_route": 80,
-        "same_facts": 78,
-        "same_missing": 73
+        "of_cases": 80,
+        "cases_same_disposition_all_reps": 78,
+        "cases_same_route_all_reps": 80,
+        "cases_same_facts_all_reps": 78,
+        "cases_same_missing_all_reps": 73
       },
       "relative_cost_index": 1.0
     }

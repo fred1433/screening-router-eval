@@ -74,6 +74,14 @@ def parse_remarks(rem):
 
 
 # ---------------------------------------------------------------- normalisation
+ABSENT_VALUES = {'', 'not listed', 'not captured', 'not provided', 'n/a', 'na', 'none', 'none listed', 'not available',
+                 'unknown', '-', '-0-'}
+
+
+def is_absent(v):
+    """The single test for an absent value, applied to both sides before any comparison (v2)."""
+    return v is None or re.sub(r'\s+', ' ', str(v)).strip().lower().rstrip('.') in ABSENT_VALUES
+
 def strip_accents(s):
     return ''.join(c for c in unicodedata.normalize('NFKD', s) if not unicodedata.combining(c))
 
@@ -83,6 +91,26 @@ def name_tokens(name):
     s = re.sub(r'[^a-z0-9]+', ' ', s)
     toks = [t for t in s.split() if t not in {'ltd', 'limited', 'llc', 'co', 'company', 'the', 'inc', 'sa', 'plc'}]
     return tuple(sorted(toks))
+
+
+def name_class(customer_name, primary, aliases):
+    """Name class computed by code (v2): 'exact', 'listed_alias', 'none', or 'unnormalizable' when normalisation
+    leaves nothing to compare (for example a name in a non-Latin script). Never equality on empty strings."""
+    c = name_tokens(customer_name or '')
+    if not c:
+        return 'unnormalizable'
+    p = name_tokens(primary or '')
+    if p and c == p:
+        return 'exact'
+    if any(name_tokens(a) and c == name_tokens(a) for a in aliases):
+        return 'listed_alias'
+    return 'none'
+
+
+def list_names(list_text):
+    f = read_fields(list_text)
+    al = f.get('Aliases', '')
+    return f.get('Primary name', ''), ([] if is_absent(al) else [a.strip() for a in al.split(' | ') if a.strip()])
 
 
 def norm_id(s):
@@ -105,10 +133,11 @@ def parse_date(s):
 POLICY_TEXT = (ROOT / 'policy' / 'policy_a.md').read_text() if (ROOT / 'policy' / 'policy_a.md').exists() else ''
 
 
-def apply_policy(name_match, comparisons, policy='A'):
+def apply_policy(name_match, comparisons, policy='A2'):
     """Recompute disposition from a list of comparisons [{attribute, relation}].
     Policy A: same = name criterion + >=2 agreeing identifiers incl. >=1 strong + no conflict.
-    Policy B (stricter, demo only): same additionally needs two agreeing strong identifiers."""
+    Policy B (stricter, demo only): same additionally needs two agreeing strong identifiers.
+    Policy A2 (v2 default): as A, but only a conflicting date of birth or registration number can exclude."""
     agree = {c['attribute'] for c in comparisons if c.get('relation') == 'agree'}
     conflict = {c['attribute'] for c in comparisons if c.get('relation') == 'conflict'}
     name_ok = name_match in ('exact', 'listed_alias', 'transliteration_variant')
@@ -117,6 +146,12 @@ def apply_policy(name_match, comparisons, policy='A'):
         if policy == 'B' and len(strong_agree) < 2:
             return 'insufficient_evidence'
         return 'same_entity_supported'
+    if policy == 'A2':
+        # v2: a passport or national ID mismatch alone never excludes (documents are renewed or duplicated);
+        # exclusion needs a conflicting date of birth or registration number.
+        if strong_conflict & {'date_of_birth', 'registration_number'} and not strong_agree:
+            return 'different_entity_supported'
+        return 'insufficient_evidence'
     if strong_conflict and not strong_agree:
         return 'different_entity_supported'
     return 'insufficient_evidence'
@@ -157,24 +192,21 @@ def structured_relations(packet):
                 return l
         return None
     rel = {}
-    na = lambda v: (not v) or v.lower() in ('not provided', 'not captured', 'n/a', 'none')
+    na = is_absent
     # name
     cname = cf.get('Full name') or cf.get('Legal name') or ''
-    listed = [lf.get('Primary name', '')] + [a.strip() for a in lf.get('Aliases', '').split(' | ') if a.strip()]
-    if name_tokens(cname) == name_tokens(listed[0]):
-        name_match = 'exact'
-    elif any(name_tokens(cname) == name_tokens(a) for a in listed[1:]):
-        name_match = 'listed_alias'
-    else:
-        name_match = 'unresolved'
+    nc = name_class(cname, *list_names(lst['text']))
+    name_match = nc if nc in ('exact', 'listed_alias') else ('unnormalizable' if nc == 'unnormalizable' else 'unresolved')
     # date of birth
     cd, ld = cf.get('Date of birth'), lf.get('Date of birth')
     if not na(cd) and not na(ld):
-        ci, li = parse_date(cd), parse_date(ld)
-        if ci and li:
-            rel['date_of_birth'] = ('agree' if ci == li else 'conflict', line(cust, 'Date of birth'), line(lst, 'Date of birth'))
-        elif ci and re.fullmatch(r'\d{4}', ld or ''):
-            rel['year_of_birth'] = ('agree' if ci[:4] == ld else 'conflict', line(cust, 'Date of birth'), line(lst, 'Date of birth'))
+        ci = parse_date(cd)
+        lds = [x.strip() for x in ld.split(';') if x.strip()]
+        lis = [parse_date(x) for x in lds]
+        if ci and all(lis):
+            rel['date_of_birth'] = ('agree' if ci in lis else 'conflict', line(cust, 'Date of birth'), line(lst, 'Date of birth'))
+        elif ci and all(re.fullmatch(r'\d{4}', x) for x in lds):
+            rel['year_of_birth'] = ('agree' if ci[:4] in lds else 'conflict', line(cust, 'Date of birth'), line(lst, 'Date of birth'))
     for attr, ck, lk in (('nationality', 'Nationality', 'Nationality'),
                          ('country_of_registration', 'Country of incorporation', 'Country of registration'),
                          ('city', 'Registered office city', 'Address cities')):

@@ -27,7 +27,7 @@ def call(tier, messages, injected_fault=None):
     body = {'model': cfg['model'], 'messages': messages,
             'provider': {'order': [cfg['provider']], 'allow_fallbacks': False, 'require_parameters': True},
             'usage': {'include': True}, **SETTINGS}
-    last = None
+    last, http_attempts = None, []   # v2: every HTTP attempt is recorded with its error
     for attempt in range(TRANSPORT_RETRIES + 1):
         t0 = time.time()
         try:
@@ -45,12 +45,15 @@ def call(tier, messages, injected_fault=None):
             if LEDGER:
                 with open(LEDGER, 'a') as f:
                     f.write(json.dumps({'id': d.get('id'), 'tier': tier, 'cost': u.get('cost')}) + '\n')
-            return {'ok': True, 'tier': tier, 'model_requested': cfg['model'], 'endpoint_requested': cfg['provider'],
+            http_attempts.append({'attempt': attempt + 1, 'ok': True, 'latency_ms': ms})
+            return {'ok': True, 'tier': tier, 'http_attempts': http_attempts, 'model_requested': cfg['model'], 'endpoint_requested': cfg['provider'],
                     'model_returned': d.get('model'), 'provider_returned': d.get('provider'), 'generation_id': d.get('id'),
                     'prompt_tokens': u.get('prompt_tokens'), 'completion_tokens': u.get('completion_tokens'),
                     'latency_ms': ms, 'attempt': attempt + 1, 'content': d['choices'][0]['message'].get('content') or ''}
         except (urllib.error.URLError, TimeoutError, EndpointError, json.JSONDecodeError, ConnectionError) as e:
-            last = {'ok': False, 'tier': tier, 'model_requested': cfg['model'], 'endpoint_requested': cfg['provider'],
+            http_attempts.append({'attempt': attempt + 1, 'ok': False, 'error': f'{type(e).__name__}: {str(e)[:200]}',
+                                  'latency_ms': int((time.time() - t0) * 1000)})
+            last = {'ok': False, 'tier': tier, 'http_attempts': http_attempts, 'model_requested': cfg['model'], 'endpoint_requested': cfg['provider'],
                     'error': f'{type(e).__name__}: {str(e)[:200]}', 'latency_ms': int((time.time() - t0) * 1000),
                     'attempt': attempt + 1, 'injected': injected_fault == 'endpoint_down'}
             if injected_fault == 'endpoint_down':

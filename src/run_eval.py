@@ -14,7 +14,7 @@ ap.add_argument('--configs', default='deterministic,small,large,router')
 ap.add_argument('--cases', default=str(ROOT / 'cases' / 'cases.jsonl'))
 ap.add_argument('--out', default=None)
 ap.add_argument('--concurrency', type=int, default=6)
-ap.add_argument('--policy', default='A')
+ap.add_argument('--policy', default=pipeline.DEFAULT_POLICY)
 a = ap.parse_args()
 
 cases = [c for c in jsonl_read(a.cases) if a.split == 'all' or c['split'] == a.split]
@@ -37,5 +37,9 @@ for cfg in a.configs.split(','):
             rows = list(ex.map(lambda c: {**pipeline.run_case(cfg, c, a.policy), 'rep': rep}, cases))
         jsonl_write(rows, out_dir / f'{cfg}_r{rep}.jsonl')
         print(f'{cfg} rep {rep}: {len(rows)} cases in {time.time() - t0:.0f}s', flush=True)
+calls = [c for f in out_dir.glob('*_r*.jsonl') for r in jsonl_read(f) for st in r['trace'] for c in st.get('calls', [])]
+manifest['logical_model_calls'] = len(calls)
+manifest['http_attempts'] = sum(len(c.get('http_attempts') or [None] * (c.get('attempt') or 1)) for c in calls)
+manifest['failed_http_attempts'] = sum(1 for c in calls for a in (c.get('http_attempts') or []) if not a.get('ok'))
 manifest['finished_utc'] = datetime.datetime.now(datetime.UTC).replace(tzinfo=None).isoformat(timespec='seconds') + 'Z'
 jdump(manifest, out_dir / 'manifest.json')

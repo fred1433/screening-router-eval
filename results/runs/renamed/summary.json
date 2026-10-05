@@ -8,7 +8,7 @@
         "correct_supported": 26,
         "unresolved_right": 17
       },
-      "outcomes_all_reps": {
+      "outcomes_all_runs": {
         "correct_supported": 26,
         "unresolved_right": 17
       },
@@ -16,8 +16,8 @@
         "k": 0,
         "n": 43,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 43,
+        "cases_any_run": 0,
+        "of_cases": 43,
         "ci95_cases": [
           0,
           0.082
@@ -27,8 +27,8 @@
         "k": 0,
         "n": 17,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 17,
+        "cases_any_run": 0,
+        "of_cases": 17,
         "ci95_cases": [
           0,
           0.184
@@ -38,16 +38,16 @@
         "k": 0,
         "n": 0,
         "rate": null,
-        "k_cases": 0,
-        "n_cases": 0,
+        "cases_any_run": 0,
+        "of_cases": 0,
         "ci95_cases": null
       },
       "supported_on_answerable": {
         "k": 26,
         "n": 26,
         "rate": 1.0,
-        "k_cases": 26,
-        "n_cases": 26,
+        "cases_any_run": 26,
+        "of_cases": 26,
         "ci95_cases": [
           0.871,
           1
@@ -57,8 +57,8 @@
         "k": 17,
         "n": 17,
         "rate": 1.0,
-        "k_cases": 17,
-        "n_cases": 17,
+        "cases_any_run": 17,
+        "of_cases": 17,
         "ci95_cases": [
           0.816,
           1
@@ -68,8 +68,8 @@
         "k": 0,
         "n": 26,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 26,
+        "cases_any_run": 0,
+        "of_cases": 26,
         "ci95_cases": [
           0,
           0.129
@@ -122,7 +122,7 @@
         "incorrect_or_unsupported": 2,
         "unresolved_right": 17
       },
-      "outcomes_all_reps": {
+      "outcomes_all_runs": {
         "correct_supported": 24,
         "incorrect_or_unsupported": 2,
         "unresolved_right": 17
@@ -131,8 +131,8 @@
         "k": 0,
         "n": 43,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 43,
+        "cases_any_run": 0,
+        "of_cases": 43,
         "ci95_cases": [
           0,
           0.082
@@ -142,8 +142,8 @@
         "k": 0,
         "n": 17,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 17,
+        "cases_any_run": 0,
+        "of_cases": 17,
         "ci95_cases": [
           0,
           0.184
@@ -153,16 +153,16 @@
         "k": 0,
         "n": 0,
         "rate": null,
-        "k_cases": 0,
-        "n_cases": 0,
+        "cases_any_run": 0,
+        "of_cases": 0,
         "ci95_cases": null
       },
       "supported_on_answerable": {
         "k": 24,
         "n": 26,
         "rate": 0.923,
-        "k_cases": 24,
-        "n_cases": 26,
+        "cases_any_run": 24,
+        "of_cases": 26,
         "ci95_cases": [
           0.759,
           0.979
@@ -172,8 +172,8 @@
         "k": 17,
         "n": 17,
         "rate": 1.0,
-        "k_cases": 17,
-        "n_cases": 17,
+        "cases_any_run": 17,
+        "of_cases": 17,
         "ci95_cases": [
           0.816,
           1
@@ -183,8 +183,8 @@
         "k": 0,
         "n": 26,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 26,
+        "cases_any_run": 0,
+        "of_cases": 26,
         "ci95_cases": [
           0,
           0.129
@@ -245,6 +245,7 @@
           "no_material_change": 6
         },
         "small_invalid_replaced_by_stop": 2,
+        "small_invalid_corrected_by_large": 0,
         "stopped_without_large_call": 2,
         "decided_by_rules": 19
       },
@@ -258,7 +259,7 @@
         "incorrect_or_unsupported": 2,
         "unresolved_right": 17
       },
-      "outcomes_all_reps": {
+      "outcomes_all_runs": {
         "correct_supported": 24,
         "incorrect_or_unsupported": 2,
         "unresolved_right": 17
@@ -267,8 +268,8 @@
         "k": 0,
         "n": 43,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 43,
+        "cases_any_run": 0,
+        "of_cases": 43,
         "ci95_cases": [
           0,
           0.082
@@ -278,8 +279,8 @@
         "k": 0,
         "n": 17,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 17,
+        "cases_any_run": 0,
+        "of_cases": 17,
         "ci95_cases": [
           0,
           0.184
@@ -289,16 +290,16 @@
         "k": 0,
         "n": 0,
         "rate": null,
-        "k_cases": 0,
-        "n_cases": 0,
+        "cases_any_run": 0,
+        "of_cases": 0,
         "ci95_cases": null
       },
       "supported_on_answerable": {
         "k": 24,
         "n": 26,
         "rate": 0.923,
-        "k_cases": 24,
-        "n_cases": 26,
+        "cases_any_run": 24,
+        "of_cases": 26,
         "ci95_cases": [
           0.759,
           0.979
@@ -308,8 +309,8 @@
         "k": 17,
         "n": 17,
         "rate": 1.0,
-        "k_cases": 17,
-        "n_cases": 17,
+        "cases_any_run": 17,
+        "of_cases": 17,
         "ci95_cases": [
           0.816,
           1
@@ -319,8 +320,8 @@
         "k": 0,
         "n": 26,
         "rate": 0.0,
-        "k_cases": 0,
-        "n_cases": 26,
+        "cases_any_run": 0,
+        "of_cases": 26,
         "ci95_cases": [
           0,
           0.129

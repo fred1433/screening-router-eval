@@ -1,0 +1,304 @@
+{
+  "policy": "A2",
+  "configs": {
+    "deterministic": {
+      "rows": 240,
+      "cases": 80,
+      "outcomes": {
+        "unresolved_wrong": 120,
+        "correct_supported": 60,
+        "unresolved_right": 60
+      },
+      "wrong_exclusion_true_matches": {
+        "runs": 0,
+        "of_runs": 153,
+        "cases_any_run": 0,
+        "of_cases": 51,
+        "ci95_cases": [
+          0,
+          0.07
+        ]
+      },
+      "decisive_on_insufficient": {
+        "runs": 0,
+        "of_runs": 60,
+        "cases_any_run": 0,
+        "of_cases": 20,
+        "ci95_cases": [
+          0,
+          0.161
+        ]
+      },
+      "wrong_match_distinct": {
+        "runs": 0,
+        "of_runs": 87,
+        "cases_any_run": 0,
+        "of_cases": 29,
+        "ci95_cases": [
+          0,
+          0.117
+        ]
+      },
+      "dimensions": {
+        "decision": {
+          "fail": 120,
+          "pass": 120
+        },
+        "evidence": {
+          "pass": 93
+        },
+        "next_action": {
+          "pass": 93
+        },
+        "missing_info": {
+          "not needed": 60,
+          "pass": 21,
+          "fail": 12
+        },
+        "name_class": {
+          "pass": 93
+        }
+      },
+      "decidable_cases_solved_all_reps": {
+        "cases": 20,
+        "of": 60
+      },
+      "decidable_cases_solved_any_rep": {
+        "cases": 20,
+        "of": 60
+      },
+      "large_calls_per_case": 0,
+      "model_calls_per_case": 0,
+      "resource_index_per_case": 0,
+      "runs_using_large_alone_answer": 0,
+      "pending_rerun": 0,
+      "relative_resource_index": 0.0
+    },
+    "large": {
+      "rows": 240,
+      "cases": 80,
+      "outcomes": {
+        "correct_supported": 173,
+        "unresolved_wrong": 3,
+        "unresolved_right": 60,
+        "pending_rerun": 4
+      },
+      "wrong_exclusion_true_matches": {
+        "runs": 0,
+        "of_runs": 153,
+        "cases_any_run": 0,
+        "of_cases": 51,
+        "ci95_cases": [
+          0,
+          0.07
+        ]
+      },
+      "decisive_on_insufficient": {
+        "runs": 0,
+        "of_runs": 60,
+        "cases_any_run": 0,
+        "of_cases": 20,
+        "ci95_cases": [
+          0,
+          0.161
+        ]
+      },
+      "wrong_match_distinct": {
+        "runs": 0,
+        "of_runs": 87,
+        "cases_any_run": 0,
+        "of_cases": 29,
+        "ci95_cases": [
+          0,
+          0.117
+        ]
+      },
+      "dimensions": {
+        "decision": {
+          "pass": 233,
+          "fail": 3,
+          "pending": 4
+        },
+        "evidence": {
+          "pass": 233
+        },
+        "next_action": {
+          "pass": 233
+        },
+        "missing_info": {
+          "not needed": 173,
+          "pass": 54,
+          "fail": 6
+        },
+        "name_class": {
+          "pass": 233
+        }
+      },
+      "decidable_cases_solved_all_reps": {
+        "cases": 57,
+        "of": 60
+      },
+      "decidable_cases_solved_any_rep": {
+        "cases": 58,
+        "of": 60
+      },
+      "large_calls_per_case": 1.067,
+      "model_calls_per_case": 1.067,
+      "resource_index_per_case": 24312.0,
+      "runs_using_large_alone_answer": 0,
+      "pending_rerun": 4,
+      "relative_resource_index": 6.47
+    },
+    "router": {
+      "rows": 240,
+      "cases": 80,
+      "outcomes": {
+        "correct_supported": 180,
+        "pending_rerun": 3,
+        "unresolved_right": 57
+      },
+      "wrong_exclusion_true_matches": {
+        "runs": 0,
+        "of_runs": 153,
+        "cases_any_run": 0,
+        "of_cases": 51,
+        "ci95_cases": [
+          0,
+          0.07
+        ]
+      },
+      "decisive_on_insufficient": {
+        "runs": 0,
+        "of_runs": 60,
+        "cases_any_run": 0,
+        "of_cases": 20,
+        "ci95_cases": [
+          0,
+          0.161
+        ]
+      },
+      "wrong_match_distinct": {
+        "runs": 0,
+        "of_runs": 87,
+        "cases_any_run": 0,
+        "of_cases": 29,
+        "ci95_cases": [
+          0,
+          0.117
+        ]
+      },
+      "dimensions": {
+        "decision": {
+          "pass": 237,
+          "pending": 3
+        },
+        "evidence": {
+          "pass": 237
+        },
+        "next_action": {
+          "pass": 237
+        },
+        "missing_info": {
+          "not needed": 180,
+          "pass": 40,
+          "fail": 17
+        },
+        "name_class": {
+          "pass": 237
+        },
+        "routing": {
+          "pass": 237
+        }
+      },
+      "decidable_cases_solved_all_reps": {
+        "cases": 60,
+        "of": 60
+      },
+      "decidable_cases_solved_any_rep": {
+        "cases": 60,
+        "of": 60
+      },
+      "large_calls_per_case": 0.208,
+      "model_calls_per_case": 0.963,
+      "resource_index_per_case": 7222.2,
+      "runs_using_large_alone_answer": 9,
+      "pending_rerun": 3,
+      "relative_resource_index": 1.92
+    },
+    "small": {
+      "rows": 240,
+      "cases": 80,
+      "outcomes": {
+        "correct_supported": 166,
+        "pending_rerun": 16,
+        "unresolved_wrong": 4,
+        "unresolved_right": 54
+      },
+      "wrong_exclusion_true_matches": {
+        "runs": 0,
+        "of_runs": 153,
+        "cases_any_run": 0,
+        "of_cases": 51,
+        "ci95_cases": [
+          0,
+          0.07
+        ]
+      },
+      "decisive_on_insufficient": {
+        "runs": 0,
+        "of_runs": 60,
+        "cases_any_run": 0,
+        "of_cases": 20,
+        "ci95_cases": [
+          0,
+          0.161
+        ]
+      },
+      "wrong_match_distinct": {
+        "runs": 0,
+        "of_runs": 87,
+        "cases_any_run": 0,
+        "of_cases": 29,
+        "ci95_cases": [
+          0,
+          0.117
+        ]
+      },
+      "dimensions": {
+        "decision": {
+          "pass": 220,
+          "pending": 16,
+          "fail": 4
+        },
+        "evidence": {
+          "pass": 216
+        },
+        "next_action": {
+          "pass": 216
+        },
+        "missing_info": {
+          "not needed": 166,
+          "pass": 35,
+          "fail": 15
+        },
+        "name_class": {
+          "pass": 216
+        }
+      },
+      "decidable_cases_solved_all_reps": {
+        "cases": 54,
+        "of": 60
+      },
+      "decidable_cases_solved_any_rep": {
+        "cases": 56,
+        "of": 60
+      },
+      "large_calls_per_case": 0,
+      "model_calls_per_case": 1.258,
+      "resource_index_per_case": 3758.2,
+      "runs_using_large_alone_answer": 0,
+      "pending_rerun": 16,
+      "relative_resource_index": 1.0
+    }
+  }
+}

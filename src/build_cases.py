@@ -327,7 +327,7 @@ def reference(c):
             ['date_of_birth', 'passport_number', 'national_id', 'nationality', 'place_of_birth'])
     miss = [a for a in pool if a not in ag and a not in cf]  # every identifier that cannot be compared (review round 1)
     comps = [{'attribute': a, 'relation': 'agree'} for a in ag] + [{'attribute': a, 'relation': 'conflict'} for a in cf]
-    disp = apply_policy(nm, comps)
+    disp = apply_policy(nm, comps, 'A')  # v1 references follow policy A
     just = {
         'same_entity_supported': f"Name criterion met ({nm.replace('_', ' ')}); {', '.join(ag)} agree; nothing conflicts.",
         'different_entity_supported': f"{', '.join(x for x in cf)} conflict and no strong identifier agrees.",

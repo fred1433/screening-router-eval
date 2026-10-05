@@ -1,0 +1,122 @@
+[
+ {
+  "test": "R1 case-075 with passport AB123456 vs not listed is never different_entity",
+  "passed": true
+ },
+ {
+  "test": "R1 regression: passport_number present for the customer, absent from the list, is not compared",
+  "passed": true
+ },
+ {
+  "test": "R1 regression: national_id present for the customer, absent from the list, is not compared",
+  "passed": true
+ },
+ {
+  "test": "R1 regression: registration_number present for the customer, absent from the list, is not compared",
+  "passed": true
+ },
+ {
+  "test": "R7 small: simulated network answer recorded with its HTTP attempts",
+  "passed": true
+ },
+ {
+  "test": "R7 large: simulated network answer recorded with its HTTP attempts",
+  "passed": true
+ },
+ {
+  "test": "R7 router: simulated network answer recorded with its HTTP attempts",
+  "passed": true
+ },
+ {
+  "test": "R1 the four configurations cross the same validator",
+  "passed": true
+ },
+ {
+  "test": "R2 v1 next actions of case-019, 029, 085 and 013 are rejected",
+  "passed": true
+ },
+ {
+  "test": "R2 a supported match gets the fixed next action",
+  "passed": true
+ },
+ {
+  "test": "R3 two different non-Latin names are never exact",
+  "passed": true
+ },
+ {
+  "test": "R3 empty normalisation is an explicit stop",
+  "passed": true
+ },
+ {
+  "test": "R3 case-024 takes the escalation branch in v2",
+  "passed": true
+ },
+ {
+  "test": "R3 case-029 takes the escalation branch in v2",
+  "passed": true
+ },
+ {
+  "test": "R3 case-031 takes the escalation branch in v2",
+  "passed": true
+ },
+ {
+  "test": "R4 case-047: a Residence country line does not prove a nationality",
+  "passed": true
+ },
+ {
+  "test": "R4 case-020 variant: identifiers in a sentence about the brother are rejected",
+  "passed": true
+ },
+ {
+  "test": "R4 v1 outputs of case-050, 075, 077, 079, 080, 030 are classified on the five dimensions",
+  "passed": true
+ },
+ {
+  "test": "R9 small: calls per case recomputed from traces",
+  "passed": true
+ },
+ {
+  "test": "R9 small: large calls per case recomputed",
+  "passed": true
+ },
+ {
+  "test": "R9 small: wrong exclusions recomputed",
+  "passed": true
+ },
+ {
+  "test": "R9 large: calls per case recomputed from traces",
+  "passed": true
+ },
+ {
+  "test": "R9 large: large calls per case recomputed",
+  "passed": true
+ },
+ {
+  "test": "R9 large: wrong exclusions recomputed",
+  "passed": true
+ },
+ {
+  "test": "R9 router: calls per case recomputed from traces",
+  "passed": true
+ },
+ {
+  "test": "R9 router: large calls per case recomputed",
+  "passed": true
+ },
+ {
+  "test": "R9 router: wrong exclusions recomputed",
+  "passed": true
+ },
+ {
+  "test": "R9 router: escalations recomputed",
+  "passed": true
+ },
+ {
+  "test": "R9 router: invalid small outputs split into stops and corrections",
+  "passed": true
+ },
+ {
+  "test": "R13 no em dash in page, README, memo, fixed texts",
+  "passed": true
+ }
+]

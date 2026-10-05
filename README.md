@@ -4,7 +4,37 @@ A measured comparison, on one compliance task, of four ways to prepare an identi
 analyst: rules only, a small open-weight model alone, a large open-weight model alone, and a router that uses rules, then
 the small model, then the large model only for observable reasons.
 
-Results page: https://theaipipe.com/demos/screening-router/ (generated from the files in `results/`).
+Results page: https://theaipipe.com/demos/screening-router/ (generated from the files in `results/`); the page as first
+published (run v1) is kept at https://theaipipe.com/demos/screening-router/v1/.
+
+## Two commands
+
+- `./recompute.sh` rebuilds every number on the page from the recorded traces: no network, no key, no model call. In a fresh
+  clone it reproduces `site/values.json` exactly.
+- `./run_final.sh` runs a new experiment against OpenRouter and needs `OPENROUTER_API_KEY` in the environment. It creates
+  `.private/` for the private cost ledger before writing anything.
+
+## Versions
+
+- **Run v1** (code commit 6901735, five relative-trap cases re-run at commit f5bc89a, see `results/runs/test/reruns.json`): the
+  measured run on 80 unseen records from ten authored case families, three runs each. Its historical score is
+  `results/runs/test/summary.json`.
+- **Controls v2** (frozen at commit 8e11387), written after inspecting the v1 results: one absence test for both sides and the
+  rules through the shared validator; a fixed, non-authorizing next action for supported matches and a check against
+  authorizing language; name class computed by code; evidence bound to its field and to the customer; five-dimension scoring
+  (`src/score_v2.py`); every HTTP attempt recorded. Tests: `tests/test_v2.py`.
+- **v2 replay** (`results/runs/v2_replay/`): the v2 pipeline executed on the 80 cases with every model call answered by the
+  answer recorded in v1. Where v2 sends an answer back for a repair v1 never requested, the run is marked `pending_rerun`:
+  no new model call was made (this demo spends nothing on model APIs). On these cases v2 is not a measurement on unseen data.
+- **New cases** (`cases/cases_v2_new.jsonl`, 31 cases, generated after the v2 freeze by `src/build_cases_v2.py`): a customer
+  identifier the list does not give, renewed passports, alternative dates of birth, two customer documents that disagree,
+  company homonyms in the same country and city, long names. References follow policy v2 (`policy/policy_a2.md`) and were
+  reviewed twice by a fresh Claude session on a subscription, not through an API (`review/reference_review_v2_new_round*.jsonl`;
+  round 1 found one IMO ship number used as a company registration, fixed in the generator). Only the rules have run on them
+  (`results/runs/v2_new/`); the model runs wait for an agreed run.
+- **Rules, then small** (`results/runs/ablation_v1/`, `ablation_v2/`): derived from the router's recorded steps by stopping
+  before the large-model call. Not an independent run; no latency is reconstructed.
+
 One-page memo on fine-tuning and the pilot: [MEMO.md](MEMO.md).
 
 ## The question
@@ -26,8 +56,12 @@ human step that is never automated or scored. Out of scope: candidate search, ad
 identifiers, relative's date of birth, year of birth only, entity match, entity homonym). 20 development cases, 80 held out
 for the final score. Each reference gives the identity used to build the case and the disposition the evidence permits, with
 decisive agreements, conflicts, missing information and a justification. OFAC snapshot: `data/snapshot.json` (export
-published 2026-10-02, retrieved 2026-10-03, SHA-256 of each file). The raw CSV files are not committed; download them from the
-URL in the snapshot file and check the hashes to rebuild the cases with `src/build_cases.py`.
+published 2026-10-02, retrieved 2026-10-03, SHA-256 of each file). The raw exports used are archived in `data/ofac_raw/`
+(public data; check them with `shasum -a 256 data/ofac_raw/*.csv` against the snapshot file).
+
+Reproducing the score needs only the recorded cases (`cases/*.jsonl`) and traces (`./recompute.sh`). Rebuilding the cases
+themselves from the raw sources uses the archive: `python3 src/build_cases.py` (v1 cases) and `python3 src/build_cases_v2.py`
+(new cases).
 
 References were written by the builder and checked twice by a fresh Claude Opus session with no tools and no memory of the
 build (`src/review_refs.py`). Round 1: 14 disagreements, all on incomplete missing-information lists; the references were
@@ -76,7 +110,7 @@ No money amount is published. `results/price_index.json` holds relative token we
 Intervals are computed over cases, not runs (`ci95_cases` in the summary): 0 of 51 true-match cases gives 0 to 7%. The
 router's median is low because rules settle 93 of 240 runs; over runs that call a model it is 6.4 s.
 
-Re-run after the final run: the relative-trap notes always said "elder", even for a relative born after the customer.
+Re-run after the final run (v1): the relative-trap notes always said "elder", even for a relative born after the customer.
 The generator was fixed (one word in 6 packets, references unchanged) and the 5 held-out cases it touched were re-run with
 the frozen pipeline (`results/runs/test/reruns.json`). The two-policy demonstration was moved to an individual
 (`src/two_policies.py`). A stricter citation check was added to `src/pipeline.py` after the run and replayed on the accepted

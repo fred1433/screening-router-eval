@@ -1,0 +1,80 @@
+{
+  "policy": "A2",
+  "configs": {
+    "rules_small": {
+      "rows": 240,
+      "cases": 80,
+      "outcomes": {
+        "correct_supported": 165,
+        "unresolved_wrong": 15,
+        "pending_rerun": 3,
+        "unresolved_right": 57
+      },
+      "wrong_exclusion_true_matches": {
+        "runs": 0,
+        "of_runs": 153,
+        "cases_any_run": 0,
+        "of_cases": 51,
+        "ci95_cases": [
+          0,
+          0.07
+        ]
+      },
+      "decisive_on_insufficient": {
+        "runs": 0,
+        "of_runs": 60,
+        "cases_any_run": 0,
+        "of_cases": 20,
+        "ci95_cases": [
+          0,
+          0.161
+        ]
+      },
+      "wrong_match_distinct": {
+        "runs": 0,
+        "of_runs": 87,
+        "cases_any_run": 0,
+        "of_cases": 29,
+        "ci95_cases": [
+          0,
+          0.117
+        ]
+      },
+      "dimensions": {
+        "decision": {
+          "pass": 222,
+          "fail": 15,
+          "pending": 3
+        },
+        "evidence": {
+          "pass": 218
+        },
+        "next_action": {
+          "pass": 218
+        },
+        "missing_info": {
+          "not needed": 165,
+          "pass": 35,
+          "fail": 18
+        },
+        "name_class": {
+          "pass": 218
+        }
+      },
+      "decidable_cases_solved_all_reps": {
+        "cases": 55,
+        "of": 60
+      },
+      "decidable_cases_solved_any_rep": {
+        "cases": 55,
+        "of": 60
+      },
+      "large_calls_per_case": 0,
+      "model_calls_per_case": 0.754,
+      "resource_index_per_case": 2258.7,
+      "runs_using_large_alone_answer": 0,
+      "pending_rerun": 3,
+      "relative_resource_index": null
+    }
+  }
+}

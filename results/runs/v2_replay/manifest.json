@@ -1,6 +1,5 @@
 {
-  "created_utc": "2026-10-05T00:24:48+00:00",
-  "code_commit": "7c939304c660e2de209bfd3c91c8c4b9d90bb522",
+  "code_commit_at_creation": "see git log for this file",
   "kind": "v2 controls replayed on the answers recorded in the v1 run; no model call",
   "policy": "A2",
   "source_run": "results/runs/test (v1)",

@@ -63,11 +63,12 @@ for cfg in ('deterministic', 'small', 'large', 'router'):
             pipeline.CALLER = make_caller(queues, flags)
             r = pipeline.run_case(cfg, cases[cid], 'A2')
             r['rep'] = rep
+            r['latency_ms'] = None   # not reconstructed
             r['replay'] = True
             rows.append(r)
         jsonl_write(rows, OUT / f'{cfg}_r{rep}.jsonl')
         print(cfg, rep, {k: sum(1 for x in rows if x['resolution'] == k) for k in {x['resolution'] for x in rows}}, flush=True)
-jdump({'created_utc': datetime.datetime.now(datetime.UTC).isoformat(timespec='seconds'), 'code_commit': commit,
+jdump({'code_commit_at_creation': 'see git log for this file',
        'kind': 'v2 controls replayed on the answers recorded in the v1 run; no model call', 'policy': 'A2',
        'source_run': 'results/runs/test (v1)', 'new_model_calls': 0,
        'pending_rerun_meaning': 'v2 sent an answer back for a repair that v1 never requested; the repair was not run'},

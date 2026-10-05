@@ -1,15 +1,15 @@
 """Independent check of the reference answers by a fresh model session that did not build them.
 Reviewer: a new `claude -p --model opus --tools ""` process per batch (Claude Opus, no tools, no memory of the build).
 This is a model review, not a review by a human compliance expert.
-Usage: python src/review_refs.py"""
+Usage: python src/review_refs.py [out.jsonl] [cases file in cases/] [policy file in policy/]"""
 import json, re, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from common import ROOT, jsonl_read, jsonl_write, render_packet
 
-POLICY = (ROOT / 'policy' / 'policy_a.md').read_text()
-cases = jsonl_read(ROOT / 'cases' / 'cases.jsonl')
+POLICY = (ROOT / 'policy' / (sys.argv[3] if len(sys.argv) > 3 else 'policy_a.md')).read_text()
+cases = jsonl_read(ROOT / 'cases' / (sys.argv[2] if len(sys.argv) > 2 else 'cases.jsonl'))
 PROMPT = """You are reviewing reference answers for a test set. Each case has an evidence packet (customer documents C*, one watchlist candidate record L1) and a reference answer written by someone else. Using ONLY the packet and the policy below, check each reference: is the permitted disposition right, are the decisive agreements, conflicts and missing items right, and is anything decisive left out? Be strict; disagree whenever the packet does not support the reference. Write in English.
 
 {policy}

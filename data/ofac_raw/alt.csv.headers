@@ -1,0 +1,41 @@
+HTTP/2 302 
+server: AkamaiGHost
+content-length: 0
+location: https://sanctionslistservice.ofac.treas.gov/api/publicationpreview/exports/alt.csv
+date: Sat, 03 Oct 2026 14:36:35 GMT
+alt-svc: h3=":443"; ma=93600
+strict-transport-security: max-age=31536000 ; includeSubDomains ; preload
+
+HTTP/1.1 302 Found
+Date: Sat, 03 Oct 2026 14:36:36 GMT
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: https://wc2h-sls-prod-public-published.s3.us-gov-west-1.amazonaws.com/Published/72c82e29-cc88-487b-9d3e-a305a134956d/2026-10-02/0c48024c-5001-47a9-9378-c87b68dd9de8/ALT.CSV?X-Amz-Expires=3600&X-Amz-Security-Token=FwoDYXdzEO3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGEQmyBKZA0G6Qw9nyLsBGcYu8cuZgb4olcSk6CON8BM5yelmUQzfr9TS%2BnojSMht24pyx3k8n%2Bn5c8R%2Fvy6KAxLVVQXAIdqQpXWhWmzhysyidvew3EiBvpMxqi8coFQQBsWAcJ2um%2BYw3nxrWh9%2BVtQmGGF%2BKkKV1B0R5JWfJAhHyhQByQLtIkf0kCtzEL0xe1iQVJKHWf8px6bvLZLQhX34TqzaWWo%2BdIauEaFzGWrHjZMGFJPfU3CeJKN0kTSdqufotVZttKbH4LAC368CPyTL2NXN6qq0mJUOwfhaVUDoJM1gD3ihbQlCDZ3c27erT0pbYWQWPRtX7xzjUCxx7a4UdGteHmZxhzoAz9ZsYT0kk62aU6t%2F07LaM%2FTDFjJzCITuN%2FuxhQsZ1hhjqt3c%2FVihO%2BMreaBWaW%2F7ktja6Hdw3cbeZeFhLAKf%2BmTVa1QTv7J6g1V2sXLXXYQX1NVwaISB8ZedcCuvAouSXjRQ4%2FYJi6WJ%2BhjYTE8uEgZ0E4SIBc9fNoNyDBTneYkDK2voqdV8UCmr5Xo7qbwD%2FLr7hB4Dsu7BvKwe8NqmzvjLoLjNeYBTjQxMFuK77rSXvsq90WW709sagq992HE3NLfd3tJQaLprD9rm3o7C4%2FZAmAWKoAQDOkeNrw37In%2FqYZK0eqcV%2BbNQvDP5WeGrA4E586zUPi0RLd5z7qFg7p5V4YwjtaDbMkrI0jn%2BC9ZL3xwbiqlZFLQQfeP2sDq6r2w3YZOw3JXzXB7pN4kljPKyPp5nexD0QNxIxzcUbWDQ1R0MS3BKa6gxnuuQvxwlYTkr%2ByVN%2BBGSLMJ3yEsM2MdJG4Ei5ZZo9yjafo64UZAKPCehNYGMkEbIRr3lfHjROMD608eV1Y%2FfNn4z2XUyMLMfzWSUI6EwLc7eQJfPq9mPBWvcHmD93a%2FUVfNoalavwRPEYQTt1ufHg%3D%3D&response-content-disposition=attachment%3B%20filename%3D%22alt.csv%22&response-content-type=text%2Fcsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIASARBLFPLEEZ7VKG5%2F20261003%2Fus-gov-west-1%2Fs3%2Faws4_request&X-Amz-Date=20261003T143636Z&X-Amz-SignedHeaders=host&X-Amz-Signature=d843a693b3ea183fc105a31f7df8f3b542c17ceb6b450834a208909da19c5916
+Server: Microsoft-IIS/10.0
+X-Frame-Options: DENY
+Permissions-Policy: camera=(), geolocation=(), microphone=()
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Set-Cookie: BIGipServer~sanctionslistservice.ofac.treas.gov~main~myPool=!zDdrhAQrEmQiZLdInar2Dw4vzXDer9+TW6D3CXcCOOqXpOVjJOeCcyny61E6/QLXEeQjcX9xb12tOw==; path=/; Httponly; Secure
+
+HTTP/1.1 200 OK
+x-amz-id-2: Lfo0+h72M9rrfPGyjPsxBvze7FB4RZlVIxCNqG1X1AtSbaIS7ZY82o8wNWDHcZpyHUS9b6UEH2Bc5HCFaPypXcan/cJLo/46Xak+Ckt02EE=
+x-amz-request-id: WYFNZ8WX6ZBSDK6V
+Date: Sat, 03 Oct 2026 14:36:37 GMT
+Last-Modified: Fri, 02 Oct 2026 15:55:48 GMT
+ETag: "32d724f007d625906748d95f1f330257"
+x-amz-server-side-encryption: aws:kms
+x-amz-server-side-encryption-aws-kms-key-id: arn:aws-us-gov:kms:us-gov-west-1:138582633430:key/1caa2f6f-1a4d-40fb-a9a1-27cd7db0709b
+x-amz-server-side-encryption-bucket-key-enabled: true
+x-amz-meta-preview-name: 2026-10-02/0c48024c-5001-47a9-9378-c87b68dd9de8/ALT.CSV
+x-amz-meta-preview-date: 10/2/2026 10:10:23 AM
+x-amz-meta-preview-description: Comma delimited alternate (aka) names (links to SDN.CSV and ADD.CSV)
+x-amz-meta-publication-id: 1045
+x-amz-meta-preview-upload-date: 10/2/2026 10:10:23 AM
+x-amz-meta-preview-upload-userid: 28
+Content-Disposition: attachment; filename="alt.csv"
+x-amz-meta-delta-name: 2026-10-02_delta.xml
+Accept-Ranges: bytes
+Content-Type: text/csv
+Content-Length: 1065827
+Server: AmazonS3
+

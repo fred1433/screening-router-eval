@@ -1,0 +1,76 @@
+{
+  "policy": "A2",
+  "configs": {
+    "deterministic": {
+      "rows": 31,
+      "cases": 31,
+      "outcomes": {
+        "correct_supported": 17,
+        "unresolved_wrong": 3,
+        "unresolved_right": 11
+      },
+      "wrong_exclusion_true_matches": {
+        "runs": 0,
+        "of_runs": 26,
+        "cases_any_run": 0,
+        "of_cases": 26,
+        "ci95_cases": [
+          0,
+          0.129
+        ]
+      },
+      "decisive_on_insufficient": {
+        "runs": 0,
+        "of_runs": 11,
+        "cases_any_run": 0,
+        "of_cases": 11,
+        "ci95_cases": [
+          0.0,
+          0.259
+        ]
+      },
+      "wrong_match_distinct": {
+        "runs": 0,
+        "of_runs": 5,
+        "cases_any_run": 0,
+        "of_cases": 5,
+        "ci95_cases": [
+          0,
+          0.434
+        ]
+      },
+      "dimensions": {
+        "decision": {
+          "pass": 28,
+          "fail": 3
+        },
+        "evidence": {
+          "pass": 17
+        },
+        "next_action": {
+          "pass": 17
+        },
+        "missing_info": {
+          "not needed": 17
+        },
+        "name_class": {
+          "pass": 17
+        }
+      },
+      "decidable_cases_solved_all_reps": {
+        "cases": 17,
+        "of": 20
+      },
+      "decidable_cases_solved_any_rep": {
+        "cases": 17,
+        "of": 20
+      },
+      "large_calls_per_case": 0,
+      "model_calls_per_case": 0,
+      "resource_index_per_case": 0,
+      "runs_using_large_alone_answer": 0,
+      "pending_rerun": 0,
+      "relative_resource_index": null
+    }
+  }
+}

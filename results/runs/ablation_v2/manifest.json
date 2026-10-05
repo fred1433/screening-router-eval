@@ -1,0 +1,5 @@
+{
+  "kind": "derived from recorded steps, not an independent run",
+  "source": "results/runs/v2_replay",
+  "latency": "not reconstructed"
+}

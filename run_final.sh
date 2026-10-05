@@ -1,5 +1,6 @@
 #!/bin/bash
-# The final run, in the order it was executed. Code, prompts, routing and scoring are frozen at the commit recorded in each manifest.
+# A new experiment (network, OPENROUTER_API_KEY). This is the v1 sequence; run today it uses the v2 controls in src/pipeline.py.
+# To rebuild the published numbers from the recorded traces without network, use ./recompute.sh instead.
 set -e
 cd "$(dirname "$0")"
 mkdir -p .private

@@ -19,6 +19,16 @@ and `results/runs/test/first_answer_only.json`.
   replayed on every accepted output without new calls: it would have rejected 9 of 235 small-model outputs, 3 of 238
   large-model outputs and 3 of 240 router outputs, all for citing a line that records an absent value.
 
+## After v2 (controls written after reading v1)
+
+Replayed on the recorded answers without new model calls (`results/runs/v2_replay/summary_v2.json`), the v2 controls leave
+the router at 180/180 answerable runs correct and supported and send 23 runs, across all configurations,
+back for a repair call that was not made. The router alone did not need the large model's correction on most cases; stopping
+it before the large-model call gives 174/180 in v1 at a resource index of 0.62 (small alone = 1), against
+180/180 and 1.72 for the full router. The 31 new cases generated after the v2 freeze are the
+unseen test; only the rules have run on them so far. Whether the router is worth its large-model step is the question that
+model run would answer.
+
 ## Error families that remain, and which a training run could touch
 
 | Family | Seen in | Fix that comes first | Could training help? |

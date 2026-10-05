@@ -4,25 +4,25 @@
  },
  "cases": [
   {
-   "tab": "A supported recommendation",
+   "tab": "Listed alias",
    "case_id": "case-020",
    "config": "router",
    "rep": 1,
    "note": "The customer's name is one of the candidate's listed aliases. The structured record holds only the nationality; the date of birth and the passport number appear only in the transcribed passport page. Rules do not read free text, so the small model compared them, citing each value from the line it came from. Its first answer passed every check and the large model was not called."
   },
   {
-   "tab": "A justified stop",
-   "case_id": "case-050",
+   "tab": "Missing identity evidence",
+   "case_id": "case-047",
    "config": "router",
    "rep": 1,
-   "note": "Only the name is captured. The small model names what is missing and the router stops there, because a larger model cannot supply a date of birth or a passport number that is not in the file. The output is a request for documents, routed to further investigation."
+   "note": "Only the name is captured, and the small model rightly stops: insufficient evidence, further investigation. Yet the record claims a nationality agreement and cites, as its proof, the line <i>Nationality: not captured</i>. The decision is right and the evidence is not; the five separate scores below show both. Under the v2 checks this citation is refused and the answer goes back for a repair."
   },
   {
-   "tab": "A correction, and what it reveals",
+   "tab": "Repair changed the reasoning",
    "case_id": "case-030",
    "config": "router",
    "rep": 1,
-   "note": "In their first answers, in all three runs, both the small and the large model read a place of birth marked <i>not captured</i> as a conflict, and both failed the policy check. The repair call then split them: the large model corrected the comparison, while the small model kept it and bent its disposition to match, insufficient evidence. The router escalated on an observable reason, an agreement and a conflict side by side, so the large model's repaired answer is the one kept. With the small model alone this case ended as a needless stop in all three runs. The stricter citation check added after the run refuses a <i>not captured</i> line as evidence, which sends the first answer back for the right reason."
+   "note": "In their first answers, in all three runs, both the small and the large model read a place of birth marked <i>not captured</i> as a conflict, and both failed the policy check. The repair call then split them: the large model corrected the comparison, while the small model kept it and bent its disposition to match, insufficient evidence. The router escalated on an observable reason, an agreement and a conflict side by side, so the large model's repaired answer is the one kept. With the small model alone this case ended as a needless stop in all three runs."
   }
  ]
 }
